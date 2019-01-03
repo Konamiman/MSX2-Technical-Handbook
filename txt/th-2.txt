@@ -13,7 +13,7 @@ Changes from the original:
 - In description of REM statement, [<comment>] field has been added.
 
 - In description of SGN function, "Examines the sign and returns..." has been 
-substitued for "Examines the sign of <expression> and returns..."
+changed to "Examines the sign of <expression> and returns..."
 
 - Descriptions for MSX DISK-BASIC statements DSKI$ and DSKO$ have been added.
 
@@ -23,8 +23,8 @@ substitued for "Examines the sign of <expression> and returns..."
 assigned to "\" as it is actually, and not to "$" as in the original text.
 
 - In List 2.3 (Changing error handling routine), the third line of "command 
-initialize", which is "LD HL,CMDHDAT" in the original, is corrected and 
-substitued by "LD HL,HDAT".
+initialize", which is "LD HL,CMDHDAT" in the original, is corrected to 
+"LD HL,HDAT".
 
 - In section 5, "Notes on Software Development", subsection "BASIC version 
 number", the part "and so on" has been added in point 1.
@@ -413,7 +413,7 @@ Statement               Specifies whethter to display the contents of
 --- L ---
 
 LEFT$ (<string expression>,<expression>)
-function                Gets <expression> characters from the left of
+Function                Gets <expression> characters from the left of
                         <string expression>.
 
 LEN (<string expression>)
@@ -1070,7 +1070,7 @@ display functions.
 
 
    Table 2.1  Correspondances of BASIC screen (SCREEN) modes and
-              VDP screen modess
+              VDP screen modes
 
 -----------------------------------------------------------------------------
 |              |             |                   Meaning                    |
@@ -1469,7 +1469,7 @@ double precision real type. It should be prepared with enough area to get the
 screen data. Its size can be calculated by expression 1 as shown below. 
 <Pixel size> is the number of bits to be used to express one dot on the 
 screen. It is 4 when the screen mode is 5 or 7, 2 for mode 6, and 8 for mode 
-8. Screen data is stored in the format shown in figure 2.4.
+8. Screen data is stored in the format shown in Figure 2.4.
 
         Expression 1
 
@@ -2712,7 +2712,7 @@ Input:   HL <-- Starting address of the expression in text
 Output:  HL <-- Address after the expression
          DE <-- Result of evaluation of the expression
 Purpose: Evaluate an expression and make output in integer type (INT). When 
-the result is beyond the range of 2-byte integer type, an "Ovwrflow" error 
+the result is beyond the range of 2-byte integer type, an "Overflow" error 
 occurs and the system returns to the BASIC command level.
 
 

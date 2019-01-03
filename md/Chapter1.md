@@ -3,10 +3,35 @@
 The MSX2 was designed to be fully compatible with the MSX1, but there are many enhanced features in the MSX2. Chapter 1 introduces the enhanced features of the MSX2, and shows block figures and standard tables. This information is conceptual, but will be needed to understand dexcriptions in volume 2 and later.
 
 
+## Index
+
+[1. FROM MSX1 TO MSX2](#1-from-msx1-to-msx2)
+
+[1.1 What is MSX?](#11-what-is-msx)
+
+[1.2 Environment of the MSX](#12-environment-of-the-msx)
+
+[1.3 Extended Contents of MSX2](#13-extended-contents-of-msx2)
+
+[2. MSX2 SYSTEM OVERVIEW](#2-msx2-system-overview)
+
+[2.1 Hardware overview](#21-hardware-overview)
+
+[2.1.1 Address map](#211-address-map)
+
+[2.1.2 Interfacing with peripherals](#212-interfacing-with-peripherals)
+
+[2.2 Software Overview](#22-software-overview)
+
+
+<p>&nbsp;</p>
+
 ## 1. FROM MSX1 TO MSX2
 
 To begin with, let us took back to the original purpose or intention of MSX and then sum up the transition from MSX1 to MSX2.
 
+
+<p>&nbsp;</p>
 
 ### 1.1 What is MSX?
 
@@ -19,6 +44,8 @@ The design team for MSX considered these problems. Since a computer is most powe
 Some of the useful features included in the MSX system include the use of double precision BCD for normal BASIC arithmetic and the same file format as MS-DOS. The real capabilities of the MSX machine will come to light as it is used across several fields.
 
 
+<p>&nbsp;</p>
+
 ### 1.2 Environment of the MSX
 
 Over one million MSX machines had been sold by December 1985 and are used mainly as game machines or primers by primary and junior high school students. But MSX use has gradually spread to include such uses as communication terminals, Japanese word processing, factory automation, and audio visual control. For improving its capabilities, a disk system and MSX-DOS have been prepared, and languages such as C, FORTH, and LOGO are available. BIOS, which is the collection of input/output routines in BASIC ROM, and BDOS, which resides in the disk interface ROM and has compatibility with CP/M system calls have both been improved. So an excellent programming environment is now available. Chinese Character input, light pen and mouse input, and the RS-232C interface have been standardised, and stantardisation of other peripherals is proceeding. The keyboard and character set are consistent with international standards, and there are minor variations to satisfy the needs of individual countries.
@@ -27,6 +54,8 @@ Several new peripherals have been developed. Standard devices include printers, 
 
 Many applications other than games are now supplied on disks and are becoming more practical. There are now Japanese word processors capable of clause transformation, data bases which can exchange data with higher-level systems, and CAI and CAD systems.
 
+
+<p>&nbsp;</p>
 
 ### 1.3 Extended Contents of MSX2
 
@@ -174,7 +203,7 @@ mouse, etc       |                                     |:::::::::::::::::::::
 ------------     ---------------------------------------
 ```
 
-* MSX-BASIC
+#### MSX-BASIC
 
 BASIC has also been extended from version 1.0 to version 2.0 in order to support a new VDP, backup RAM, CLOCK-IC, and so on. Compatibility with MSX1 is maintained. When using the newly extended screen mode, be careful when specifiyng range, since ranges are slightly different in MSX2.
 
@@ -200,7 +229,7 @@ A minimum of 64K bytes are required for VRAM in order to execute the added featu
 MSX machines which have 64K bytes VRAM but cannot be expanded to 128K bytes are marked "VRAM64K" on their catalogue or packaging.
 
 
-* VDP
+#### VDP
 
 The MSX series computers use a video display processor (VDP) type LSI chip for controlling the screen output. The VDP used for MSX1 was the TMS9918, but the MSX2 uses the V9938 (MSX-VIDEO), which has upper and full compatibility with the TMS9918 and can execute software for TMS9918 without any modification.
 
@@ -258,22 +287,26 @@ Mode            Number of       Dots       Colours      Palette   Sprite
 (*) Feature modes available from TMS9918 (however, palette feature only from V9938).
 ```
 
-* Battery-powered Clock-IC
+#### Battery-powered Clock-IC
 
 Battery-powered RAM is connected to the I/O port and is used for storage of setup information and for keeping track of the date and time. Setup information specifies the screen colour and mode at reset. This allows the user to set up the desired environment when the system is booted.
 
 The CLOCK-IC works independently of the main power supply. After being set once new time settings are no longer required.
 
 
-* RAM Disk Feature
+#### RAM Disk Feature
 
 When using BASIC on MSX1 machines which had 64K bytes RAM, only 32K bytes of RAM were used; the other 32K bytes were unused since the BASIC interpreter occupied the address space. On MSX2 machines this unused RAM can be used as a RAMDISK. For users who do not have a disk drive, this feature is very useful when loading or saving BASIC programs temporarily.
 
+
+<p>&nbsp;</p>
 
 ## 2. MSX2 SYSTEM OVERVIEW
 
 This section gives a simple overview of the MSX2 software and hardware systems. To help you understand the concepts, diagrams which would be useful when developping softwarem, such as VRAM map, the I/O map, and the interface standard, are found in the APPENDIX of this manual.
 
+
+<p>&nbsp;</p>
 
 ### 2.1 Hardware overview
 
@@ -347,9 +380,11 @@ First of all, look at the block diagram in [Figure 1.3](#figure-13--msx2-block-d
 Note: The dotted lines represent optional features.
 ```
 
+<p>&nbsp;</p>
+
 #### 2.1.1 Address map
 
-* Memory map
+##### Memory map
 
 The MSX2 has three kinds of memory: MAIN-ROM, SUB-ROM, and RAM. Each memory resides in an independent 64K address space and is allocated as shown in [Figure 1.4](#figure-14--msx2-standard-memory) (1) (each 64K space is called a "slot", which consists of four 16K areas called "pages"). [Figures 1.3](#figure-13--msx2-block-diagram) (2) and (3) show memory usage when using BASIC and MSX-DOS, respectively.
 
@@ -488,6 +523,8 @@ FFFFH    | Register  |
          -------------
 ```
 
+<p>&nbsp;</p>
+
 #### 2.1.2 Interfacing with peripherals
 
 MSX2 interfacing with peripherals is standarised in detail.
@@ -506,6 +543,8 @@ The disk drive interface is still an option but may be considered part of the st
 
 For detailed information about the cartridge specifications, see the appendix.
 
+
+<p>&nbsp;</p>
 
 ### 2.2 Software Overview
 
