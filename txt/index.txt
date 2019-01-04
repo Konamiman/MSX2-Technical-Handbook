@@ -36,7 +36,7 @@ TH-4A    TXT   131604 bytes   Chapter 4  - VDP and Display Screen (1-5)
 TH-4B    TXT    92922 bytes   Chapter 5  - VDP and Display Screen (6)
 TH-5A    TXT    97157 bytes   Chapter 5  - Access to Peripherals Through BIOS
                                            (1-6)
-TH-5B    TXT    46762 bytes   Chapter 6  - Access to Peripherals Through BIOS
+TH-5B    TXT    46762 bytes   Chapter 5  - Access to Peripherals Through BIOS
                                            (7)
 TH-AP    TXT   106609 bytes   Appendix 1 - BIOS listing
                               Appendix 2 - MATH-PACK
