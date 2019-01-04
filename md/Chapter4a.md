@@ -120,6 +120,8 @@ Chapter 4 describes how to use this video display processor. It describes functi
 
 [5.3.3 Judging sprite conflicts](#533-judging-sprite-conflicts)
 
+[Changes from the original](#changes-from-the-original)
+
 
 <p>&nbsp;</p>
 

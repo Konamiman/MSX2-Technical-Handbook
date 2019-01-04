@@ -1,75 +1,67 @@
-MSX2 TECHNICAL HANDBOOK
------------------------
+# CHAPTER 4 - VDP AND DISPLAY SCREEN (Section 6)
 
-Edited by:              ASCII Systems Division
-Published by:           ASCII Coprporation - JAPAN
-First edition:          March 1987
+## Index
 
-Text file typed by:     Nestor Soriano (Konami Man) - SPAIN
-                        March 1997
+[6. VDP COMMAND USAGE](#6-vdp-command-usage)
 
-Changes from the original:
+[6.1 Coordinate System of VDP Commands](#61-coordinate-system-of-vdp-commands)
 
-- In Figure 4.72, last "10000H" is corrected to "1FFFFH".
+[6.2 VDP Commands](#62-vdp-commands)
 
-- In Table 4.6, in TEOR line, "else DC+..." is corrected to "else DC=..."
+[6.3 Logical Operations](#63-logical-operations)
 
-- In Figure 4.76, in R#45 figure, DIX and DIY bits have been placed 
-correctly (they were inverted in the original).
+[6.4 Area Specification](#64-area-specification)
 
-- In Figure 4.79, in R#42 and R#43 explanation, "NY -> of dots..." has been 
-changed to "NY -> number of dots..."
+[6.5 Use of Each Command](#65-use-of-each-command)
 
-- In List 4.9, in the line with the comment "YMMM command", 11010000 bitfield 
-has been corrected to 11100000.
+[6.5.1 HMMC (CPU -> VRAM high-speed transfer)](#651-hmmc-cpu---vram-high-speed-transfer)
 
-- In Figure 4.84, "*" mark removed from the explanation of NX.
+[6.5.2 YMMM (high-speed transfer between VRAM in Y direction)](#652-ymmm-high-speed-transfer-between-vram-in-y-direction)
 
-- In Figure 4.85, in R#45 explanation,  "select source memory" text has been 
-corrected to "select destination memory".
+[6.5.3  HMMM (high-speed transfer between VRAM)](#653--hmmm-high-speed-transfer-between-vram)
 
-- In List 4.13, labels beginning with "LMMC" have been corrected to "LMCM".
+[6.5.4 HMMV (painting the rectangle in high speed)](#654-hmmv-painting-the-rectangle-in-high-speed)
 
-- In List 4.15, in the line with the comment "NY", the "OUT (C),H" 
-instruction has been corrected to "OUT (C),L".
+[6.5.5 LMMC (CPU -> VRAM logical transfer)](#655-lmmc-cpu---vram-logical-transfer)
 
-- In section 6.5.9, the explanation of usage of the LINE command was mixed 
-wih other text. It has been corrected.
+[6.5.6 LMCM (VRAM - CPU logical transfer)](#656-lmcm-vram---cpu-logical-transfer)
 
-- In Figure 4.94, a line explaining the meaning of R#44 has been added.
+[6.5.7. LMMM (VRAM->VRAM logical transfer)](#657-lmmm-vram-vram-logical-transfer)
 
-- In Figure 4.97, BX9 bit has been supressed in S#9 figure.
+[6.5.8 LMMV (VRAM logical paint)](#658-lmmv-vram-logical-paint)
 
-- In Figure 4.99, a line explaining the meaning of R#44 has been added.
+[6.5.9 LINE (drawing a line)](#659-line-drawing-a-line)
 
-- In Table 4.7, "CLR L" has been corrected to "CMR L".
+[6.5.10 SRCH (colour code search)](#6510-srch-colour-code-search)
 
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+[6.5.11 PSET (drawing a point)](#6511-pset-drawing-a-point)
+
+[6.5.12 POINT (reading a colour code)](#6512-point-reading-a-colour-code)
+
+[6.6 Speeding Up Commands](#66-speeding-up-commands)
+
+[6.7 Register Status at Command Termination](#67-register-status-at-command-termination)
+
+[Changes from the original](#changes-from-the-original)
 
 
-CHAPTER 4 - VDP AND DISPLAY SCREEN (Part 6)
+<p>&nbsp;</p>
+
+## 6. VDP COMMAND USAGE
+
+MSX-VIDEO can execute basic graphic operations, which are called VDP commands. These are done by accessing special harware and are available in the GRAPHIC 4 to GRAPHIC 7 modes. These graphic commands have been made easy to implement, requiring only that the necessary parameters be set in the proper registers before invoking them. This section describes these VDP commands.
 
 
-6. VDP COMMAND USAGE
+<p>&nbsp;</p>
 
-MSX-VIDEO can execute basic graphic operations, which are called VDP 
-commands. These are done by accessing special harware and are available in 
-the GRAPHIC 4 to GRAPHIC 7 modes. These graphic commands have been made easy 
-to implement, requiring only that the necessary parameters be set in the 
-proper registers before invoking them. This section describes these VDP 
-commands.
+### 6.1 Coordinate System of VDP Commands
+
+When VDP commands are executed, the location of the source and destination points are represented as (X, Y) coordinates as shown in [Figure 4.72](#figure-472--coordinate-system-of-vram). When commands are executed, there is no page division and the entire 128K bytes VRAM is placed in a large coordinate system.
 
 
-6.1 Coordinate System of VDP Commands
+##### _Figure 4.72  Coordinate system of VRAM_
 
-When VDP commands are executed, the location of the source and destination 
-points are represented as (X, Y) coordinates as shown in Figure 4.72. When 
-commands are executed, there is no page division and the entire 128K bytes 
-VRAM is placed in a large coordinate system.
-
-
-   Figure 4.72  Coordinate system of VRAM
-
+```
     GRAPHIC 4  (SCREEN 5)                       GRAPHIC 5  (SCREEN 6)
 ------------------------------    00000H    ------------------------------
 | (0,0)              (255,0) |      |       | (0,0)              (511,0) |
@@ -99,16 +91,18 @@ VRAM is placed in a large coordinate system.
 |           Page 1           |      |       |           Page 1           |
 | (0,511)          (255,511) |      |       | (0,511)          (511,511) |
 ------------------------------    1FFFFH    ------------------------------
+```
+
+<p>&nbsp;</p>
+
+### 6.2 VDP Commands
+
+There are 12 types of VDP commands which can be executed by MSX-VIDEO. These are shown in [Table 4.5](#table-45--list-of-vdp-commands).
 
 
-6.2 VDP Commands
+##### _Table 4.5  List of VDP commands_
 
-There are 12 types of VDP commands which can be executed by MSX-VIDEO. These 
-are shown in Table 4.5.
-
-
-   Table 4.5  List of VDP commands
-
+```
 ----------------------------------------------------------------------------
 | Command name | Destination | Source | Units | Mnemonic | R#46 (4 hi ord) |
 |--------------+-------------+--------+-------+----------+-----------------|
@@ -136,38 +130,31 @@ are shown in Table 4.5.
 |--------------+-------------+--------+-------+----------+-----------------|
 | Stop         |    ----     |  ----  | ----- |   ----   |  0   0   0   0  |
 ----------------------------------------------------------------------------
+```
 
-* When data is written in R#46 (Command register), MSX-VIDEO begins to 
-execute the command after setting 1 to bit 0 (CE/Command Execute) of the 
-status register S#2. Necessary parameters should be set in register R#32 to 
-R#45 before the command is executed.
+* When data is written in R#46 (Command register), MSX-VIDEO begins to execute the command after setting 1 to bit 0 (CE/Command Execute) of the status register S#2. Necessary parameters should be set in register R#32 to R#45 before the command is executed.
 
 * When the execution of the command ends, CE becomes 0.
 
 * To stop the execution of the command, execute STOP command.
 
-* Actions of the commands are guaranteed only in the bitmap modes (GRAPHIC 4 
-to GRAPHIC 7).
+* Actions of the commands are guaranteed only in the bitmap modes (GRAPHIC 4 to GRAPHIC 7).
 
 
-6.3 Logical Operations
+<p>&nbsp;</p>
 
-When commands are executed, various logical operations can be done between 
-data in VRAM and the specified data. Each operation will be done according to 
-the rules listed in Table 4.6.
+### 6.3 Logical Operations
 
-In the table, SC represents the source color and DC represents the 
-destination colour. IMP, AND, OR, EOR and NOT write the result of each 
-operation to the destination. In operations whose names are preceded by "T", 
-dots which correspond with SC=0 are not the objects of the operations and 
-remains as DC. Using these operations enables only colour portions of two 
-figures to be overlapped, so they are especially effective for animations.
+When commands are executed, various logical operations can be done between data in VRAM and the specified data. Each operation will be done according to the rules listed in [Table 4.6](#table-46--list-of-logical-operations).
 
-List 4.7 shows an example of these operations.
+In the table, SC represents the source color and DC represents the destination colour. IMP, AND, OR, EOR and NOT write the result of each operation to the destination. In operations whose names are preceded by "T", dots which correspond with SC=0 are not the objects of the operations and remains as DC. Using these operations enables only colour portions of two figures to be overlapped, so they are especially effective for animations.
+
+[List 4.7](#list-47--example-of-the-logical-operation-with-t) shows an example of these operations.
 
 
-   Table 4.6  List of logical operations
+##### _Table 4.6  List of logical operations_
 
+```
 -------------------------------------------------------------------------
 | Logical name |                                        |L03 L02 L01 L00|
 |--------------+----------------------------------------+---------------|
@@ -207,15 +194,16 @@ List 4.7 shows an example of these operations.
 |     ----     |                                        | 1   1   1   1 |
 |              |                                        |               |
 -------------------------------------------------------------------------
+```
 
 * SC  = Source colour code
 * DC  = Destination colour code
 * EOR = Exclusive OR
 
 
-List 4.7  Example of the logical operation with T
-=========================================================================
+##### _List 4.7  Example of the logical operation with T_
 
+```
 1000 '***********************************************************
 1010 '  List 4.7   logical operation with T
 1020 '***********************************************************
@@ -235,24 +223,19 @@ List 4.7  Example of the logical operation with T
 1160 NEXT
 1170 '
 1180 GOTO 1180
-
-=========================================================================
-
-
-6.4 Area Specification
-
-AREA-MOVE commands are for transferring screen data inside areas surrounded 
-by a rectangle. The area to be transferred is specified by one vertex and the 
-length of each side of the rectangle as shown in Figure 4.73. SX and SY 
-represent the basic point of the rectangle to be transferred and NX and NY 
-represent the lengt of each side in dots. The two bits, DIX and DIY, are for 
-the direction of transferring data (the meaning of DIX and DIY depends on the 
-type of command). The point where the area is to be transferred is specified 
-in DX and DY.
+```
 
 
-   Figure 4.73  Area specification
+<p>&nbsp;</p>
 
+### 6.4 Area Specification
+
+AREA-MOVE commands are for transferring screen data inside areas surrounded by a rectangle. The area to be transferred is specified by one vertex and the length of each side of the rectangle as shown in [Figure 4.73](#figure-473--area-specification). SX and SY represent the basic point of the rectangle to be transferred and NX and NY represent the lengt of each side in dots. The two bits, DIX and DIY, are for the direction of transferring data (the meaning of DIX and DIY depends on the type of command). The point where the area is to be transferred is specified in DX and DY.
+
+
+##### _Figure 4.73  Area specification_
+
+```
 ----------------------------------------------------------------
 |                                                              |
 |     (SX,SY)                                                  |
@@ -273,38 +256,29 @@ in DX and DY.
 |                                  ------------------          |
 |                                                              |
 ----------------------------------------------------------------
+```
+
+<p>&nbsp;</p>
+
+### 6.5 Use of Each Command
+
+Commands are clasified into three types, high-speed transfer commands, logical transfer commands, and drawing commands. This section describes the commands and their use.
 
 
-6.5 Use of Each Command
+<p>&nbsp;</p>
 
-Commands are clasified into three types, high-speed transfer commands, 
-logical transfer commands, and drawing commands. This section describes the 
-commands and their use.
+#### 6.5.1 HMMC (CPU -> VRAM high-speed transfer)
 
+Data is transferred into the specified area of VRAM from the CPU (see [Figure 4.74](#figure-474--action-of-hmmc-command)). Logical operations cannot be specified. Data is transferred in bytes in high-speed transfer commands such as HMMC. Note that the low order bit of the X-coordinate is not referred to in GRAPHIC 4, or 6 modes. The two low order bits are not referred to in GRAPHIC 5 mode (see [Figure 4.75](#figure-475--dots-not-to-be-referred-to)).
 
-6.5.1 HMMC (CPU -> VRAM high-speed transfer)
+Set the parameters as shown in [Figure 4.76](#figure-476--register-settings-of-hmmc-command) to the appropriate registers. At this point, write only the first byte of data to be transferred from the CPU in R#44. Writing the command code F0H in R#46 causes the command to be executed, and UMSX-VIDEO receives data from R#44 and writes it to VRAM, then waits for data from the CPU.
 
-Data is transferred into the specified area of VRAM from the CPU (see Figure 
-4.74). Logical operations cannot be specified. Data is transferred in bytes 
-in high-speed transfer commands such as HMMC. Note that the low order bit of 
-the X-coordinate is not referred to in GRAPHIC 4, or 6 modes. The two low 
-order bits are not referred to in GRAPHIC 5 mode (see Figure 4.75).
-
-Set the parameters as shown in Figure 4.76 to the appropriate registers. At 
-this point, write only the first byte of data to be transferred from the CPU 
-in R#44. Writing the command code F0H in R#46 causes the command to be 
-executed, and UMSX-VIDEO receives data from R#44 and writes it to VRAM, then 
-waits for data from the CPU.
-
-The CPU writes data after the second byte in R#44. Note that data should be 
-transferred after MSX-VIDEO can receive data (in the case that TR bit is 
-"1"), referring to TR bit of S#2. When the CE bit of S#2 is "0", this means 
-that all data has been transferred (see figure 4.77). List 4.8 shows an 
-example of using HMMC.
+The CPU writes data after the second byte in R#44. Note that data should be transferred after MSX-VIDEO can receive data (in the case that TR bit is "1"), referring to TR bit of S#2. When the CE bit of S#2 is "0", this means that all data has been transferred (see figure 4.77). [List 4.8](#list-48--example-of-hmmc-command-execution) shows an example of using HMMC.
 
 
-   Figure 4.74  Action of HMMC command
+##### _Figure 4.74  Action of HMMC command_
 
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |   MSX-VIDEO      CPU
@@ -334,39 +308,39 @@ DY:  destination origin  Y-coordinate (0 to 1023)
 
 CLR (R#44:Colour register):  1st byte of data to be transferred
 
-* The one low-order bit for GRAPHIC 4 and 6 modes, or two low-order bits for 
-GRAPHIC 5 mode of the DX and NX registers are ignored.
+* The one low-order bit for GRAPHIC 4 and 6 modes, 
+  or two low-order bits for GRAPHIC 5 mode of the DX and NX registers are ignored.
+```
 
 
-   Figure 4.75  Dots not to be referred to
+##### _Figure 4.75  Dots not to be referred to_
 
+```
        MSB   7    6    5    4    3    2    1    0    LSB
            -----------------------------------------
 GRAPHIC 4  |    :    :    :    |    :    :    :    |
            -----------------------------------------
                     (1)                 (2)
-Since 1 VRAM byte represents 2 dots, 1 low order bit of X-coordinate is not 
-referred to.
+Since 1 VRAM byte represents 2 dots, 1 low order bit of X-coordinate is not referred to.
 
        MSB   7    6    5    4    3    2    1    0    LSB
            -----------------------------------------
 GRAPHIC 5  |    :    |    :    |    :    |    :    |
            -----------------------------------------
                (1)       (2)       (3)       (4)
-Since 1 VRAM byte represents 4 dots, 2 low order bits of X-coordinate are not 
-referred to.
+Since 1 VRAM byte represents 4 dots, 2 low order bits of X-coordinate are not referred to.
 
        MSB   7    6    5    4    3    2    1    0    LSB
            -----------------------------------------
 GRAPHIC 6  |    :    :    :    |    :    :    :    |
            -----------------------------------------
                     (1)                 (2)
-Since 1 VRAM byte represents 2 dots, 1 low order bit of X-coordinate is not 
-referred to.
+Since 1 VRAM byte represents 2 dots, 1 low order bit of X-coordinate is not referred to.
+```
 
+##### _Figure 4.76  Register settings of HMMC command_
 
-   Figure 4.76  Register settings of HMMC command
-
+```
 > HMMC register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -383,34 +357,34 @@ R#39    | 0  | 0  | 0  | 0  | 0  | 0  | DY9| DY8|
         -----------------------------------------
 
         -----------------------------------------
-R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|         Number of dots in
-        ----------------------------------------- NX ---> X direction to be
-R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|         transferred
+R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|
+        ----------------------------------------- NX ⟶ Number of dots in X direction to be transferred
+R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|
         -----------------------------------------
 
         -----------------------------------------
-R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|         Number of dots in
-        ----------------------------------------- NY ---> Y direction to be
-R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|         transferred
+R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|
+        ----------------------------------------- NY ⟶ Number of dots in Y direction to be transferred
+R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|
         -----------------------------------------
 
-        -----------------------------------------                     --+d
-R#44    | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |a
-        -----------------------------------------                       |t
-        |                   |                   |                       |a
-        +-------------------+-------------------+                       |
-                X=2N               X=2N+1         (N=0, 1, ..., 127)    |t
-                                                                        |o
+        -----------------------------------------                     --+
+R#44    | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |
         -----------------------------------------                       |
-        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 5)       |b
-        -----------------------------------------                       |e
+        |                   |                   |                       |
+        +-------------------+-------------------+                       |
+                X=2N               X=2N+1         (N=0, 1, ..., 127)    |
+                                                                        |
+        -----------------------------------------                       |
+        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 5)       | data to be transferred
+        -----------------------------------------                       |
         |         |         |         |         |                       |
-        +---------+---------+---------+---------+                       |t
-           X=4N     X=4N+1    X=4N+2    X=4N+3    (N=0, 1, ..., 127)    |r
-                                                                        |a
-        -----------------------------------------                       |n
-        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |s
-        -----------------------------------------                     --+f.
+        +---------+---------+---------+---------+                       |
+           X=4N     X=4N+1    X=4N+2    X=4N+3    (N=0, 1, ..., 127)    |
+                                                                        |
+        -----------------------------------------                       |
+        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |
+        -----------------------------------------                     --+
                       1 byte per dot
 
         -----------------------------------------
@@ -428,10 +402,11 @@ R#45    |  0 | -- | MXD| -- | DIY| DIX| -- | -- | ARG (Argument register)
         -----------------------------------------
 R#46    | 1  | 1  | 1  | 1  | -- | -- | -- | -- | CMR
         -----------------------------------------
+```
 
+##### _Figure 4.77  HMMC command execution flow chart_
 
-   Figure 4.77  HMMC command execution flow chart
-
+```
         /-------------------\
         |     HMMC start    |
         \-------------------/
@@ -470,15 +445,15 @@ R#46    | 1  | 1  | 1  | 1  | -- | -- | -- | -- | CMR
         /--------------------\
         |      HMMC end      |
         \--------------------/
+```
 
+##### _List 4.8  Example of HMMC command execution_
 
-List 4.8  Example of HMMC command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.8   HMMC sample
 ;               to use, set H, L, D, E, IX and go
-;               RAM (IX) ---> VRAM (H,L)-(D,E)
+;               RAM (IX) ⟶ VRAM (H,L)-(D,E)
 ;****************************************************************
 ;
 RDVDP:  EQU     0006H
@@ -583,25 +558,20 @@ WAIT.VDP:                               ;wait VDP ready
         RET
 
         END
+```
 
-=========================================================================
+<p>&nbsp;</p>
 
+#### 6.5.2 YMMM (high-speed transfer between VRAM in Y direction)
 
-6.5.2 YMMM (high-speed transfer between VRAM in Y direction)
+Data from a specified VRAM area is transferred into another area in VRAM. Note that transfers using this command can only be done in the Y direction (see [Figure 4.78](#figure-478--actions-of-ymmm-command)).
 
-Data from a specified VRAM area is transferred into another area in VRAM. 
-Note that transfers using this command can only be done in the Y direction 
-(see Figure 4.78).
-
-After setting the data as shown in Figure 4.79 in the proper registers, 
-writing command code E0H in R#46 causes the command to be executed. When the 
-CE bit of S#2 is "1", it indicates that the command is currently being 
-executed. List 4.9 shows an example of using YMMM.
+After setting the data as shown in [Figure 4.79](#figure-479--register-settings-of-ymmm-command) in the proper registers, writing command code E0H in R#46 causes the command to be executed. When the CE bit of S#2 is "1", it indicates that the command is currently being executed. [List 4.9](#list-49--example-of-ymmm-command-execution) shows an example of using YMMM.
 
 
-   Figure 4.78  Actions of YMMM command
+##### _Figure 4.78  Actions of YMMM command_
 
-
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |
@@ -615,7 +585,7 @@ executed. List 4.9 shows an example of using YMMM.
 |                                    |            |
 |                                    |            |
 |                (DX,SY)                          |
-|                        x------------------------| --> DIX
+|                        x------------------------| ⟶ DIX
 |                        |                        |
 |                        | NY                     |
 |                        |                        |
@@ -637,37 +607,38 @@ DIY: direction of NY from the origin    0 = below, 1 = above
 DX:  destination origin  X-coordinate (0 to 511)*
 DY:  destination origin  Y-coordinate (0 to 1023)
 
-* The one low-order bit for GRAPHIC 4 and 6 modes, or two low-order bits for 
-GRAPHIC 5 mode of the DX register are ignored.
+* The one low-order bit for GRAPHIC 4 and 6 modes, 
+  or two low-order bits for GRAPHIC 5 mode of the DX register are ignored.
+```
 
+##### _Figure 4.79  Register settings of YMMM command_
 
-   Figure 4.79  Register settings of YMMM command
-
+```
 > YMMM register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
         -----------------------------------------
 R#34    | SY7| SY6| SY5| SY4| SY3| SY2| SY1| SY0|
-        ----------------------------------------- SY --> source origin
+        ----------------------------------------- SY ⟶ source origin
 R#35    | 0  | 0  | 0  | 0  | 0  | 0  | SY9| SY8|
         -----------------------------------------
 
         -----------------------------------------
 R#36    | DX7| DX6| DX5| DX4| DX3| DX2| DX1| DX0|
-        ----------------------------------------- DX --> destination and
-R#37    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | DX8|        source origin
+        ----------------------------------------- DX ⟶ destination and source origin
+R#37    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | DX8|
         -----------------------------------------
 
         -----------------------------------------
 R#38    | DY7| DY6| DY5| DY4| DY3| DY2| DY1| DY0|
-        ----------------------------------------- DY --> destination origin
+        ----------------------------------------- DY ⟶ destination origin
 R#39    | 0  | 0  | 0  | 0  | 0  | 0  | DY9| DY8|
         -----------------------------------------
 
         -----------------------------------------
-R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|         number of dots to
-        ----------------------------------------- NY ---> be transferred in
-R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|         Y direction
+R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|
+        ----------------------------------------- NY ⟶ number of dots to be transferred in Y direction
+R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|
         -----------------------------------------
 
         -----------------------------------------
@@ -685,15 +656,15 @@ R#45    |  0 | -- | MXD| -- | DIY| DIX| -- | -- | ARG (Argument register)
         -----------------------------------------
 R#46    | 1  | 1  | 1  | 0  | -- | -- | -- | -- | CMR
         -----------------------------------------
+```
 
+##### _List 4.9  Example of YMMM command execution_
 
-List 4.9  Example of YMMM command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.9   YMMM sample
 ;               to use, set L, E, B, C, D(bit 2) and go
-;               VRAM (B,L)-(*,E) ---> VRAM (B,C)
+;               VRAM (B,L)-(*,E) ⟶ VRAM (B,C)
 ;               DIX must be set in D(bit 2)
 ;****************************************************************
 ;
@@ -774,22 +745,20 @@ WAIT.VDP:
         RET
 
         END
+```
 
-=========================================================================
+<p>&nbsp;</p>
 
+#### 6.5.3  HMMM (high-speed transfer between VRAM)
 
-6.5.3  HMMM (high-speed transfer between VRAM)
+Data of specified VRAM area is transferred into another area in VRAM (see [Figure 4.80](#figure-480--actions-of-hmmm-command)).
 
-Data of specified VRAM area is transferred into another area in VRAM (see 
-Figure 4.80).
-
-After setting the parameters as shown in Figure 4.81, writing D0H in R#46 
-causes the command to be executed. While the command is being executed, CE 
-bit of S#2 is "1". List 4.10 shows an example of using HMMM.
+After setting the parameters as shown in [Figure 4.81](#figure-481--register-settings-of-hmmm-command), writing D0H in R#46 causes the command to be executed. While the command is being executed, CE bit of S#2 is "1". [List 4.10](#list-410--example-of-hmmm-command-execution) shows an example of using HMMM.
 
 
-   Figure 4.80  Actions of HMMM command
+##### _Figure 4.80  Actions of HMMM command_
 
+```
                     VRAM or expansion RAM
 ----------------------------------------------------------------
 |                                                              |
@@ -827,12 +796,13 @@ DIY: direction of NY from the origin    0 = below, 1 = above
 DX:  destination origin  X-coordinate (0 to 511)*
 DY:  destination origin  Y-coordinate (0 to 1023)
 
-* The one low-order bit for GRAPHIC 4 and 6 modes, or two low-order bits for 
-GRAPHIC 5 mode of the SX, DX, and NX register are ignored.
+* The one low-order bit for GRAPHIC 4 and 6 modes,
+ or two low-order bits for GRAPHIC 5 mode of the SX, DX, and NX register are ignored.
+```
 
+##### _Figure 4.81  Register settings of HMMM command_
 
-   Figure 4.81  Register settings of HMMM command
-
+```
 > HMMM register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -861,15 +831,15 @@ R#39    | 0  | 0  | 0  | 0  | 0  | 0  | DY9| DY8|
         -----------------------------------------
 
         -----------------------------------------
-R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|         Number of dots in
-        |----+----+----+----+----+----+----+----| NX ---> X direction to be
-R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|         transferred
+R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|
+        |----+----+----+----+----+----+----+----| NX ⟶ Number of dots in X direction to be transferred
+R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|
         -----------------------------------------
 
         -----------------------------------------
-R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|         Number of dots in
-        |----+----+----+----+----+----+----+----| NY ---> Y direction to be
-R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|         transferred
+R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|
+        |----+----+----+----+----+----+----+----| NY ⟶ Number of dots in Y direction to be transferred
+R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|
         -----------------------------------------
 
         -----------------------------------------
@@ -889,15 +859,15 @@ R#45    |  0 | -- | MXD| MXS| DIY| DIX| -- | -- | ARG (Argument register)
         -----------------------------------------
 R#46    | 1  | 1  | 0  | 1  | -- | -- | -- | -- | CMR
         -----------------------------------------
+```
 
+##### _List 4.10  Example of HMMM command execution_
 
-List 4.10  Example of HMMM command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.10   HMMM sample
 ;                to use, set H, L, D, E, B, C and go
-;                VRAM (H,L)-(D,E) ---> VRAM (B,C)
+;                VRAM (H,L)-(D,E) ⟶ VRAM (B,C)
 ;                DIX must be set in D(bit 2)
 ;****************************************************************
 ;
@@ -988,23 +958,20 @@ WAIT.VDP:
         RET
 
         END
+```
 
-=========================================================================
+<p>&nbsp;</p>
 
+#### 6.5.4 HMMV (painting the rectangle in high speed)
 
-6.5.4 HMMV (painting the rectangle in high speed)
+Each byte of data in the specified VRAM area is painted by the specified colour code (see [Figure 4.82](#figure-482--actions-of-hmmc-command))
 
-Each byte of data in the specified VRAM area is painted by the specified 
-colour code (see Figure 4.82)
-
-After setting the parameters as shown in Figure 4.83, writing C0H in R#46 
-causes the command to be executed. While the command is being executed, the 
-CE bit of S#2 is 1. List 4.11 shows an example of using HMMV.
+After setting the parameters as shown in [Figure 4.83](#figure-483--register-settings-of-hmmv-command), writing C0H in R#46 causes the command to be executed. While the command is being executed, the CE bit of S#2 is 1. [List 4.11](#list-411--example-of-hmmv-command-execution) shows an example of using HMMV.
 
 
-   Figure 4.82  Actions of HMMC command
+##### _Figure 4.82  Actions of HMMC command_
 
-
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |   MSX-VIDEO
@@ -1034,12 +1001,13 @@ DY:  origin  Y-coordinate (0 to 1023)
 
 CLR (R#44:Colour register):  Painted data
 
-* The one low-order bit for GRAPHIC 4 and 6 modes, or two low-order bits for 
-GRAPHIC 5 mode of the DX and NX registers are ignored.
+* The one low-order bit for GRAPHIC 4 and 6 modes,
+  or two low-order bits for GRAPHIC 5 mode of the DX and NX registers are ignored.
+```
 
+##### _Figure 4.83  Register settings of HMMV command_
 
-   Figure 4.83  Register settings of HMMV command
-
+```
 > HMMV register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -1056,35 +1024,35 @@ R#39    | 0  | 0  | 0  | 0  | 0  | 0  | DY9| DY8|
         -----------------------------------------
 
         -----------------------------------------
-R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|         number of dots in
-        |----+----+----+----+----+----+----+----| NX ---> X direction to
-R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|         be painted
+R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|
+        |----+----+----+----+----+----+----+----| NX ⟶ number of dots in X direction to be painted
+R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|
         -----------------------------------------
 
         -----------------------------------------
-R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|         number of dots in
-        |----+----+----+----+----+----+----+----| NY ---> Y direction to
-R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|         be painted
+R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|
+        |----+----+----+----+----+----+----+----| NY ⟶ number of dots inY direction to be painted
+R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|
         -----------------------------------------
 
-        -----------------------------------------                     --+d
-R#44    | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |a
-        -----------------------------------------                       |t
-        |                   |                   |                       |a
-        +-------------------+-------------------+                       |
-                X=2N               X=2N+1         (N=0, 1, ..., 127)    |t
-                                                                        |o
+        -----------------------------------------                     --+
+R#44    | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |
         -----------------------------------------                       |
-        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 5)       |b
-        -----------------------------------------                       |e
+        |                   |                   |                       |
+        +-------------------+-------------------+                       |
+                X=2N               X=2N+1         (N=0, 1, ..., 127)    |
+                                                                        |
+        -----------------------------------------                       |
+        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 5)       | data to be painted
+        -----------------------------------------                       |
         |         |         |         |         |                       |
-        +---------+---------+---------+---------+                       |p
-           X=4N     X=4N+1    X=4N+2    X=4N+3    (N=0, 1, ..., 127)    |a
-                                                                        |i
-        -----------------------------------------                       |n
-        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |t
-        -----------------------------------------                     --+e
-                      1 byte / dot                                       d
+        +---------+---------+---------+---------+                       |
+           X=4N     X=4N+1    X=4N+2    X=4N+3    (N=0, 1, ..., 127)    |
+                                                                        |
+        -----------------------------------------                       |
+        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |
+        -----------------------------------------                     --+
+                      1 byte / dot                                       
 
         -----------------------------------------
 R#45    |  0 | -- | MXD| -- | DIY| DIX| -- | -- | ARG (Argument register)
@@ -1101,15 +1069,15 @@ R#45    |  0 | -- | MXD| -- | DIY| DIX| -- | -- | ARG (Argument register)
         -----------------------------------------
 R#46    | 1  | 1  | 0  | 0  | -- | -- | -- | -- | CMR
         -----------------------------------------
+```
 
+##### _List 4.11  Example of HMMV command execution_
 
-List 4.11  Example of HMMV command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.11   HMMV sample
 ;                to use, set H, L, D, E, B and go
-;                B ---> VRAM (H,L)-(D,E) fill
+;                B ⟶ VRAM (H,L)-(D,E) fill
 ;****************************************************************
 ;
 RDVDP:  EQU     0006H
@@ -1192,26 +1160,21 @@ WAIT.VDP:
         RET
 
         END
-
-=========================================================================
-
-
-6.5.5 LMMC (CPU -> VRAM logical transfer)
-
-Data is transferred from the CPU to thespecified VRAM area in dots (see 
-Figure 4.84). Logical operations with the source can be specified. In the 
-logical transfer commands, such as LMMC, data is transfered in dots and one 
-byte is required for the information of one pixel in all screen modes.
-
-After setting the data as shown in Figure 4.85, write command code B0H in 
-R#46. At this point, logical operations can be specified by using the 4 low 
-order bits of the command register. Data is transferred with reference to the 
-TR and CE bit of S#2, as in HMMC (see Figure 4.86). List 4.12 shows an 
-example of using LMMC.
+```
 
 
-   Figure 4.84  Action of LMMC command
+<p>&nbsp;</p>
 
+#### 6.5.5 LMMC (CPU -> VRAM logical transfer)
+
+Data is transferred from the CPU to thespecified VRAM area in dots (see [Figure 4.84](#figure-484--action-of-lmmc-command)). Logical operations with the source can be specified. In the logical transfer commands, such as LMMC, data is transfered in dots and one byte is required for the information of one pixel in all screen modes.
+
+After setting the data as shown in [Figure 4.85](#figure-485--register-settings-of-lmmc-command), write command code B0H in R#46. At this point, logical operations can be specified by using the 4 low order bits of the command register. Data is transferred with reference to the TR and CE bit of S#2, as in HMMC (see [Figure 4.86](#figure-486--lmmc-command-execution-flow-chart)). [List 4.12](#list-412--example-of-lmmc-command-execution) shows an example of using LMMC.
+
+
+##### _Figure 4.84  Action of LMMC command_
+
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |   MSX-VIDEO      CPU
@@ -1240,10 +1203,11 @@ DX:  destination origin  X-coordinate (0 to 511)
 DY:  destination origin  Y-coordinate (0 to 1023)
 
 CLR (R#44:Colour register):  1st byte of data to be transferred
+```
 
+##### _Figure 4.85  Register settings of LMMC command_
 
-   Figure 4.85  Register settings of LMMC command
-
+```
 > LMMC register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -1260,24 +1224,24 @@ R#39    | 0  | 0  | 0  | 0  | 0  | 0  | DY9| DY8|
         -----------------------------------------
 
         -----------------------------------------
-R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|         Number of dots in
-        |----+----+----+----+----+----+----+----| NX ---> X direction to be
-R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|         transferred
+R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|
+        |----+----+----+----+----+----+----+----| NX ⟶ Number of dots in X direction to be transferred
+R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|
         -----------------------------------------
 
         -----------------------------------------
-R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|         Number of dots in
-        |----+----+----+----+----+----+----+----| NY ---> Y direction to be
-R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|         transferred
+R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|
+        |----+----+----+----+----+----+----+----| NY ⟶ Number of dots in Y direction to be transferred
+R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|
         -----------------------------------------
 
         -----------------------------------------                  --+
 R#44    | -- | -- | -- | -- | CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)  |
         -----------------------------------------                    |
-                                                                     | data
-        -----------------------------------------                    | to be
-        | -- | -- | -- | -- | -- | -- | CR1| CR0| CLR (GRAPHIC 5)    | trans-
-        -----------------------------------------                    | ferred
+                                                                     |
+        -----------------------------------------                    |
+        | -- | -- | -- | -- | -- | -- | CR1| CR0| CLR (GRAPHIC 5)    | data to be transferred
+        -----------------------------------------                    |
                                                                      |
         -----------------------------------------                    |
         | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)    |
@@ -1301,10 +1265,11 @@ R#46    | 1  | 0  | 1  | 1  | L03| L02| L01| L00| CMR
                             |                   |
                             +-------------------+
                               Logical operation
+```
 
+##### _Figure 4.86  LMMC command execution flow chart_
 
-   Figure 4.86  LMMC command execution flow chart
-
+```
         /-------------------\
         |     LMMC start    |
         \-------------------/
@@ -1343,15 +1308,15 @@ R#46    | 1  | 0  | 1  | 1  | L03| L02| L01| L00| CMR
         /--------------------\
         |      LMMC end      |
         \--------------------/
+```
 
+##### _List 4.12  Example of LMMC command execution_
 
-List 4.12  Example of LMMC command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.12    LMMC sample
 ;                 to use, set H, L, D, E, IX, A and go
-;                 RAM (IX) ---> VRAM (H,L)-(D,E) (logi-OP : A)
+;                 RAM (IX) ⟶ VRAM (H,L)-(D,E) (logi-OP : A)
 ;****************************************************************
 ;
 RDVDP:  EQU     0006H
@@ -1453,25 +1418,21 @@ WAIT.VDP:
         RET
 
         END
-
-=========================================================================
-
-
-6.5.6 LMCM (VRAM - CPU logical transfer)
-
-Data is transferred from the specified VRAM area to CPU in dots (see Figure 
-4.87)
-
-After setting the parameters as shown in Figure 4.88, writing command code 
-A0H in R#46 causes the command to be executed and data to be transferred from 
-MSX-VIDEO. The CPU refers to the TR bit of S#2 and, since data of MSX-VIDEO 
-has been prepared if this bit is "1", the CPU reads data from S#7. When CE 
-bit of S#2 is "0", data comes to the end (see Figure 4.89). List 4.13 shows 
-an example of using LMCM.
+```
 
 
-   Figure 4.87  Action of LMCM command
+<p>&nbsp;</p>
 
+#### 6.5.6 LMCM (VRAM - CPU logical transfer)
+
+Data is transferred from the specified VRAM area to CPU in dots (see [Figure 4.87](#figure-487--action-of-lmcm-command))
+
+After setting the parameters as shown in [Figure 4.88](#figure-488--register-settings-of-lmcm-command), writing command code A0H in R#46 causes the command to be executed and data to be transferred from MSX-VIDEO. The CPU refers to the TR bit of S#2 and, since data of MSX-VIDEO has been prepared if this bit is "1", the CPU reads data from S#7. When CE bit of S#2 is "0", data comes to the end (see [Figure 4.89](#figure-489--lmcm-command-execution-flow-chart)). [List 4.13](#list-413--example-of-lmcm-command-execution) shows an example of using LMCM.
+
+
+##### _Figure 4.87  Action of LMCM command_
+
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |   MSX-VIDEO      CPU
@@ -1498,10 +1459,11 @@ NY:  number of dots to be transferred in Y direction (0 to 1023)
 
 DIX: direction of NX from the origin    0 = right, 1 = left
 DIY: direction of NY from the origin    0 = below, 1 = above
+```
 
+##### _Figure 4.88  Register settings of LMCM command_
 
-   Figure 4.88  Register settings of LMCM command
-
+```
 > LMCM register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -1518,15 +1480,15 @@ R#35    | 0  | 0  | 0  | 0  | 0  | 0  | SY9| SY8|
         -----------------------------------------
 
         -----------------------------------------
-R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|         Number of dots in
-        |----+----+----+----+----+----+----+----| NX ---> X direction to be
-R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|         transferred
+R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|
+        |----+----+----+----+----+----+----+----| NX ⟶ Number of dots in X direction to be transferred
+R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|
         -----------------------------------------
 
         -----------------------------------------
-R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|         Number of dots in
-        |----+----+----+----+----+----+----+----| NY ---> Y direction to be
-R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|         transferred
+R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|
+        |----+----+----+----+----+----+----+----| NY ⟶ Number of dots in Y direction to be transferred
+R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|
         -----------------------------------------
 
         -----------------------------------------
@@ -1556,10 +1518,11 @@ S#7     | 0  | 0  | 0  | 0  | 0  | 0  | C1 | C0 | status register (GRAPHIC 5)
         -----------------------------------------
 S#7     | C7 | C6 | C5 | C4 | C3 | C2 | C1 | C0 | status register (GRAPHIC 7)
         -----------------------------------------
+```
 
+##### _Figure 4.89  LMCM command execution flow chart_
 
-   Figure 4.89  LMCM command execution flow chart
-
+```
         /-------------------\
         |     LMCM start    |
         \-------------------/
@@ -1598,21 +1561,20 @@ S#7     | C7 | C6 | C5 | C4 | C3 | C2 | C1 | C0 | status register (GRAPHIC 7)
         /--------------------\
         |      LMCM end      |
         \--------------------/
+```
 
-* Note 1: Read status register #7 in "register setup", since TR bit should be 
-reset before the command execution.
+**Note 1:** Read status register #7 in "register setup", since TR bit should be reset before the command execution.
 
-* Note 2: Though last data was set in register #7 and TR bit was 1, the 
-command would end inside of the MSX-VIDEO and CE would be zero.
+**Note 2:** Though last data was set in register #7 and TR bit was 1, the command would end inside of the MSX-VIDEO and CE would be zero.
 
 
-List 4.13  Example of LMCM command execution
-=========================================================================
+##### _List 4.13  Example of LMCM command execution_
 
+```
 ;****************************************************************
-;  List 4.13    LMCM sample
+;  List 4.13   LMCM sample
 ;                 to use, set H, L, D, E, IX, A and go
-;                 VRAM (H,L)-(D,E) ---> RAM (IX)
+;                 VRAM (H,L)-(D,E) ⟶ RAM (IX)
 ;****************************************************************
 ;
 RDVDP:  EQU     0006H
@@ -1715,23 +1677,21 @@ WAIT.VDP:
         RET
 
         END
-
-=========================================================================
-
-
-6.5.7. LMMM (VRAM->VRAM logical transfer)
-
-Data of the specified VRAM area is transferred into another VRAM area in 
-dots (see figure 4.9)
-
-After setting the parameters as shown in Figure 4.91, writing command code 
-9XH (X means a logical operation) in R#46 causes the command to be executed. 
-While the CE bit of S#2 is "1", the command is being executed. List 4.14 
-shows an example of using LMMM.
+```
 
 
-   Figure 4.90  Actions of LMMM command
+<p>&nbsp;</p>
 
+#### 6.5.7. LMMM (VRAM->VRAM logical transfer)
+
+Data of the specified VRAM area is transferred into another VRAM area in dots (see figure 4.9)
+
+After setting the parameters as shown in [Figure 4.91](#figure-491--register-settings-of-lmmm-command), writing command code 9XH (X means a logical operation) in R#46 causes the command to be executed. While the CE bit of S#2 is "1", the command is being executed. [List 4.14](#list-414--example-of-lmmm-command-execution) shows an example of using LMMM.
+
+
+##### _Figure 4.90  Actions of LMMM command_
+
+```
                     VRAM or expansion RAM
 ----------------------------------------------------------------
 |                                                              |
@@ -1768,10 +1728,11 @@ DIY: direction of NY from the origin    0 = below, 1 = above
 
 DX:  destination origin  X-coordinate (0 to 511)
 DY:  destination origin  Y-coordinate (0 to 1023)
+```
 
+##### _Figure 4.91  Register settings of LMMM command_
 
-   Figure 4.91  Register settings of LMMM command
-
+```
 > LMMM register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -1785,6 +1746,7 @@ R#33    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | SX8|       |
 R#34    | SY7| SY6| SY5| SY4| SY3| SY2| SY1| SY0|       |
         |----+----+----+----+----+----+----+----| SY ---+
 R#35    | 0  | 0  | 0  | 0  | 0  | 0  | SY9| SY8|
+
         -----------------------------------------
 
         -----------------------------------------
@@ -1801,13 +1763,13 @@ R#39    | 0  | 0  | 0  | 0  | 0  | 0  | DY9| DY8|
 
         -----------------------------------------
 R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|         Number of dots in
-        |----+----+----+----+----+----+----+----| NX ---> X direction to be
+        |----+----+----+----+----+----+----+----| NX ⟶ X direction to be
 R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|         transferred
         -----------------------------------------
 
         -----------------------------------------
 R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|         Number of dots in
-        |----+----+----+----+----+----+----+----| NY ---> Y direction to be
+        |----+----+----+----+----+----+----+----| NY ⟶ Y direction to be
 R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|         transferred
         -----------------------------------------
 
@@ -1831,15 +1793,15 @@ R#46    | 1  | 0  | 0  | 1  | L03| L02| L01| L00| CMR
                             |                   |
                             +-------------------+
                               Logical operation
+```
 
+##### _List 4.14  Example of LMMM command execution_
 
-List 4.14  Example of LMMM command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.14   LMMM sample
 ;                to use, set H, L, D, E, B, C, A and go
-;                VRAM (H,L)-(D,E) ---> VRAM (B,C) (logi-OP : A)
+;                VRAM (H,L)-(D,E) ⟶ VRAM (B,C) (logi-OP : A)
 ;****************************************************************
 ;
 RDVDP:  EQU     0006H
@@ -1931,25 +1893,21 @@ WAIT.VDP:
         RET
 
         END
-
-=========================================================================
-
-
-6.5.8 LMMV (VRAM logical paint)
-
-The specified VRAM area is painted by the colour code in dots (see Figure 
-4.92). Logical operations between data in VRAM and the specified data are 
-allowed.
-
-After setting the parameters as shown in Figure 4.93, writing command code 
-8Xh (X means a logical operation) in R#46 causes the command to be executed. 
-While the CE bit of S#2 is "1", the command is being executed. List 4.15 
-shows an example of using LMMV.
+```
 
 
-   Figure 4.92  Actions of LMMV command
+<p>&nbsp;</p>
+
+#### 6.5.8 LMMV (VRAM logical paint)
+
+The specified VRAM area is painted by the colour code in dots (see [Figure 4.92](#figure-492--actions-of-lmmv-command)). Logical operations between data in VRAM and the specified data are allowed.
+
+After setting the parameters as shown in [Figure 4.93](#figure-493--register-settings-of-lmmv-command), writing command code 8Xh (X means a logical operation) in R#46 causes the command to be executed. While the CE bit of S#2 is "1", the command is being executed. [List 4.15](#list-415--example-of-lmmv-command-execution) shows an example of using LMMV.
 
 
+##### _Figure 4.92  Actions of LMMV command_
+
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |   MSX-VIDEO
@@ -1978,10 +1936,11 @@ DX:  origin  X-coordinate (0 to 511)
 DY:  origin  Y-coordinate (0 to 1023)
 
 CLR (R#44:Colour register):  Painted data
+```
 
+##### _Figure 4.93  Register settings of LMMV command_
 
-   Figure 4.93  Register settings of LMMV command
-
+```
 > LMMV register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -1998,27 +1957,27 @@ R#39    | 0  | 0  | 0  | 0  | 0  | 0  | DY9| DY8|
         -----------------------------------------
 
         -----------------------------------------
-R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|         number of dots in
-        |----+----+----+----+----+----+----+----| NX ---> X direction to
-R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|         be painted
+R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|
+        |----+----+----+----+----+----+----+----| NX ⟶ number of dots in X direction to be painted
+R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|
         -----------------------------------------
 
         -----------------------------------------
-R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|         number of dots in
-        |----+----+----+----+----+----+----+----| NY ---> Y direction to
-R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|         be painted
+R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|
+        |----+----+----+----+----+----+----+----| NY ⟶ number of dots in Y direction to be painted
+R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|
         -----------------------------------------
 
         -----------------------------------------                     --+
-R#44    | 0  | 0  | 0  | 0  | CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |data
+R#44    | 0  | 0  | 0  | 0  | CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |
         -----------------------------------------                       |
-                                                                        |to
+                                                                        |
         -----------------------------------------                       |
-        | 0  | 0  | 0  | 0  | 0  | 0  | CR1| CR0| CLR (GRAPHIC 5)       |be
+        | 0  | 0  | 0  | 0  | 0  | 0  | CR1| CR0| CLR (GRAPHIC 5)       | data to be transferred
         -----------------------------------------                       |
-                                                                        |tran
-        -----------------------------------------                       |sfe
-        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |rred
+                                                                        |
+        -----------------------------------------                       |
+        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |
         -----------------------------------------                     --+
 
         -----------------------------------------
@@ -2039,15 +1998,15 @@ R#46    | 1  | 0  | 0  | 0  | L03| L03| L01| L00| CMR
                             |                   |
                             +-------------------+
                               Logical operation
+```
 
+##### _List 4.15  Example of LMMV command execution_
 
-List 4.15  Example of LMMV command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.15   LMMV sample
 ;                to use, set H, L, D, E, B, A and go
-;                data B ---> fill VRAM (H,L)-(D,E) (logi-op : A)
+;                data B ⟶ fill VRAM (H,L)-(D,E) (logi-op : A)
 ;****************************************************************
 ;
 RDVDP:  EQU     0006H
@@ -2133,26 +2092,21 @@ WAIT.VDP:
         RET
 
         END
-
-=========================================================================
-
-
-6.5.9 LINE (drawing a line)
-
-Lines can be drawn between any coordinates in VRAM. The parameters to be 
-specified include the (X,Y) coordinates of the starting point and the X and Y 
-lengths in units to the ending point (see Figure 4.94). Logical operations 
-between data in VRAM and the specified data are allowed.
-
-After setting the parameters as shown in Figure 4.94, writing command code 
-7XH (X means a logical operation) in R#46 causes the command to be executed. 
-While the CE bit of S#2 is "1", the command is being executed. List 4.16 
-shows an example of using LINE.
+```
 
 
-   Figure 4.94  Actions of LINE command
+<p>&nbsp;</p>
+
+#### 6.5.9 LINE (drawing a line)
+
+Lines can be drawn between any coordinates in VRAM. The parameters to be specified include the (X,Y) coordinates of the starting point and the X and Y lengths in units to the ending point (see [Figure 4.94](#figure-494--actions-of-line-command)). Logical operations between data in VRAM and the specified data are allowed.
+
+After setting the parameters as shown in [Figure 4.94](#figure-494--actions-of-line-command), writing command code 7XH (X means a logical operation) in R#46 causes the command to be executed. While the CE bit of S#2 is "1", the command is being executed. [List 4.16](#list-416--example-of-line-command-execution) shows an example of using LINE.
 
 
+##### _Figure 4.94  Actions of LINE command_
+
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |
@@ -2185,10 +2139,11 @@ DX:  origin  X-coordinate (0 to 511)
 DY:  origin  Y-coordinate (0 to 1023)
 
 CLR (R#44:Colour register):  Line colour data
+```
 
+##### _Figure 4.95  Register settings of LINE command_
 
-   Figure 4.95  Register settings of LINE command
-
+```
 > LINE register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -2205,25 +2160,25 @@ R#39    | 0  | 0  | 0  | 0  | 0  | 0  | DY9| DY8|
         -----------------------------------------
 
         -----------------------------------------
-R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|             number of dots
-        |----+----+----+----+----+----+----+----| Maj (NX) -> of the major
-R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|             side
+R#40    | NX7| NX6| NX5| NX4| NX3| NX2| NX1| NX0|
+        |----+----+----+----+----+----+----+----| Maj (NX) -> number of dots of the major side
+R#41    | 0  | 0  | 0  | 0  | 0  | 0  | 0  | NX8|
         -----------------------------------------
 
         -----------------------------------------
-R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|             number of dots
-        |----+----+----+----+----+----+----+----| Min (NY) -> of the minor
-R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|             side
+R#42    | NY7| NY6| NY5| NY4| NY3| NY2| NY1| NY0|
+        |----+----+----+----+----+----+----+----| Min (NY) -> number of dots of the minor side
+R#43    | 0  | 0  | 0  | 0  | 0  | 0  | NY9| NY8|
         -----------------------------------------
 
         -----------------------------------------                     --+
 R#44    | 0  | 0  | 0  | 0  | CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |
-        -----------------------------------------                       |co-
-                                                                        |lour
         -----------------------------------------                       |
-        | 0  | 0  | 0  | 0  | 0  | 0  | CR1| CR0| CLR (GRAPHIC 5)       |code
+                                                                        |
         -----------------------------------------                       |
-                                                                        |data
+        | 0  | 0  | 0  | 0  | 0  | 0  | CR1| CR0| CLR (GRAPHIC 5)       | colour code data
+        -----------------------------------------                       |
+                                                                        |
         -----------------------------------------                       |
         | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |
         -----------------------------------------                     --+
@@ -2248,11 +2203,11 @@ R#46    | 0  | 1  | 1  | 1  | L03| L03| L01| L00| CMR
                             |                   |
                             +-------------------+
                               Logical operation
+```
 
+##### _List 4.16  Example of LINE command execution_
 
-List 4.16  Example of LINE command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.16   LINE sample
 ;                to use, set H, L, D, E, B, A and go
@@ -2353,29 +2308,23 @@ WAIT.VDP:
         RET
 
         END
-
-=========================================================================
-
-
-6.5.10 SRCH (colour code search)
-
-SRCH searches for the existence of the specified colour from any coordinate 
-on VRAM to the right or the left (see figure 4.96). This is very useful for 
-paint routines.
-
-After setting the parameters as shown in Figure 4.97, writing 60H in R#46 
-causes the command to be executed. The command terminates when the objective 
-colour is found or when it cannot be found after searching for it to the 
-screen edge. While the CE bit of S#2 is "1", the command is being executed 
-(see Figure 4.98).
-
-After the command ends, the objective colour code is stored in S#8 and S#9. 
-List 4.17 shows an example of using SRCH.
+```
 
 
-   Figure 4.96  Actions of SRCH command
+<p>&nbsp;</p>
+
+#### 6.5.10 SRCH (colour code search)
+
+SRCH searches for the existence of the specified colour from any coordinate on VRAM to the right or the left (see figure 4.96). This is very useful for paint routines.
+
+After setting the parameters as shown in [Figure 4.97](#figure-497--register-settings-of-srch-command), writing 60H in R#46 causes the command to be executed. The command terminates when the objective colour is found or when it cannot be found after searching for it to the screen edge. While the CE bit of S#2 is "1", the command is being executed (see [Figure 4.98](#figure-498--srch-command-execution-flowchart)).
+
+After the command ends, the objective colour code is stored in S#8 and S#9. [List 4.17](#list-417--example-of-srch-command-execution) shows an example of using SRCH.
 
 
+##### _Figure 4.96  Actions of SRCH command_
+
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |
@@ -2404,10 +2353,11 @@ EQ:  0 = ends the execution when the border colour is found
          border colour
 
 CLR (R#44:Colour register):  border colour
+```
 
+##### _Figure 4.97  Register settings of SRCH command_
 
-   Figure 4.97  Register settings of SRCH command
-
+```
 > SRCH register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -2422,19 +2372,19 @@ R#34    | SY7| SY6| SY5| SY4| SY3| SY2| SY1| SY0|       |
         |----+----+----+----+----+----+----+----| SY ---+
 R#35    | 0  | 0  | 0  | 0  | 0  | 0  | SY9| SY8|
         -----------------------------------------
-                                                                         b
-        -----------------------------------------                     --+o
-R#44    | 0  | 0  | 0  | 0  | CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |r
-        -----------------------------------------                       |d
-                                                                        |e
-        -----------------------------------------                       |r
-        | 0  | 0  | 0  | 0  | 0  | 0  | CR1| CR0| CLR (GRAPHIC 5)       |
-        -----------------------------------------                       |c
-                                                                        |o
-        -----------------------------------------                       |l
-        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |o
-        -----------------------------------------                     --+u
-                                                                         r
+
+        -----------------------------------------                     --+
+R#44    | 0  | 0  | 0  | 0  | CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |
+        -----------------------------------------                       |
+                                                                        |
+        -----------------------------------------                       |
+        | 0  | 0  | 0  | 0  | 0  | 0  | CR1| CR0| CLR (GRAPHIC 5)       | border colour
+        -----------------------------------------                       |
+                                                                        |
+        -----------------------------------------                       |
+        | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |
+        -----------------------------------------                     --+
+
         -----------------------------------------
 R#45    | -- | -- | MXD| -- | -- | DIX| EQ | -- | ARG (Argument register)
         -----------------------------------------
@@ -2460,14 +2410,15 @@ S#2     | -- | -- | -- | BO | -- | -- | -- | CE | CMR
                          +-------> when the border colour is found : 1
 
         -----------------------------------------
-S#8     | BX7| BX6| BX5| BX4| BX3| BX2| BX1| BX0| X-coordinate when the
-        ----------------------------------------- border colour is found
+S#8     | BX7| BX6| BX5| BX4| BX3| BX2| BX1| BX0|
+        ----------------------------------------- X-coordinate when the border colour is found
 S#9     | 1  | 1  | 1  | 1  | 1  | 1  | 1  | BX8|
         -----------------------------------------
+```
 
+##### _Figure 4.98  SRCH command execution flowchart_
 
-   Figure 4.98  SRCH command execution flowchart
-
+```
         /-------------------\
         |     SRCH start    |
         \-------------------/
@@ -2512,11 +2463,11 @@ S#9     | 1  | 1  | 1  | 1  | 1  | 1  | 1  | BX8|
         /--------------------\
         |      SRCH end      |
         \--------------------/
+```
 
+##### _List 4.17  Example of SRCH command execution_
 
-List 4.17  Example of SRCH command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.17   SRCH sample
 ;                to use, set H, L, E, A as follows
@@ -2604,13 +2555,12 @@ WAIT.VDP:
         RET
 
         END
+```
 
-=========================================================================
 
+##### _List 4.18  Simple PAINT routine using SRCH and LINE_
 
-List 4.18  Simple PAINT routine using SRCH and LINE
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.18   SRCH and LINE sample
 ;                search color to right and left,
@@ -2672,13 +2622,12 @@ STK:    DS      2
 AREA:   $
 
         END
+```
 
-=========================================================================
 
+##### _List 4.19  Example of the use of simple PAINT routine_
 
-List 4.19  Example of the use of simple PAINT routine
-=========================================================================
-
+```
 1000 '***********************************************
 1010 ' List 4.19   SRCH and LINE sample
 1020 ' Operate cursor while holding down the space bar.
@@ -2743,23 +2692,21 @@ List 4.19  Example of the use of simple PAINT routine
 1610 DATA 06,00,0C,ED,79,3E,8F,ED,79,ED,78,C1
 1620 DATA C9,3E,02,CD,FD,A0,E6,01,C2,0D,A1
 1630 DATA AF,CD,FD,A0,C9,END
+```
 
-=========================================================================
 
+<p>&nbsp;</p>
 
-6.5.11 PSET (drawing a point)
+#### 6.5.11 PSET (drawing a point)
 
 A point is drawn at any coordinate in VRAM (see figure 4.99).
 
-After setting the parameters as shown in Figure 4.100, writing 5XH (X means a 
-logical operation) in R#46 causes the command to be executed. While the CE 
-bit of S#2 is "1", the command is being executed. List 4.20 shows an example 
-of using PSET.
+After setting the parameters as shown in [Figure 4.100](#figure-4100--register-settings-of-pset-command), writing 5XH (X means a logical operation) in R#46 causes the command to be executed. While the CE bit of S#2 is "1", the command is being executed. [List 4.20](#list-420--example-of-pset-command-execution) shows an example of using PSET.
 
 
-   Figure 4.99  Actions of PSET command
+##### _Figure 4.99  Actions of PSET command_
 
-
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |
@@ -2782,10 +2729,11 @@ DX: origin X-coordinate (0 to 511)
 DY: origin Y-coordinate (0 to 1023)
 
 CLR (R#44:Colour register):  point colour
+```
 
+##### _Figure 4.100  Register settings of PSET command_
 
-   Figure 4.100  Register settings of PSET command
-
+```
 > PSET register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -2803,12 +2751,12 @@ R#39    | 0  | 0  | 0  | 0  | 0  | 0  | DY9| DY8|
 
         -----------------------------------------                     --+
 R#44    | 0  | 0  | 0  | 0  | CR3| CR2| CR1| CR0| CLR (GRAPHIC 4,6)     |
-        -----------------------------------------                       |co-
-                                                                        |lour
         -----------------------------------------                       |
-        | 0  | 0  | 0  | 0  | 0  | 0  | CR1| CR0| CLR (GRAPHIC 5)       |code
+                                                                        |
         -----------------------------------------                       |
-                                                                        |data
+        | 0  | 0  | 0  | 0  | 0  | 0  | CR1| CR0| CLR (GRAPHIC 5)       | colour code data
+        -----------------------------------------                       |
+                                                                        |
         -----------------------------------------                       |
         | CR7| CR6| CR5| CR4| CR3| CR2| CR1| CR0| CLR (GRAPHIC 7)       |
         -----------------------------------------                     --+
@@ -2828,11 +2776,11 @@ R#46    | 0  | 1  | 0  | 1  | L03| L02| L01| L00| CMR
                             |                   |
                             +-------------------+
                               Logical operation
+```
 
+##### _List 4.20  Example of PSET command execution_
 
-List 4.20  Example of PSET command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.20   PSET sample
 ;                to use, set H, L, E, A as follows
@@ -2909,24 +2857,21 @@ WAIT.VDP:
         RET
 
         END
-
-=========================================================================
-
-
-6.5.12 POINT (reading a colour code)
-
-POINT reads the colour code in any coordinate of VRAM (see Figure 4.101).
-
-After setting the parameters as shown in Figure 4.102, writing 40H in R#46 
-causes the command to be executed. While the CE bit of S#2 is "1", the 
-command is being executed. After the command terminates, the colour code of 
-the specified coordinate is set in S#7. List 4.21 shows an example of using 
-POINT.
+```
 
 
-   Figure 4.101  Actions of POINT command
+<p>&nbsp;</p>
+
+#### 6.5.12 POINT (reading a colour code)
+
+POINT reads the colour code in any coordinate of VRAM (see [Figure 4.101](#figure-4101--actions-of-point-command)).
+
+After setting the parameters as shown in [Figure 4.102](#figure-4102--register-settings-of-point-command), writing 40H in R#46 causes the command to be executed. While the CE bit of S#2 is "1", the command is being executed. After the command terminates, the colour code of the specified coordinate is set in S#7. [List 4.21](#list-421--example-of-point-command-execution) shows an example of using POINT.
 
 
+##### _Figure 4.101  Actions of POINT command_
+
+```
               VRAM or expansion RAM
 ---------------------------------------------------
 |                                                 |
@@ -2947,10 +2892,11 @@ MXD: memory selection                   0 = VRAM, 1 = expansion RAM
 
 SX:  origin X-coordinate (0 to 511)
 SY:  origin Y-coordinate (0 to 1023)
+```
 
+##### _Figure 4.102  Register settings of POINT command_
 
-   Figure 4.102  Register settings of POINT command
-
+```
 > POINT register setup
 
     MSB   7    6    5    4    3    2    1    0    LSB
@@ -2986,20 +2932,20 @@ S#2     | -- | -- | -- | -- | -- | -- | -- | CE | CMR
 
         -----------------------------------------                    --+
 S#7     | 0  | 0  | 0  | 0  | C3 | C2 | C1 | C0 | CL (GRAPHIC 4,6)     |
-        -----------------------------------------                      |co-
-                                                                       |lour
         -----------------------------------------                      |
-        | 0  | 0  | 0  | 0  | 0  | 0  | C1 | C0 | CL (GRAPHIC 5)       |code
+                                                                       |
         -----------------------------------------                      |
-                                                                       |data
+        | 0  | 0  | 0  | 0  | 0  | 0  | C1 | C0 | CL (GRAPHIC 5)       | colour code data
+        -----------------------------------------                      |
+                                                                       |
         -----------------------------------------                      |
         | C7 | C6 | C5 | C4 | C3 | C2 | C1 | C0 | CL (GRAPHIC 7)       |
         -----------------------------------------                    --+
+```
 
+##### _List 4.21  Example of POINT command execution_
 
-List 4.21  Example of POINT command execution
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.21   POINT sample
 ;                to use, set H, L as follows
@@ -3077,13 +3023,12 @@ WAIT.VDP:
         RET
 
         END
+```
 
-=========================================================================
 
+##### _List 4.22  PAINT routine using PSET and POINT_
 
-List 4.22  PAINT routine using PSET and POINT
-=========================================================================
-
+```
 ;****************************************************************
 ;  List 4.22  paint routine using PSET and POINT
 ;       ENTRY:  X:H, Y:L, BORDER COLOR:D, PAINT COLOR:E
@@ -3194,6 +3139,7 @@ GET.Q0: LD      HL,(Q.BTM)
         SBC     HL,BC
         POP     HL
         JP      C,GET.Q1
+
         LD      HL,Q.BUF
 GET.Q1: LD      D,(HL)
         INC     HL
@@ -3213,13 +3159,12 @@ Q.BTM   DS      2
 Q.BUF   DS      Q.LENGTH
 
         END
+```
 
-=========================================================================
 
+##### _List 4.23  Example of using the PAINT routine_
 
-List 4.23  Example of using the PAINT routine
-=========================================================================
-
+```
 1000 '***********************************************
 1010 ' List 4.23   paint routine using POINT and PSET
 1020 ' Position cursor at beginnig of paint area and press the space bar.
@@ -3280,48 +3225,45 @@ List 4.23  Example of using the PAINT routine
 1570 DATA ED,79,3E,8F,ED,79,ED,78,C1,C9,3E,02,CD,2A,A1,E6
 1580 DATA 01,C2,3A,A1,AF,CD,2A,A1,C9
 1590 DATA END
-
-=========================================================================
-
-
-6.6 Speeding Up Commands
-
-MSX-VIDEO performs various screen management duties in addition to executing 
-the specified commands. Sometimes the command execution speed seems to be a 
-bit slow because of this. Thus, by discarding these operations, the speed of 
-the command executions can be made faster. This can be done using the 
-following method.
+```
 
 
-1. Sprite display inhibition
+<p>&nbsp;</p>
 
-This method is useful since speedup can be realised while the screen remains 
-displayed. Set "1" to bit 1 of R#8.
+### 6.6 Speeding Up Commands
 
-
-2. Screen display inhibition
-
-This method cannot be used frequently except in the case of initialising the 
-screen, since the screen fades out in this mode. Set "1" to bit 6 of R#1.
+MSX-VIDEO performs various screen management duties in addition to executing the specified commands. Sometimes the command execution speed seems to be a bit slow because of this. Thus, by discarding these operations, the speed of the command executions can be made faster. This can be done using the following method.
 
 
-6.7 Register Status at Command Termination
+#### 1. Sprite display inhibition
 
-Table 4.7 shows the register status at the command termination for each 
-command.
-
-When the number of dots to be executed in Y direction assumes N, the values 
-of SY*, DY*, and NYB can be calculated as follows:
-
-        SY*=SY+N, DY*=DY+N .................... when DIY bit is 0
-        SY*=SY-N, DY*=DY-N .................... when DIY bit is 1
-        NYB=NY-N
-
-        Note: when MAJ bit is 0 in LINE, N = N - 1.
+This method is useful since speedup can be realised while the screen remains displayed. Set "1" to bit 1 of R#8.
 
 
-   Table 4.7  Register status at command termination
+#### 2. Screen display inhibition
 
+This method cannot be used frequently except in the case of initialising the screen, since the screen fades out in this mode. Set "1" to bit 6 of R#1.
+
+
+<p>&nbsp;</p>
+
+### 6.7 Register Status at Command Termination
+
+[Table 4.7](#table-47--register-status-at-command-termination) shows the register status at the command termination for each command.
+
+When the number of dots to be executed in Y direction assumes N, the values of SY*, DY*, and NYB can be calculated as follows:
+
+```
+    SY*=SY+N, DY*=DY+N .................... when DIY bit is 0
+    SY*=SY-N, DY*=DY-N .................... when DIY bit is 1
+    NYB=NY-N
+```
+*Note:* when MAJ bit is 0 in LINE, N = N - 1.
+
+
+##### _Table 4.7  Register status at command termination_
+
+```
 ----------------------------------------------------------------------------
 | command name | SX  | SY  | DX  | DY  | NX  | NY  | CLR |CMR H|CMR L| ARG |
 |--------------+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
@@ -3355,3 +3297,35 @@ of SY*, DY*, and NYB can be calculated as follows:
 --- :   no change
  .  :   coordinate (SY*, DY*) and the colour code at the command termination
  #  :   the number of counts (NYB), when the screen edge is fetched
+```
+
+
+## Changes from the original
+
+- In [Figure 4.72](#figure-472--coordinate-system-of-vram), last "10000H" is corrected to "1FFFFH".
+
+- In [Table 4.6](#table-46--list-of-logical-operations), in TEOR line, "else DC+..." is corrected to "else DC=..."
+
+- In [Figure 4.76](#figure-476--register-settings-of-hmmc-command), in R#45 figure, DIX and DIY bits have been placed correctly (they were inverted in the original).
+
+- In [Figure 4.79](#figure-479--register-settings-of-ymmm-command), in R#42 and R#43 explanation, "NY -> of dots..." has been changed to "NY -> number of dots..."
+
+- In [List 4.9](#list-49--example-of-ymmm-command-execution), in the line with the comment "YMMM command", 11010000 bitfield has been corrected to 11100000.
+
+- In [Figure 4.84](#figure-484--action-of-lmmc-command), "*" mark removed from the explanation of NX.
+
+- In [Figure 4.85](#figure-485--register-settings-of-lmmc-command), in R#45 explanation,  "select source memory" text has been corrected to "select destination memory".
+
+- In [List 4.13](#list-413--example-of-lmcm-command-execution), labels beginning with "LMMC" have been corrected to "LMCM".
+
+- In [List 4.15](#list-415--example-of-lmmv-command-execution), in the line with the comment "NY", the "OUT (C),H" instruction has been corrected to "OUT (C),L".
+
+- In [section 6.5.9](#659-line-drawing-a-line), the explanation of usage of the LINE command was mixed wih other text. It has been corrected.
+
+- In [Figure 4.94](#figure-494--actions-of-line-command), a line explaining the meaning of R#44 has been added.
+
+- In [Figure 4.97](#figure-497--register-settings-of-srch-command), BX9 bit has been supressed in S#9 figure.
+
+- In [Figure 4.99](#figure-499--actions-of-pset-command), a line explaining the meaning of R#44 has been added.
+
+- In [Table 4.7](#table-47--register-status-at-command-termination), "CLR L" has been corrected to "CMR L".
