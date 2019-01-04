@@ -116,7 +116,7 @@ There are four types of instructions:
 
 #### (c) Function or action of instruction
 
-The following list gives a brief description of the action for each instruction. More detailed descriptions about instructions which have been modified or added at version 2.0 are given in section 2.
+The following list gives a brief description of the action for each instruction. More detailed descriptions about instructions which have been modified or added at version 2.0 are given in [section 2](#2-differences-in-msx-basic-version-20).
 
 
 <p>&nbsp;</p>
@@ -926,7 +926,7 @@ INT ((<pixel size>*(ABS(X2-X1)+1)*(ABS(Y2-Y1)+1)+7)/8)+4 bytes
 (*) If the length of data cannot be divided by byte, excess bits are to be 0.
 ```
 
-`<Logical operation>` specifies a logical operation between the data which resides on the destination and the data to be transferred. See table 2.7 for the parameters to specify.
+`<Logical operation>` specifies a logical operation between the data which resides on the destination and the data to be transferred. See [Table 2.7]((#table-27--logical-operation)) for the parameters to specify.
 
 When operations preceded by "T" are specified, the transparent portions of the source will not be transferred.
 
@@ -1328,19 +1328,18 @@ The highest address of the user's area when no disk drives are connected is F380
      |      BASIC       |
      |   Interpreter    |
      |                  |
-8000 |------------------|  <-- (BOTTOM)             --+
-     |                  |                             |
-     |    User area     |                    --+      |
-     |                  |                      |      |
-     |------------------|  <-- (HIMEM)         |      |32K
-     |  Disk work area  |              --+     |16K   |
-F380 |------------------|                | 8K  |      |
-     | System work area |                |     |      |
-FFFF --------------------              --+   --+    --+
-
-**Note:** Though the machine has more than 32K bytes of RAM, only 32K bytes are used for BASIC.
-          On MSX2, however, another 32K bytes can be used as a RAM disk by BASIC.
+8000 |------------------|  ⟵ (BOTTOM)             --+
+     |                  |                            |
+     |    User area     |                   --+      |
+     |                  |                     |      |
+     |------------------|  ⟵ (HIMEM)         |      |32K
+     |  Disk work area  |             --+     |16K   |
+F380 |------------------|               | 8K  |      |
+     | System work area |               |     |      |
+FFFF --------------------             --+   --+    --+
 ```
+
+**Note:** Though the machine has more than 32K bytes of RAM, only 32K bytes are used for BASIC. On MSX2, however, another 32K bytes can be used as a RAM disk by BASIC.
 
 When developping a program on MSX2, we recommend you create it at addresses 8000H to DE3FH as if to install a 2DD-2 drive whose highest address of the user's area is the lowest. The work area of the disk can grow even larger, therefore, HIMEM of the application program should be checked to prevent disasters even in the worst situation. The following are ways to prevent this:
 
@@ -1921,11 +1920,11 @@ For more sophisticated expansions of statements it is useful if arguments can be
 
 * `CHRGTR (4666H/MAIN)` - Extract one character from text (see [Figure 2.14](#figure-214--inputoutput-state-of-chrgtr))
 ```
-Input:   HL <-- Address pointing to text
-Output:  HL <-- Address of the extracted character
-         A  <-- Extracted character
-         Z  flag <-- ON at the end of line (: or 00H)
-         CY flag <-- ON if 0 to 9
+Input:   HL ⟵ Address pointing to text
+Output:  HL ⟵ Address of the extracted character
+         A  ⟵ Extracted character
+         Z  flag ⟵ ON at the end of line (: or 00H)
+         CY flag ⟵ ON if 0 to 9
 ```
 Purpose: Extract one character from the text at (HL + 1). Spaces are skipped.
 
@@ -1982,10 +1981,10 @@ Purpose: Extract one character from the text at (HL + 1). Spaces are skipped.
 * `FRMEVL (4C64/MAIN)` - Evaluate an expression in text (see [Figure 2.15](#figure-215--inputoutput-state-of-frmevl))
 
 ```
-Input:   HL <-- Starting address of the expression in text
-Output:  HL <-- Address after the expression
-         [VALTYP (F663H)] <-- Value 2, 3, 4 or 8 according to the expression
-         [DAC (F7F6H)]    <-- Result of the evaluation of the expression
+Input:   HL ⟵ Starting address of the expression in text
+Output:  HL ⟵ Address after the expression
+         [VALTYP (F663H)] ⟵ Value 2, 3, 4 or 8 according to the expression
+         [DAC (F7F6H)]    ⟵ Result of the evaluation of the expression
 ```
 Purpose: Evaluate an expression and make output according to its type.
 
@@ -2024,9 +2023,9 @@ Purpose: Evaluate an expression and make output according to its type.
 
 * `FRMQNT (542F/MAIN)` - Evaluate an expression un 2-byte integer type.
 ```
-Input:   HL <-- Starting address of the expression in text
-Output:  HL <-- Address after the expression
-         DE <-- Result of evaluation of the expression
+Input:   HL ⟵ Starting address of the expression in text
+Output:  HL ⟵ Address after the expression
+         DE ⟵ Result of evaluation of the expression
 ```
 Purpose: Evaluate an expression and make output in integer type (INT). When the result is beyond the range of 2-byte integer type, an "Overflow" error occurs and the system returns to the BASIC command level.
 <p>&nbsp;<p/>
@@ -2034,10 +2033,10 @@ Purpose: Evaluate an expression and make output in integer type (INT). When the 
 
 * `GETBYT (521C/MAIN)` - Evaluate an expression in 1-byte integer type.
 ```
-Input:   HL <-- Starting address of the expression in text
-Output:  HL <-- Next address of expression
-         A, E <-- Result of expression evaluation
-                  (A and E contains the same value.)
+Input:   HL ⟵ Starting address of the expression in text
+Output:  HL ⟵ Next address of expression
+         A, E ⟵ Result of expression evaluation
+                 (A and E contains the same value.)
 ```
 Purpose: Evaluate an expression and make 1-byte integer output. When the result is beyond the range of 1-byte integer type, an "Illegal function call" error occurs and the execution returns to BASIC command level.
 <p>&nbsp;<p/>
@@ -2045,9 +2044,9 @@ Purpose: Evaluate an expression and make 1-byte integer output. When the result 
 
 * `FRESTR (67D0/MAIN)` - Register a string.
 ```
-Input:   [VALTYP (F663H)] <-- Type (if not string type, an error occurs)
-         [DAC (F7F6H)]    <-- Pointer to string descriptor
-Output:  HL <-- Pointer to string descriptor
+Input:   [VALTYP (F663H)] ⟵ Type (if not string type, an error occurs)
+         [DAC (F7F6H)]    ⟵ Pointer to string descriptor
+Output:  HL ⟵ Pointer to string descriptor
 ```
 Purpose: Register the result of the string type obtained by FRMEVL and obtain its string descriptor. When evaluating a string, this is generally combined with FRMEVL described above to use as follows:
 
@@ -2069,12 +2068,12 @@ LD      A,(DE)
 
 * `PTRGET (5EA4/MAIN)` - Obtain the address for the storage of a variable (see [Figure 2.16](#figure-216--inputoutput-state-of-ptrget)).
 ```
-Input:   HL <-- Starting address of the variable name in text
-                [SUBFLG (F6A5H)] <-- 0: Simple variable,
-                                     other than 0: array variable
-Output:  HL <-- Address after the variable name
-         DE <-- Address where the contents of the objective variable
-                is stored
+Input:   HL ⟵ Starting address of the variable name in text
+                [SUBFLG (F6A5H)] ⟵ 0: Simple variable,
+                                    other than 0: array variable
+Output:  HL ⟵ Address after the variable name
+         DE ⟵ Address where the contents of the objective variable
+               is stored
 ```
 
 Purpose: Obtain the address for the storage of a variable (or an array variable). Allocation of the area is also done when the area for the objective variable has not been allocated. When the value of SUBFLG is set to other than 0, the starting address of the array is obtained, other than individual elements of the array.
@@ -2156,7 +2155,7 @@ Purpose: Obtain the address for the storage of a variable (or an array variable)
 
 * `NEWSTT (4601H/MAIN)` - Execute a text
 ```
-Input:   HL <-- Address of the text to be executed
+Input:   HL ⟵ Address of the text to be executed
 Output:  ----
 ```
 Purpose: Execute a text. The state of the text is necessary to be as same as shown in [Figure 2.17](#figure-217--memory-setting-for-newstt).
@@ -2352,7 +2351,7 @@ BIOS is called through the jump table which begins at 0000H of MAIN-ROM. Though 
 
 ### Work area
 
-F380H to FFFFH of MAIN-RAM cannot be used, as it is a work area for BIOS and BASIC interpreter. Free space in the work area cannot be used, because it is reserved for the future use. See "3.1  User's area" for the work area of the disk.
+F380H to FFFFH of MAIN-RAM cannot be used, as it is a work area for BIOS and BASIC interpreter. Free space in the work area cannot be used, because it is reserved for the future use. See [3.1 User's area](#31-users-area) for the work area of the disk.
 
 
 ### Initialisation of RAM and stack pointer

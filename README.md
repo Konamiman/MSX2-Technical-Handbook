@@ -6,7 +6,7 @@ These are the book chapters:
 
 * [Chapter 1: MSX system overview](md/Chapter1.md)
 * [Chapter 2: BASIC](md/Chapter2.md)
-* Chapter 3: MSX-DOS
+* [Chapter 3: MSX-DOS](md/Chapter3.md)
 * Chapter 4: VDP and display screen
 * Chapter 5: Access to peripherals through BIOS
 * Appendices
@@ -17,7 +17,11 @@ The original text files are in [the txt folder](txt), unmodified since I first p
 
 ### Contributing
 
-This is a finished project, and no further changes will be made in principle unless typos or mistakes are found. However, it would be nice to convert the ASCII tables and figures to nice-looking pictures, as they were originally in the printed book. So if you feel like doing that... go for it, your pull request(s) will be more than welcome.
+This is in principle a finished project, however contributions (preferably pull requests, but you can also [create an issue](/../../issues)) in any of the following forms will be welcome:
+
+* Fixing typos and mistakes.
+* Improving the markdown layout/formatting.
+* Converting the ASCII figures and tables to markdown equivalents, or to pretty pictures as they were in the original printed book.
 
 
 ### Last but not least...

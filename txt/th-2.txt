@@ -1498,7 +1498,7 @@ screen. It is 4 when the screen mode is 5 or 7, 2 for mode 6, and 8 for mode
 
 
 <Logical operation> specifies a logical operation between the data which 
-resides on the destination and the data to be transferred. See table 2.7 for 
+resides on the destination and the data to be transferred. See Table 2.7 for 
 the parameters to specify.
 
 When operations preceded by "T" are specified, the transparent portions of 
