@@ -10,7 +10,7 @@ These are the book chapters, chapters 4 and 5 are split in two files each due to
 * [Chapter 4: VDP and display screen (sections 1 to 5)](md/Chapter4a.md)
 * [Chapter 4: VDP and display screen (section 6)](md/Chapter4b.md)
 * [Chapter 5: Access to peripherals through BIOS (sections 1 to 6)](md/Chapter5a.md)
-* Chapter 5: Access to peripherals through BIOS (section 7)
+* [Chapter 5: Access to peripherals through BIOS (section 7)](md/Chapter5b.md)
 * Appendices
 * BASIC KUN compiler
 

@@ -2,6 +2,9 @@
 
 The BASIC of MSX2 has been upgraded: the new version is called MSX BASIC version 2.0. And, when using a disk system, MSX DISK-BASIC can be used, which consists of MSX BASIC version 2.0 and additional instructions for disk operations. The following sections describe these two versions of BASIC.
 
+
+<p>&nbsp;</p>
+
 ## Index
 
 [1. LIST OF INSTRUCTIONS](#1-list-of-instructions)

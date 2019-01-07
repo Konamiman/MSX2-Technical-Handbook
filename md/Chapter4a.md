@@ -4,6 +4,9 @@ The MSX2 machines uses an advanced VDP (video display processor) for its display
 
 Chapter 4 describes how to use this video display processor. It describes functions not accessible by BASIC. For mode details (e.g. hardware specifications), see V9938 MSX-VIDEO Technical Data Book (ASCII).
 
+
+<p>&nbsp;</p>
+
 ## Index
 
 [1.  MSX-VIDEO CONFIGURATION](#1--msx-video-configuration)

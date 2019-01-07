@@ -3,6 +3,8 @@
 The MSX2 was designed to be fully compatible with the MSX1, but there are many enhanced features in the MSX2. Chapter 1 introduces the enhanced features of the MSX2, and shows block figures and standard tables. This information is conceptual, but will be needed to understand dexcriptions in volume 2 and later.
 
 
+<p>&nbsp;</p>
+
 ## Index
 
 [1. FROM MSX1 TO MSX2](#1-from-msx1-to-msx2)

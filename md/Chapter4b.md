@@ -1,5 +1,12 @@
 # CHAPTER 4 - VDP AND DISPLAY SCREEN (Section 6)
 
+## 6. VDP COMMAND USAGE
+
+MSX-VIDEO can execute basic graphic operations, which are called VDP commands. These are done by accessing special harware and are available in the GRAPHIC 4 to GRAPHIC 7 modes. These graphic commands have been made easy to implement, requiring only that the necessary parameters be set in the proper registers before invoking them. This section describes these VDP commands.
+
+
+<p>&nbsp;</p>
+
 ## Index
 
 [6. VDP COMMAND USAGE](#6-vdp-command-usage)
@@ -43,13 +50,6 @@
 [6.7 Register Status at Command Termination](#67-register-status-at-command-termination)
 
 [Changes from the original](#changes-from-the-original)
-
-
-<p>&nbsp;</p>
-
-## 6. VDP COMMAND USAGE
-
-MSX-VIDEO can execute basic graphic operations, which are called VDP commands. These are done by accessing special harware and are available in the GRAPHIC 4 to GRAPHIC 7 modes. These graphic commands have been made easy to implement, requiring only that the necessary parameters be set in the proper registers before invoking them. This section describes these VDP commands.
 
 
 <p>&nbsp;</p>

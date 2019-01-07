@@ -434,6 +434,8 @@ R14 and R15 are the ports to send and receive 8-bit data in parallel. MSX uses t
 For access the PSG from assembly language programs, several BIOS routines described below are available.
 
 
+<p>&nbsp;</p>
+
 #### GICINI (0090H/MAIN) - PSG initialization
 
 ***Input:*** ---
@@ -485,6 +487,9 @@ For access the PSG from assembly language programs, several BIOS routines descri
 -----------------------------------------------------------------------------
 ```
 
+
+<p>&nbsp;</p>
+
 #### WRTPSG (0093H/MAIN) - writing data in PSG registers
 
 ***Input:***
@@ -497,6 +502,8 @@ E ⟵ data to be written
 
 ***Function:*** writes the contents of the E register in the PSG register whose number is specified by the A register.
 
+
+<p>&nbsp;</p>
 
 #### RDPSG (0096H/MAIN) - reading PSG register data
 
@@ -512,6 +519,8 @@ A ⟵ contents of the specified register
 
 ***Function:*** reads the contents of PSG register whose number is specified by the A register and stores the value in the A register.
 
+
+<p>&nbsp;</p>
 
 #### STRTMS (0099H/MAIN) - starting the music
 
@@ -892,6 +901,8 @@ In the file body, the starting address, the end address, and the entry address a
 The following BIOS routines are offered to access cassette files.
 
 
+<p>&nbsp;</p>
+
 #### TAPION (00E1H/MAIN) - OPEN for read
 
 ***Input:*** ---
@@ -903,6 +914,8 @@ CY flag = ON at abnormal terminations
 
 ***Function:*** starts the motor of the tape recorder and reads the long header or the short headet. At the same time, the baud rate in which the file is recorded is detected and the work area is set according to it. Interrupts are inhibited.
 
+
+<p>&nbsp;</p>
 
 #### TAPIN (00E4H/MAIN) - read one byte
 
@@ -917,6 +930,8 @@ CY flag = ON at abnormal terminations
 ***Function:*** reads one byte of data from the tape and stores it in the A register.
 
 
+<p>&nbsp;</p>
+
 #### TAPIOF (00E7H/MAIN) - CLOSE for read
 
 ***Input:*** ---
@@ -925,6 +940,8 @@ CY flag = ON at abnormal terminations
 
 ***Function:*** ends reading from the tape. At this point, interrupts are allowed.
 
+
+<p>&nbsp;</p>
 
 #### TAPOON (00EAH/MAIN) - OPEN for write
 
@@ -941,6 +958,8 @@ CY flag = ON at abnormal terminations
 ***Function:*** starts the motor of the tape recorder and writes the header of the type specified in the A register to the tape. Interrupts are inhibited.
 
 
+<p>&nbsp;</p>
+
 #### TAPOUT (00EDH/MAIN) - write one byte
 
 ***Input:***
@@ -956,6 +975,8 @@ CY flag = ON at abnormal terminations
 ***Function:*** writes the contents of the A register to the tape.
 
 
+<p>&nbsp;</p>
+
 #### TAPOOF (00F0H/MAIN) - CLOSE writing
 
 ***Input:*** ---
@@ -964,6 +985,8 @@ CY flag = ON at abnormal terminations
 
 ***Function:*** ends writing the tape. At this point, interrupts are allowed.
 
+
+<p>&nbsp;</p>
 
 #### STMOTR (00F3/MAIN) - specify the actions of the motor
 
@@ -1301,6 +1324,8 @@ PUTPNT (F3F8H, 2) points to the next location for the character to be put when t
 BIOS routines having functions for key input using this keyboard buffer and functions related to it are described below. Inhibiting the timer interrupt renders them useless, of course.
 
 
+<p>&nbsp;</p>
+
 #### CHSNS (009CH/MAIN) - checks the keyboard buffer
 
 ***Input:*** ---
@@ -1312,6 +1337,8 @@ Z flag = ON when the buffer is empty
 
 ***Function:*** examines whether any characters remain in the keyboard buffer and sets the Z flag when the buffer is empty.
 
+
+<p>&nbsp;</p>
 
 #### CHGET (009FH/MAIN) - one character input from the keyboard buffer
 
@@ -1326,19 +1353,20 @@ A ⟵ character code
 
 Work area:
 
-```
-    CLIKSW (F3DBH, 1)       key click sound (0 = OFF, others = ON)
-    SCNCNT (F3F6H, 1)       key scanning interval (1, normally)
-    REPCNT (F3F7H, 1)       delay until beginning auto-repeat (50, normally)
-    CSTYLE (FCAAH, 1)       figure of the cursor (0 = block, others = underline)
-    CAPST  (FCABH, 1)       CAPS lock (0 = OFF, others = ON)
-    DEADST (FCACH, 1)       dead key lock
-                                0 = on preceding dead key
-                                1 = dead key
-                                2 = shifted dead key
-                                3 = code dead key
-                                4 = code shift dead key
-```
+* **CLIKSW (F3DBH, 1)**: key click sound (0 = OFF, others = ON)
+* **SCNCNT (F3F6H, 1)**: key scanning interval (1, normally)
+* **REPCNT (F3F7H, 1)**: delay until beginning auto-repeat (50, normally)
+* **CSTYLE (FCAAH, 1)**: figure of the cursor (0 = block, others = underline)
+* **CAPST  (FCABH, 1)**: CAPS lock (0 = OFF, others = ON)
+* **DEADST (FCACH, 1)**: dead key lock
+  * 0 = on preceding dead key
+  * 1 = dead key
+  * 2 = shifted dead key
+  * 3 = code dead key
+  * 4 = code shift dead key
+
+
+<p>&nbsp;</p>
 
 #### KILBUF (0156H/MAIN) - empty the keyboard buffer
 
@@ -1391,6 +1419,8 @@ KEY2:   CALL    CHPUT           ;put the character
 ```
 
 
+<p>&nbsp;</p>
+
 #### CNVRCHR (00AB/MAIN) - graphic character operation
 
 ***Input:***
@@ -1435,6 +1465,8 @@ CY flag = ON, Z flag = OFF (input was the normal character and was not translate
 -------------------------------------------------------------
 ```
 
+<p>&nbsp;</p>
+
 #### PINLIN (00AEH/MAIN) - one line input
 
 ***Input:*** ---
@@ -1450,10 +1482,11 @@ CY flag ⟵ terminated by STOP=ON, terminated by RETURN=OFF
 
 Work area:
 
-```
-    BUF    (F55EH, 258)     the line buffer where the string is stored
-    LINTTB (FBB2H, 24)      00H when the one physiscal line is the succession of the line above
-```
+* **BUF (F55EH, 258)**: the line buffer where the string is stored
+* **LINTTB (FBB2H, 24)**: 00H when the one physiscal line is the succession of the line above
+
+
+<p>&nbsp;</p>
 
 #### INLIN (00B1H/MAIN) - one line input (prompt available)
 
@@ -1522,18 +1555,16 @@ PRMPT2: DB      0DH,0AH,'PINLIN:$'
 
 MSX has ten function keys, which can be defined by the user at will. A 16 byte work area is allocated for the definition of each key. The following list shows their addresses.
 
-```
-    FNKSTR (F87FH, 16) ............ F1 key definition address
-    + 10H  (F88FH, 16) ............ F2 key definition address
-    + 20H  (F89FH, 16) ............ F3 key definition address
-    + 30H  (F8AFH, 16) ............ F4 key definition address
-    + 40H  (F8BFH, 16) ............ F5 key definition address
-    + 50H  (F8CFH, 16) ............ F6 key definition address
-    + 60H  (F8DFH, 16) ............ F7 key definition address
-    + 70H  (F8EFH, 16) ............ F8 key definition address
-    + 80H  (F8FFH, 16) ............ F9 key definition address
-    + 90H  (F90FH, 16) ............ F10 key definition address
-```
+* **FNKSTR (F87FH, 16)**: F1 key definition address
+* **+ 10H  (F88FH, 16)**: F2 key definition address
+* **+ 20H  (F89FH, 16)**: F3 key definition address
+* **+ 30H  (F8AFH, 16)**: F4 key definition address
+* **+ 40H  (F8BFH, 16)**: F5 key definition address
+* **+ 50H  (F8CFH, 16)**: F6 key definition address
+* **+ 60H  (F8DFH, 16)**: F7 key definition address
+* **+ 70H  (F8EFH, 16)**: F8 key definition address
+* **+ 80H  (F8FFH, 16)**: F9 key definition address
+* **+ 90H  (F90FH, 16)**: F10 key definition address
 
 Pressing a function key causes the string defined in that key to be stored in [KEYBUF]. The end of the string is indicated by 00H and a maximum of 15 keystrokes can be defined for one function key (definitions longer than 16 keystrokes are defined over more than one function key definition area). To restore the initial settings of the function keys, use the following BIOS routine.
 
@@ -1631,9 +1662,7 @@ An MSX standard printer can print any character that can be displayed on the scr
 
 To feed lines in MSX standard printers, send 0DH and 0AH successively. To print the bit image, send nnnn bytes data, where nnnn means four decimal figures, after the escape sequence ESC + "Snnnn". Note that, MSX has a function to transform the tab code (09H) to the adequate number of space codes (20H) for printers not having a tab function. This transformation is normally done. To print a bit image which includes the value 09H correctly, change the following work area.
 
-````
-RAWPRT (F418H, 1): replaces a tab by spaces when the contents are 00H, otherwise not.
-````
+* **RAWPRT (F418H, 1)**: replaces a tab by spaces when the contents are 00H, otherwise not.
 
 
 ##### _Table 5.4  Control codes of the printer_
@@ -1664,6 +1693,8 @@ RAWPRT (F418H, 1): replaces a tab by spaces when the contents are 00H, otherwise
 To send output to the printer, the following BIOS routines are offered.
 
 
+<p>&nbsp;</p>
+
 #### LPTOUT (00A5H/MAIN)
 
 ***Input:***
@@ -1679,6 +1710,8 @@ CY flag = ON at abnormal termination
 ***Function:*** sends a character specified by the A register to the printer.
 
 
+<p>&nbsp;</p>
+
 #### LPTSTT (00A8/MAIN)
 
 ***Input:*** ---
@@ -1690,6 +1723,8 @@ A register ⟵ printer status
 
 ***Function:*** examines the current printer status. After calling this routine, the printer can be used when the A register is 255 and the Z flag is 0; when the A register is 0 and the Z flag is 1, the printer cannot be used.
 
+
+<p>&nbsp;</p>
 
 #### OUTDLP (014DH,MAIN)
 
@@ -1827,6 +1862,8 @@ Figure 5.23 shows the joystick circuit. As the circuit shows, sending "0" to the
 The following BIOS routines are offered for accessing the joystick. These routines have similar functions to the STICK function and STRIG function of BASIC. The status of the cursor keys or the space bar, in addition to the joystick, can be read in real time.
 
 
+<p>&nbsp;</p>
+
 #### GTSTCK (00D5H/MAIN) - read joystick
 
 ***Input:***
@@ -1841,6 +1878,8 @@ A ⟵ direction of joystick or cursor key
 
 ***Function:*** returns the current status of the joystick or the cursor keys in the A register. The value is the same as the STICK function in BASIC.
 
+
+<p>&nbsp;</p>
 
 #### GTTRIG (00D8H/MAIN) - read trigger button
 
@@ -2746,6 +2785,8 @@ ID=2: sets the prompt on BASIC
 The following BIOS routines are offered to access the clock and the battery-powered memory. Since these routines reside in SUB-ROM, they are called by using the inter-slot call.
 
 
+<p>&nbsp;</p>
+
 #### REDCLK (015FH/SUB) - read CLOCK-IC data
 
 ***Input:***
@@ -2772,6 +2813,9 @@ C register      |  . |  . | M1 : M0 | A3 : A2 : A1 : A0 |
                           Block to be       Register
                           selected          address
 ```
+
+
+<p>&nbsp;</p>
 
 #### WRTCLK (01F9H/SUB) - write CLOCK-IC data
 
