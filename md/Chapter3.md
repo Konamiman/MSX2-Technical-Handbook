@@ -1694,7 +1694,8 @@ Function no.                            Function
    03H                  get one character from auxiliary device
    04H                  send one character to auxiliary device
    05H                  send one character to printer
-   06H                  get one character from console (no input wait, no echo back, no control code check)/ one character output
+   06H                  get one character from console (no input wait, no echo back, no control code check)
+                        / one character output
    07H                  get one character from console (input wait, no echo back, no control code check)
    08H                  get one character from console (input wait, no echo back, control code check)
    09H                  send string
@@ -1737,7 +1738,7 @@ Function no.                            Function
 
 **Note**: System call function numbers are from 00H to 30H; the following seven numbers are blank: 1CH to 20H, 25H, 29H
 
-Calling these blank funtion system calls do nothing except setting 00H in the A register. System calls after function 31H are undefined. Using them may cause unpredictable results (not advisable).
+Calling these blank function system calls do nothing except setting 00H in the A register. System calls after function 31H are undefined. Using them may cause unpredictable results (not advisable).
 
 
 ##### List 3.3  Utility routines
@@ -2103,7 +2104,7 @@ If there is a sector which has been changed but not written to the disk, this sy
 #### Default drive setting
 
 ```
-Funtion:        0EH
+Function:        0EH
 Setup:          E register ⟵ default drive number (A = 00H, B = 01H, ...)
 Return value:   none
 ```

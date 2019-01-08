@@ -2092,8 +2092,8 @@ are blank:
 
         1CH to 20H, 25H, 29H
 
-Calling these blank funtion system calls do nothing except setting 00H in the 
-A register. System calls after function 31H are undefined. Using them may 
+Calling these blank function system calls do nothing except setting 00H in 
+the A register. System calls after function 31H are undefined. Using them may 
 cause unpredictable results (not advisable).
 
 
@@ -2463,7 +2463,7 @@ and sets DMA to 0080H.
 
 * Default drive setting
 
-Funtion:        0EH
+Function:       0EH
 Setup:          E register <-- default drive number (A = 00H, B = 01H, ...)
 Return value:   none
 
