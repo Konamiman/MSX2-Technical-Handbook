@@ -11,7 +11,16 @@ These are the book chapters, chapters 4 and 5 are split in two files each due to
 * [Chapter 4: VDP and display screen (section 6)](md/Chapter4b.md)
 * [Chapter 5: Access to peripherals through BIOS (sections 1 to 6)](md/Chapter5a.md)
 * [Chapter 5: Access to peripherals through BIOS (section 7)](md/Chapter5b.md)
-* Appendices
+* [Appendix 1: BIOS listing](md/Appendix1.md)
+* Appendix 2: MATH-PACK
+* Appendix 3: Bit block transfer
+* Appendix 4: Work area listing
+* Appendix 5: VRAM map
+* Appendix 6: I/O map
+* Appendix 7: Cartridge hardware
+* Appendix 9: Character set
+* Appendices 8 and 10: Control codes and escape sequences
+
 * BASIC KUN compiler
 
 The original text files are in [the txt folder](txt), unmodified since I first published them in [konamiman.com](http://www.konamiman.com) except that some typos have been corrected and all tabs have been converted to spaces.
@@ -24,6 +33,7 @@ This is in principle a finished project, however contributions (preferably pull 
 * Fixing typos and mistakes.
 * Improving the markdown layout/formatting e.g. converting the ASCII tables to markdown.
 * Converting the ASCII figures to pretty pictures as they were in the original printed book.
+* Providing the missing parts (Appendix 7 and Appendix 9)
 
 
 ### Last but not least...
