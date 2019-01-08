@@ -190,7 +190,7 @@ Since Math-Pack is an internal routine of BASIC, when an error occurs (such as d
 
 **Note:** These operations treat numbers in DAC and ARG as the double precision number. Registers are not preserved.
 
-**\*1** Excessive zeros in mantissa are removed. (0.00123 --> 0.123 E-2)
+**\*1** Excessive zeros in mantissa are removed. (0.00123 ⟶ 0.123 E-2)
 
 
 <p>&nbsp;</p>
@@ -295,9 +295,9 @@ Since Math-Pack is an internal routine of BASIC, when an error occurs (such as d
 
 **Note:** Results will be in A register. Meanings of A register are:
 
-* A = 1 --> left < right
-* A = 0 --> left = right
-* A = -1 --> left > right
+* A = 1 ⟶ left < right
+* A = 0 ⟶ left = right
+* A = -1 ⟶ left > right
 
 In the comparison of single precision real numbers, CBED means that each register has single precision (sign + exponent),v      (mantissa 1st and 2nd places), (mantissa 3th and 4th places), and (mantissa 5th and 6th places).
 

@@ -36,10 +36,10 @@ There are two kinds of BIOS routines, the ones in MAIN-ROM and the ones in SUB-R
 
 
 **Label name (address)**    \*n*
-* **Function:** descriptions and notes about the function
-* **Input:** parameters used by call
-* **Output:** parameters returned by call
-* **Registers:** registers which will be used (original contentes are lost)
+* **Function**: descriptions and notes about the function
+* **Input**: parameters used by call
+* **Output**: parameters returned by call
+* **Registers**: registers which will be used (original contentes are lost)
 
 
 The value of **\*n** has the following meanings.
@@ -469,10 +469,10 @@ Types can be recognised by the flag marked by "*".
 
 
 #### CALPAT (0084H) *1
-* **Funtion**: returns the address of the sprite generator table
-* **Input:**: A for the sprite number
-* **Output:**: HL for the address
-* **Registers:**: AF, DE, HL
+* **Function**: returns the address of the sprite generator table
+* **Input**: A for the sprite number
+* **Output**: HL for the address
+* **Registers**: AF, DE, HL
 
 
 <p>&nbsp;</p>
@@ -1127,6 +1127,8 @@ INIPAL: PUSH    IX
 * **Registers**: all
 
 
+<p>&nbsp;</p>
+
 #### INIT32 (00D9H)
 * **Function**: initialises the screen to GRAPHIC1 mode (32x24)
 * **Input**:
@@ -1135,8 +1137,8 @@ INIPAL: PUSH    IX
   * T32CGP (F3C1H) for the pattern generator table
   * T32ATR (F3C3H) for the sprite attribute table
   * T32PAT (F3C5H) for the sprite generator table
-* **Output:       none
-* **Registers:    all
+* **Output**: none
+* **Registers**: all
 
 
 <p>&nbsp;</p>
@@ -1179,10 +1181,10 @@ INIPAL: PUSH    IX
 <p>&nbsp;</p>
 
 #### SETT32 (00E9H)
-* **Function:**: ses VDP in the text mode (32x24)
-* **Input:**: same as [INIT32](#init32-00d9h)
-* **Output:**: none
-* **Registers:**: all
+* **Function**: ses VDP in the text mode (32x24)
+* **Input**: same as [INIT32](#init32-00d9h)
+* **Output**: none
+* **Registers**: all
 
 
 <p>&nbsp;</p>
@@ -1215,10 +1217,10 @@ INIPAL: PUSH    IX
 <p>&nbsp;</p>
 
 #### CALPAT (00F9H)
-* **Funtion:**: returns the address of the sprite generator table (this routine is the same as [CALPAT](#calpat-0084h-1) in MAIN-ROM)
-* **Input:**: A for the sprite number
-* **Output:**: HL for the address
-* **Registers:**: AF, DE, HL
+* **Function**: returns the address of the sprite generator table (this routine is the same as [CALPAT](#calpat-0084h-1) in MAIN-ROM)
+* **Input**: A for the sprite number
+* **Output**: HL for the address
+* **Registers**: AF, DE, HL
 
 
 <p>&nbsp;</p>

@@ -449,7 +449,7 @@ SETMLT (0081H)          *3
 
 
 CALPAT (0084H)          *1
-  Funtion:      returns the address of the sprite generator table
+  Function:     returns the address of the sprite generator table
   Input:        A for the sprite number
   Output:       HL for the address
   Registers:    AF, DE, HL
@@ -1061,7 +1061,7 @@ CLRSPR (00F5H)
 
 
 CALPAT (00F9H)
-  Funtion:      returns the address of the sprite generator table
+  Function:     returns the address of the sprite generator table
                 (this routine is the same as CALPAT in MAIN-ROM)
   Input:        A for the sprite number
   Output:       HL for the address

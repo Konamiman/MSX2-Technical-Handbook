@@ -13,7 +13,7 @@ These are the book chapters, chapters 4 and 5 are split in two files each due to
 * [Chapter 5: Access to peripherals through BIOS (section 7)](md/Chapter5b.md)
 * [Appendix 1: BIOS listing](md/Appendix1.md)
 * [Appendix 2: MATH-PACK](md/Appendix2.md)
-* Appendix 3: Bit block transfer
+* [Appendix 3: Bit block transfer](md/Appendix3.md)
 * Appendix 4: Work area listing
 * Appendix 5: VRAM map
 * Appendix 6: I/O map
