@@ -14,7 +14,7 @@ These are the book chapters, chapters 4 and 5 are split in two files each due to
 * [Appendix 1: BIOS listing](md/Appendix1.md)
 * [Appendix 2: MATH-PACK](md/Appendix2.md)
 * [Appendix 3: Bit block transfer](md/Appendix3.md)
-* Appendix 4: Work area listing
+* [Appendix 4: Work area listing](md/Appendix4.md)
 * Appendix 5: VRAM map
 * Appendix 6: I/O map
 * Appendix 7: Cartridge hardware

@@ -1955,7 +1955,7 @@ LINL40 (F3AEH, 1)
                 at SCREEN 0)
 
 
-LINL32 (F3AfH, 1)
+LINL32 (F3AFH, 1)
   initial value:  32
   contents:     screen width per line at SCREEN 1 (set by WIDTH statement
                 at SCREEN 1)
@@ -2966,7 +2966,7 @@ DEVNUM (FB17H, 1)
 DATCNT (FB18H, 3)
   contents:     FB18H +0:  byte data
                 FB18H +1:  byte pointer
-                FB12H +2:  byte pointer
+                FB18H +2:  byte pointer
 
 
 ERRORS (FB1BH, 1)
