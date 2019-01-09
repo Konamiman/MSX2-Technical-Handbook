@@ -16,7 +16,7 @@ These are the book chapters, chapters 4 and 5 are split in two files each due to
 * [Appendix 3: Bit block transfer](md/Appendix3.md)
 * [Appendix 4: Work area listing](md/Appendix4.md)
 * [Appendix 5: VRAM map](md/Appendix5.md)
-* Appendix 6: I/O map
+* [Appendix 6: I/O map](md/Appendix6.md)
 * Appendix 7: Cartridge hardware
 * Appendices 8 and 10: Control codes and escape sequences
 * Appendix 9: Character set

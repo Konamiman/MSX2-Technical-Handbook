@@ -4091,7 +4091,7 @@ ACH to AFH      MSX engine (one chip MSX I/O)
 
 B0H to B3H      expansion memory (SONY specification) (8255)
       A8H       port A, address (A0 to A7)
-      A9H       port B, address (A8 to A10, A13 to A15), control R/"
+      A9H       port B, address (A8 to A10, A13 to A15), control R/W
       AAH       port C, address (A11 to A12), data (D0 - D7)
       ABH       mode set
 
