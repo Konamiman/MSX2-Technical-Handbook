@@ -15,11 +15,11 @@ These are the book chapters, chapters 4 and 5 are split in two files each due to
 * [Appendix 2: MATH-PACK](md/Appendix2.md)
 * [Appendix 3: Bit block transfer](md/Appendix3.md)
 * [Appendix 4: Work area listing](md/Appendix4.md)
-* Appendix 5: VRAM map
+* [Appendix 5: VRAM map](md/Appendix5.md)
 * Appendix 6: I/O map
 * Appendix 7: Cartridge hardware
-* Appendix 9: Character set
 * Appendices 8 and 10: Control codes and escape sequences
+* Appendix 9: Character set
 
 * BASIC KUN compiler
 
