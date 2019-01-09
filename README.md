@@ -21,9 +21,9 @@ These are the book chapters, chapters 4 and 5 are split in two files each due to
 * [Appendices 8 and 10: Control codes and escape sequences](md/Appendices8and10.md)
 * Appendix 9: Character set
 
-* BASIC KUN compiler
+* [BASIC KUN compiler](md/KunBASIC.md)
 
-The original text files are in [the txt folder](txt), unmodified since I first published them in [konamiman.com](http://www.konamiman.com) except that some typos have been corrected and all tabs have been converted to spaces.
+The original text files are in [the txt folder](txt), unmodified since I first published them in [konamiman.com](http://www.konamiman.com) except that some typos have been corrected and all tabs have been converted to spaces (file sizes listed in [index.txt](txt/index.txt) aren't valid anymore due to these corrections).
 
 
 ### Contributing
