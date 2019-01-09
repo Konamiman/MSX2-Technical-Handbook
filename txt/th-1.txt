@@ -375,7 +375,7 @@ when loading or saving BASIC programs temporarily.
 
 This section gives a simple overview of the MSX2 software and hardware 
 systems. To help you understand the concepts, diagrams which would be useful 
-when developping softwarem, such as VRAM map, the I/O map, and the interface 
+when developing software, such as VRAM map, the I/O map, and the interface 
 standard, are found in the APPENDIX of this manual.
 
 

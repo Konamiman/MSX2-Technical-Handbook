@@ -768,7 +768,7 @@ c)  |  Output setup when the expanded statement was processed           |
 
 To develop the statement expansion routine, recognise the name of the expansion statement written in PROCNM first, then return with setting "1" to the carry flag without modifying the HL register if the statement is not to be handled (see [Figure 5.49](#figure-549--input-output-of-the-operation-routine-of-the-expansion-statement)b); otherwise, handle it properly and set the HL register (text pointer) to the next handled statement (where 00H or 3AH is placed usually), then return after setting "0" to the carry flag (see [Figure 5.49](#figure-549--input-output-of-the-operation-routine-of-the-expansion-statement)c).
 
-The BASIC interpreter determines the status of the carry flag whether a CALL statement has been executed, and, if not, calls the next cartridge. When all cartridges have not executed the statement (when the carry flag has been "1" all the time), it displays "SYNTAX ERROR". To test arguments of the statement, it is convenient to use "internal routines for the statement expansion" in section 4.4 of chapter 2.
+The BASIC interpreter determines the status of the carry flag whether a CALL statement has been executed, and, if not, calls the next cartridge. When all cartridges have not executed the statement (when the carry flag has been "1" all the time), it displays "SYNTAX ERROR". To test arguments of the statement, it is convenient to use "internal routines for the statement expansion" in [section 4.4 of chapter 2](Chapter2.md#44-expansion-of-cmd-command).
 
 
 ##### DEVICE

@@ -702,7 +702,7 @@ CSAVE           "filename",<baud rate>
 
 One bit data, the basis of I/O, is recorded as shown in [Figure 5.11](#figure-511--one-bit-composition). The pulse width is determined by counting the T-STATE of the CPU, so, while the cassette interface is active, any interrupt is inhibited.
 
-The bit data from the cassette can be read through the seventh bit of port B of the general-purpose I/O interface (register 15 of the PSG). This function was used in the program example of [List 5.3](#list-53--listing-names-of-files-saved-in-the-cassette), section 1 of chapter 5.
+The bit data from the cassette can be read through the seventh bit of port B of the general-purpose I/O interface (register 15 of the PSG). This function was used in the program example of [List 5.3](list-53--listing-names-of-files-saved-in-the-cassette), section 1 of chapter 5.
 
 
 ##### _Figure 5.11  One bit composition_
@@ -1104,7 +1104,7 @@ WORK:   DS      16,0
 
 ## 3. KEYBOARD INTERFACE
 
-Altough the MSX2 keyboard has the same design as that of the MSX1, it is more convenient to use because of the Romand-to-kana translation available for kana input. This chapter describes the keyboard interface of the MSX2.
+Altough the MSX2 keyboard has the same design as that of the MSX1, it is more convenient to use because of the Romand-to-kana translation available for kana input. This section describes the keyboard interface of the MSX2.
 
 Descriptions of the key aarangement are based on the Japanese keyboard standard; note that data is slightly different for the international MSX versions.
 

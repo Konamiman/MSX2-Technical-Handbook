@@ -160,7 +160,7 @@ Batch commands are carried out by getting command line input from a batch file i
 
 #### MSXDOS.SYS
 
-MSXDOS.SYS, core of MSX-DOS, controls disk access and communications with peripherals. These MSXDOS.SYS functions are opened as "BDOS (Basic Disk Operating System)" so that the user can use them. Each routine opened is called a "system call", which is useful in developping software for managing the disk (see chapter 4). Each execution is, however, not done by MSXDOS.SYS itself but DOS kernel. MSXDOS.SYS is an intermediation which arranges input/output requests from COMMAND.COM or external commands and passes them to the DOS kernel.
+MSXDOS.SYS, core of MSX-DOS, controls disk access and communications with peripherals. These MSXDOS.SYS functions are opened as "BDOS (Basic Disk Operating System)" so that the user can use them. Each routine opened is called a "system call", which is useful in developping software for managing the disk (see [section 4](#4--system-call-usage)). Each execution is, however, not done by MSXDOS.SYS itself but DOS kernel. MSXDOS.SYS is an intermediation which arranges input/output requests from COMMAND.COM or external commands and passes them to the DOS kernel.
 
 MSXDOS.SYS includes a portion called BIOS other than BDOS, as shown in [Figure 3.2](#figure-32--msxdossys). BIOS, which has been prepared to be compatible with CP/M, is not normally used.
 

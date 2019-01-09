@@ -3245,7 +3245,7 @@ area of BASIC has not been destroyed, the BASIC prompt will be displayed. The
 contents of register and stack at the jump are ignored.
 
 Another way is to execute the next command in internal routine NEWSTT (see 
-4.4 of Chapter 4) (see Figure 2.20)
+4.4 of Chapter 2) (see Figure 2.20)
 
 
    Figure 2.20  Input setting of NEWSTT for the warm start

@@ -235,7 +235,7 @@ MSX machines which have 64K bytes VRAM but cannot be expanded to 128K bytes are 
 
 The MSX series computers use a video display processor (VDP) type LSI chip for controlling the screen output. The VDP used for MSX1 was the TMS9918, but the MSX2 uses the V9938 (MSX-VIDEO), which has upper and full compatibility with the TMS9918 and can execute software for TMS9918 without any modification.
 
-[Table 1.2](#table-12--vdp-specifications) shows the VDP standard and [Table 1.3](#table-13--v9938-screen-mode) shows each screen mode. V9938 is an excellent LSI chip with digitising, superimposing, and hardware scrolling features. Chapter 4 of this manual describes it in detail.
+[Table 1.2](#table-12--vdp-specifications) shows the VDP standard and [Table 1.3](#table-13--v9938-screen-mode) shows each screen mode. V9938 is an excellent LSI chip with digitising, superimposing, and hardware scrolling features. [Chapter 4](Chapter4a.md) of this manual describes it in detail.
 
 
 ##### _Table 1.2  VDP specifications_
@@ -305,7 +305,7 @@ When using BASIC on MSX1 machines which had 64K bytes RAM, only 32K bytes of RAM
 
 ## 2. MSX2 SYSTEM OVERVIEW
 
-This section gives a simple overview of the MSX2 software and hardware systems. To help you understand the concepts, diagrams which would be useful when developping softwarem, such as VRAM map, the I/O map, and the interface standard, are found in the APPENDIX of this manual.
+This section gives a simple overview of the MSX2 software and hardware systems. To help you understand the concepts, diagrams which would be useful when developing software, such as [VRAM map](Appendix5.md), the [I/O map](Appendix6.md), and the interface standard, are found in the APPENDIX of this manual.
 
 
 <p>&nbsp;</p>
@@ -390,7 +390,7 @@ Note: The dotted lines represent optional features.
 
 The MSX2 has three kinds of memory: MAIN-ROM, SUB-ROM, and RAM. Each memory resides in an independent 64K address space and is allocated as shown in [Figure 1.4](#figure-14--msx2-standard-memory) (1) (each 64K space is called a "slot", which consists of four 16K areas called "pages"). [Figures 1.3](#figure-13--msx2-block-diagram) (2) and (3) show memory usage when using BASIC and MSX-DOS, respectively.
 
-For each class of memory, [Figure 1.5](#figure-15--main-rom-memory-map) shows the memory map of [Figure 1.4](#figure-14--msx2-standard-memory) (1)(a), [Figure 1.6](#figure-16--sub-rom-memory-map) for [Figure 1.4](#figure-14--msx2-standard-memory) (1)(b), and [Figure 1.7](#figure-17--main-ram-memory-map) for [Figure 1.4](#figure-14--msx2-standard-memory) (1)(c). There is also a VRAM map and I/O map whose standards are defined. They are found in the APPENDIX.
+For each class of memory, [Figure 1.5](#figure-15--main-rom-memory-map) shows the memory map of [Figure 1.4](#figure-14--msx2-standard-memory) (1)(a), [Figure 1.6](#figure-16--sub-rom-memory-map) for [Figure 1.4](#figure-14--msx2-standard-memory) (1)(b), and [Figure 1.7](#figure-17--main-ram-memory-map) for [Figure 1.4](#figure-14--msx2-standard-memory) (1)(c). There is also a [VRAM map](Appendix5.md) and [I/O map](Appendix6.md) whose standards are defined. They are found in the APPENDIX.
 
 
 ##### _Figure 1.4  MSX2 standard memory_

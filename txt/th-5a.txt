@@ -1059,7 +1059,7 @@ WORK:   DS      16,0
 
 Altough the MSX2 keyboard has the same design as that of the MSX1, it is more 
 convenient to use because of the Romand-to-kana translation available for 
-kana input. This chapter describes the keyboard interface of the MSX2.
+kana input. This section describes the keyboard interface of the MSX2.
 
 Descriptions of the key aarangement are based on the Japanese keyboard 
 standard; note that data is slightly different for the international MSX 

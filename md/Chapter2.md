@@ -631,7 +631,7 @@ This statement is new. It allows users to set the page to display and the page t
 ------------------------------------------
 ```
 
-See the VRAM map in the APPENDIX for the page assignment on VRAM.
+See the [VRAM map](Appendix5.md) in the APPENDIX for the page assignment on VRAM.
 
 
 <p>&nbsp;</p>
@@ -690,7 +690,7 @@ Brightness of each colour can be set to one of eight steps from 0 to 7 and combi
 
 * `COLOR=RESTORE`
 
-This statement resets the colour palette register according to the contents of the colour palette storage table (see APPENDIX VRAM MAP). For example, if image data written under unusual colour palette settings is BSAVEd, the original images cannot be reproduced because BLOADing the data does not change the colour palettes. Therefore, the image data should be BSAVEd with the colour palette storage table. To obtain the colours of the original images, BLOAD the data and reset the palettes with the COLOR=RESTORE instruction.
+This statement resets the colour palette register according to the contents of the colour palette storage table (see APPENDIX [VRAM MAP](Appendix5.md)). For example, if image data written under unusual colour palette settings is BSAVEd, the original images cannot be reproduced because BLOADing the data does not change the colour palettes. Therefore, the image data should be BSAVEd with the colour palette storage table. To obtain the colours of the original images, BLOAD the data and reset the palettes with the COLOR=RESTORE instruction.
 
 
 * `COLOR [=NEW]`
@@ -1749,7 +1749,7 @@ Integer from 256 to 32767 (%)   | 1C | XX : XX |
 
 Numbers called "identification codes" are assigned numeric values to distinguish them from reserved words and variable names, and by referring to them the following values can be recognised.
 
-The high and low bytes of a 2-byte numeric value are stored in reverse. Signed numeric values have only the intermediate codes + or - preceding the identifying codes, numeral values themselves are always stored as positive values. Floating-point notations are almost the same as the descriptions of Math-Pack (Mathematical Package) in the APPENDIX, note that numerical values are always stored as positive. Binary numbers (&B) do not have identifying codes and are stored as ASCII codes.
+The high and low bytes of a 2-byte numeric value are stored in reverse. Signed numeric values have only the intermediate codes + or - preceding the identifying codes, numeral values themselves are always stored as positive values. Floating-point notations are almost the same as the descriptions of [Math-Pack](Appendix2.md) (Mathematical Package) in the APPENDIX, note that numerical values are always stored as positive. Binary numbers (&B) do not have identifying codes and are stored as ASCII codes.
 
 
 <p>&nbsp;</p>
@@ -2349,7 +2349,7 @@ There are some matters, when developing the software for MSX, that should be fol
 
 The purpose of BIOS is to separate the hardware and the software and to make the software still valid if the hardware changes. Applications for sale which manage input and output should use BIOS (except for VDP).
 
-BIOS is called through the jump table which begins at 0000H of MAIN-ROM. Though MSX2 has a jump table on SUB-ROM, it is used for calling the extended functions. The branch destination of the jump table or, the contents of BIOS may be modified for the hardware modification or the extension of the function, so applications should not call them directly. Thogh this book has some examples that call addresses other than the BIOS jump table, you should consider them for information only (see BIOS list in APPENDIX). Applications can call Math-Pack and internal routines for the extended statements described above. These will not be changed in the future.
+BIOS is called through the jump table which begins at 0000H of MAIN-ROM. Though MSX2 has a jump table on SUB-ROM, it is used for calling the extended functions. The branch destination of the jump table or, the contents of BIOS may be modified for the hardware modification or the extension of the function, so applications should not call them directly. Thogh this book has some examples that call addresses other than the BIOS jump table, you should consider them for information only (see [BIOS list](Appendix1.md) in APPENDIX). Applications can call Math-Pack and internal routines for the extended statements described above. These will not be changed in the future.
 
 
 ### Work area
@@ -2361,7 +2361,7 @@ F380H to FFFFH of MAIN-RAM cannot be used, as it is a work area for BIOS and BAS
 
 The contents of RAM are unpredictable when the machine is powered and areas other than system work are are not initialised. Applications should initialise the work area. There was once an application which expected the contents of RAM to be 00H and was unusable.
 
-The value of the stack pointer when the INIT routine (see Section 7 of Chapter 5) in the ROM cartridge is called is unpredictable and the value when disk interface has been initialised is smaller than when not. For these reasons some programs which did not initialise the stack pointer had unpredictable results. Programs which are invoked by the INIT routine and continue processing (that is, programs which do not need to use peripherals such as disks or BASIC interpreter) should initialise the stack pointer.
+The value of the stack pointer when the INIT routine (see [Section 7 of Chapter 5](Chapter5b.md)) in the ROM cartridge is called is unpredictable and the value when disk interface has been initialised is smaller than when not. For these reasons some programs which did not initialise the stack pointer had unpredictable results. Programs which are invoked by the INIT routine and continue processing (that is, programs which do not need to use peripherals such as disks or BASIC interpreter) should initialise the stack pointer.
 
 
 ### Work area of extended BIOS
@@ -2373,12 +2373,12 @@ When using extended BIOS calls, a stack should be placed above C000H so that CPU
 
 Special attention should be paid for the allocation of the work area of programs which reside in memory with another program at the same time, programs such as the device driver or a subroutine called from BASIC.
 
-The INIT routine of the cartridge changes BOTTOM (FC48H), reserves the area between the old BOTTOM and new BOTTOM as its work area, and records the address of the work area to 2-byte area SLTWRK (FD09H) allocated for each slot. For more details, see Section 7 of Chapter 5.
+The INIT routine of the cartridge changes BOTTOM (FC48H), reserves the area between the old BOTTOM and new BOTTOM as its work area, and records the address of the work area to 2-byte area SLTWRK (FD09H) allocated for each slot. For more details, see [Section 7 of Chapter 5](Chapter5b.md).
 
 
 ### Hook
 
-When using the RS-232C cartridge, change the hook for an interrupt. For example, if another cartridge uses an interrupt hook, the RS-232C cartridge cannot use the same hook. To prevent this, the previous contents of the hook (inter-slot call command for the interrupt handling routine of RS-232C cartridge, in the example above) should be copied to another location, and, when called by the hook, it should be called so that all cartridges intending to use the hook can receive control (see [Figure 2.18](#figure-218--initialisation-of-the-hook)). For more details, see Section 7 of Chapter 5.
+When using the RS-232C cartridge, change the hook for an interrupt. For example, if another cartridge uses an interrupt hook, the RS-232C cartridge cannot use the same hook. To prevent this, the previous contents of the hook (inter-slot call command for the interrupt handling routine of RS-232C cartridge, in the example above) should be copied to another location, and, when called by the hook, it should be called so that all cartridges intending to use the hook can receive control (see [Figure 2.18](#figure-218--initialisation-of-the-hook)). For more details, see [Section 7 of Chapter 5](Chapter5b.md).
 
 
 #### _Figure 2.18  Initialisation of the hook_
@@ -2498,7 +2498,7 @@ The version of machine can be found by reading the ID byte information in ROM (s
 
 ### Escape sequence
 
-MSX has the escape sequence feature (see Appendix), which can be used in the PRINT statement of BASIC, and in console output of BIOS or BDOS call (MSX-DOS). The escape sequence feature is a subset of DEC VT52 terminal and Heathkit H19 terminal.
+MSX has the escape sequence feature (see [Appendix 10](Appendices8and10.md#appendix-10---escape-sequences)), which can be used in the PRINT statement of BASIC, and in console output of BIOS or BDOS call (MSX-DOS). The escape sequence feature is a subset of DEC VT52 terminal and Heathkit H19 terminal.
 
 
 ### Returning to BASIC
@@ -2507,7 +2507,7 @@ _Warm start_
 
 After selecting a slot of MAIN-ROM, jump to 409BH of MAIN-ROM. If the work area of BASIC has not been destroyed, the BASIC prompt will be displayed. The contents of register and stack at the jump are ignored.
 
-Another way is to execute the next command in internal routine NEWSTT (see 4.4 of Chapter 4) (see [Figure 2.20](#figure-220--input-setting-of-newstt-for-the-warm-start))
+Another way is to execute the next command in internal routine NEWSTT (see [4.4 of Chapter 2](Chapter2.md#44-expansion-of-cmd-command)) (see [Figure 2.20](#figure-220--input-setting-of-newstt-for-the-warm-start))
 
 
 #### _Figure 2.20  Input setting of NEWSTT for the warm start_
