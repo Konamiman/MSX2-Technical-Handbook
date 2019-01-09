@@ -438,11 +438,9 @@ For access the PSG from assembly language programs, several BIOS routines descri
 
 #### GICINI (0090H/MAIN) - PSG initialization
 
-***Input:*** ---
-
-***Output:*** ---
-
-***Function:*** initializes PSG registers and does the initial settings of the work area in which PLAY statement of BASIC is executed. Each register of PSG is set to the value as shown in [Figure 5.9](#figure-59--initial-values-of-psg-registers).
+* **Input**: ---
+* **Output**: ---
+* **Function**: initializes PSG registers and does the initial settings of the work area in which PLAY statement of BASIC is executed. Each register of PSG is set to the value as shown in [Figure 5.9](#figure-59--initial-values-of-psg-registers).
 
 
 ##### _Figure 5.9  Initial values of PSG registers_
@@ -492,46 +490,29 @@ For access the PSG from assembly language programs, several BIOS routines descri
 
 #### WRTPSG (0093H/MAIN) - writing data in PSG registers
 
-***Input:***
-```
-A ⟵ PSG register number
-E ⟵ data to be written
-```
-
-***Output:*** ---
-
-***Function:*** writes the contents of the E register in the PSG register whose number is specified by the A register.
+* **Input**:
+  * A ⟵ PSG register number
+  * E ⟵ data to be written
+* **Output**: ---
+* **Function**: writes the contents of the E register in the PSG register whose number is specified by the A register.
 
 
 <p>&nbsp;</p>
 
 #### RDPSG (0096H/MAIN) - reading PSG register data
 
-***Input:***
-```
-A ⟵ PSG register number
-```
-
-***Output:***
-```
-A ⟵ contents of the specified register
-```
-
-***Function:*** reads the contents of PSG register whose number is specified by the A register and stores the value in the A register.
+* **Input**: A ⟵ PSG register number
+* **Output**: A ⟵ contents of the specified register
+* **Function**: reads the contents of PSG register whose number is specified by the A register and stores the value in the A register.
 
 
 <p>&nbsp;</p>
 
 #### STRTMS (0099H/MAIN) - starting the music
 
-***Input:***
-```
-(QUEUE) ⟵ MML which is translated into the intermediate language
-```
-
-***Output:*** ---
-
-***Function:*** examines whether the music is played as the background task, and plays the music which is set in the queue, if the music has not yet been played.
+* **Input**: (QUEUE) ⟵ MML which is translated into the intermediate language
+* **Output**: ---
+* **Function**: examines whether the music is played as the background task, and plays the music which is set in the queue, if the music has not yet been played.
 
 
 ##### _List 5.1  Single tone generation_
@@ -609,15 +590,9 @@ To access to the 1-bit sound port, the following BIOS routine is offered.
 
 #### CHGSND (0135H/MAIN)
 
-***Input:***
-```
-A ⟵ specification of ON/OFF (0 = OFF, others = ON)
-```
-
-
-***Output:*** ---
-
-***Function:*** calling this routine with setting 0 in the A register turns the bit of the sound port OFF; calling it with another value turns it ON.
+* **Input**: A ⟵ specification of ON/OFF (0 = OFF, others = ON)
+* **Output**: ---
+* **Function**: calling this routine with setting 0 in the A register turns the bit of the sound port OFF; calling it with another value turns it ON.
 
 
 ##### _List 5.2  Reading from cassette tape_
@@ -905,100 +880,65 @@ The following BIOS routines are offered to access cassette files.
 
 #### TAPION (00E1H/MAIN) - OPEN for read
 
-***Input:*** ---
-
-***Output:***
-```
-CY flag = ON at abnormal terminations
-```
-
-***Function:*** starts the motor of the tape recorder and reads the long header or the short headet. At the same time, the baud rate in which the file is recorded is detected and the work area is set according to it. Interrupts are inhibited.
+* **Input**: ---
+* **Output**: CY flag = ON at abnormal terminations
+* **Function**: starts the motor of the tape recorder and reads the long header or the short headet. At the same time, the baud rate in which the file is recorded is detected and the work area is set according to it. Interrupts are inhibited.
 
 
 <p>&nbsp;</p>
 
 #### TAPIN (00E4H/MAIN) - read one byte
 
-***Input:*** ---
-
-***Output:***
-```
-A ⟵ data which has been read
-CY flag = ON at abnormal terminations
-```
-
-***Function:*** reads one byte of data from the tape and stores it in the A register.
+* **Input**: ---
+* **Output**:
+  * A ⟵ data which has been read
+  * CY flag = ON at abnormal terminations
+* **Function**: reads one byte of data from the tape and stores it in the A register.
 
 
 <p>&nbsp;</p>
 
 #### TAPIOF (00E7H/MAIN) - CLOSE for read
 
-***Input:*** ---
-
-***Output:*** ---
-
-***Function:*** ends reading from the tape. At this point, interrupts are allowed.
+* **Input**: ---
+* **Output**: ---
+* **Function**: ends reading from the tape. At this point, interrupts are allowed.
 
 
 <p>&nbsp;</p>
 
 #### TAPOON (00EAH/MAIN) - OPEN for write
 
-***Input:***
-```
-A ⟵ type of header (0 = short header, others = long header)
-```
-
-***Output:***
-```
-CY flag = ON at abnormal terminations
-```
-
-***Function:*** starts the motor of the tape recorder and writes the header of the type specified in the A register to the tape. Interrupts are inhibited.
+* **Input**: A ⟵ type of header (0 = short header, others = long header)
+* **Output**: CY flag = ON at abnormal terminations
+* **Function**: starts the motor of the tape recorder and writes the header of the type specified in the A register to the tape. Interrupts are inhibited.
 
 
 <p>&nbsp;</p>
 
 #### TAPOUT (00EDH/MAIN) - write one byte
 
-***Input:***
-```
-A ⟵ data to be written
-```
-
-***Output:***
-```
-CY flag = ON at abnormal terminations
-```
-
-***Function:*** writes the contents of the A register to the tape.
+* **Input**: A ⟵ data to be written
+* **Output**: CY flag = ON at abnormal terminations
+* **Function**: writes the contents of the A register to the tape.
 
 
 <p>&nbsp;</p>
 
 #### TAPOOF (00F0H/MAIN) - CLOSE writing
 
-***Input:*** ---
-
-***Output:*** ---
-
-***Function:*** ends writing the tape. At this point, interrupts are allowed.
+* **Input**: ---
+* **Output**: ---
+* **Function**: ends writing the tape. At this point, interrupts are allowed.
 
 
 <p>&nbsp;</p>
 
 #### STMOTR (00F3/MAIN) - specify the actions of the motor
 
-***Input:***
-```
-A ⟵ action (0 = stop, 1 = start, 255 = reverse the current status)
-```
-
-***Output:*** ---
-
-***Function:*** sets the status of the motor according to the value specified in the A register.
-
+* **Input**: A ⟵ action (0 = stop, 1 = start, 255 = reverse the current status)
+* **Output**: ---
+* **Function**: sets the status of the motor according to the value specified in the A register.
 
 When READ/WRITE routines for the cassette files are created using these BIOS calls, only READ or WRITE, without any other action, should be done. For example, reading data from the tape and displaying it on the CRT might cause a READ error.
 
@@ -1120,17 +1060,9 @@ Scanning the key matrix is done by the following BIOS routine.
 
 #### SNSMAT (0141H/MAIN) - reads the specified line of the key matrix
 
-***Input:***
-```
-A ⟵ key matrix line to be read (0 to 10)
-```
-
-***Output:***
-```
-A ⟵ status of the specified line of the key matrix (when pressed, the bit of the key is 0)
-```
-
-***Function:*** specifies a line of the key matrix shown in [Figure 5.16](#figure-516--msx-usa-version-key-matrix), [Figure 5.17](#figure-517--msx-international-version-key-matrix) or [Figure 5.17B](#figure-517b--msx-european-version-key-matrix) and stores its status in the A register. The bit corresponding with the key being pressed is "0", and "1" for the key not being pressed.
+* **Input**: A ⟵ key matrix line to be read (0 to 10)
+* **Output**: A ⟵ status of the specified line of the key matrix (when pressed, the bit of the key is 0)
+* **Function**: specifies a line of the key matrix shown in [Figure 5.16](#figure-516--msx-usa-version-key-matrix), [Figure 5.17](#figure-517--msx-international-version-key-matrix) or [Figure 5.17B](#figure-517b--msx-european-version-key-matrix) and stores its status in the A register. The bit corresponding with the key being pressed is "0", and "1" for the key not being pressed.
 
 
 ##### _Figure 5.16  MSX USA version key matrix_
@@ -1328,28 +1260,18 @@ BIOS routines having functions for key input using this keyboard buffer and func
 
 #### CHSNS (009CH/MAIN) - checks the keyboard buffer
 
-***Input:*** ---
-
-***Output:***
-```
-Z flag = ON when the buffer is empty
-```
-
-***Function:*** examines whether any characters remain in the keyboard buffer and sets the Z flag when the buffer is empty.
+* **Input**: ---
+* **Output**: Z flag = ON when the buffer is empty
+* **Function**: examines whether any characters remain in the keyboard buffer and sets the Z flag when the buffer is empty.
 
 
 <p>&nbsp;</p>
 
 #### CHGET (009FH/MAIN) - one character input from the keyboard buffer
 
-***Input:*** ---
-
-***Output:***
-```
-A ⟵ character code
-```
-
-***Function:*** reads one character from the keyboard buffer and stores it in the A register. When the buffer is empty, it displays the cursor and waits for a key input. While a key input is waited for, the CAPS lock, KANA lock, and Roman-to-kana translation lock are valid. The related work area is listed below. In the list, since SCNCNT and REPCNT are initialised after the execution of CHGET routine, this area should be set at each CHGET call to change the interval of the auto-repeat.
+* **Input**: ---
+* **Output**: A ⟵ character code
+* **Function**: reads one character from the keyboard buffer and stores it in the A register. When the buffer is empty, it displays the cursor and waits for a key input. While a key input is waited for, the CAPS lock, KANA lock, and Roman-to-kana translation lock are valid. The related work area is listed below. In the list, since SCNCNT and REPCNT are initialised after the execution of CHGET routine, this area should be set at each CHGET call to change the interval of the auto-repeat.
 
 Work area:
 
@@ -1370,11 +1292,9 @@ Work area:
 
 #### KILBUF (0156H/MAIN) - empty the keyboard buffer
 
-***Input:*** ---
-
-***Output:*** ---
-
-***Function:*** empties the keyboard buffer.
+* **Input**: ---
+* **Output**: ---
+* **Function**: empties the keyboard buffer.
 
 
 ##### _List 5.5  Use of one character input routine_
@@ -1423,20 +1343,13 @@ KEY2:   CALL    CHPUT           ;put the character
 
 #### CNVRCHR (00AB/MAIN) - graphic character operation
 
-***Input:***
-```
-A ⟵ character code
-```
-
-***Output:***
-```
-A ⟵ translated graphic character (normal characters are not translated)
-CY flag = OFF (input was the graphic header byte 01H)
-CY flag = ON, Z flag = ON  (input was the graphic character and was translated)
-CY flag = ON, Z flag = OFF (input was the normal character and was not translated)
-```
-
-***Function:*** executing CNVCHR after CHGET causes the graphic character to be translated to one byte code as shown in [Figure 5.19](#figure-519--graphic-character-translation-chart) and causes other character not to be translated and to be returned. Since the graphic character is represented by irregular 2-byte code with the graphic header byte (01H), annoying procedures are required for the character operations; this routine makes it somewhat easy.
+* **Input**: A ⟵ character code
+* **Output**:
+  * A ⟵ translated graphic character (normal characters are not translated)
+  * CY flag = OFF (input was the graphic header byte 01H)
+  * CY flag = ON, Z flag = ON  (input was the graphic character and was translated)
+  * CY flag = ON, Z flag = OFF (input was the normal character and was not translated)
+* **Function**: executing CNVCHR after CHGET causes the graphic character to be translated to one byte code as shown in [Figure 5.19](#figure-519--graphic-character-translation-chart) and causes other character not to be translated and to be returned. Since the graphic character is represented by irregular 2-byte code with the graphic header byte (01H), annoying procedures are required for the character operations; this routine makes it somewhat easy.
 
 
 ##### _Figure 5.19  Graphic character translation chart_
@@ -1469,16 +1382,12 @@ CY flag = ON, Z flag = OFF (input was the normal character and was not translate
 
 #### PINLIN (00AEH/MAIN) - one line input
 
-***Input:*** ---
-
-***Output:***
-```
-HL ⟵ F55DH
-[F55EH] ⟵ input string (the end of te line is represented by 00H)
-CY flag ⟵ terminated by STOP=ON, terminated by RETURN=OFF
-```
-
-***Function:*** stores input string in the line buffer BUF (F55EH). All functions of the screen editing are available at the string input. Pressing RETURN or STOP causes the input to be finished. The work area is listed below.
+* **Input**: ---
+* **Output**: 
+  * HL ⟵ F55DH
+  * [F55EH] ⟵ input string (the end of te line is represented by 00H)
+  * CY flag ⟵ terminated by STOP=ON, terminated by RETURN=OFF
+* **Function**: stores input string in the line buffer BUF (F55EH). All functions of the screen editing are available at the string input. Pressing RETURN or STOP causes the input to be finished. The work area is listed below.
 
 Work area:
 
@@ -1490,11 +1399,9 @@ Work area:
 
 #### INLIN (00B1H/MAIN) - one line input (prompt available)
 
-***Input:*** ---
-
-***Output:*** same as PINLIN
-
-***Function:*** stores input string in the line buffer BUF (F55EH), as PINLIN routine. Note that the portion before the cursor location at the time when the routine begins to execute is not received. [List 5.6](#list-56--difference-between-inlin-and-pinlin) shows the difference between PINLIN and INLIN.
+* **Input**: ---
+* **Output**: same as PINLIN
+* **Function**: stores input string in the line buffer BUF (F55EH), as PINLIN routine. Note that the portion before the cursor location at the time when the routine begins to execute is not received. [List 5.6](#list-56--difference-between-inlin-and-pinlin) shows the difference between PINLIN and INLIN.
 
 
 ##### _List 5.6  Difference between INLIN and PINLIN_
@@ -1571,11 +1478,9 @@ Pressing a function key causes the string defined in that key to be stored in [K
 
 #### INIFNK (003EH/MAIN) - initialize function keys
 
-***Input:*** ---
-
-***Output:*** ---
-
-***Function:*** restores the function key definition to the setting when BASIC starts.
+* **Input**: ---
+* **Output**: ---
+* **Function**: restores the function key definition to the setting when BASIC starts.
 
 
 <p>&nbsp;</p>
@@ -1587,14 +1492,9 @@ CHGET, the one-character input routine described in 3.3, determines the pressed 
 
 #### BREAKX (00B7H/MAIN) - CTRL + STOP detection
 
-***Input:*** ---
-
-***Output:***
-```
-CY flag = ON, when CTRL + STOP is pressed
-```
-
-***Function:*** scans keys and decides whether CTRL key and STOP key are pressed at the same time. When both are pressed, this routine sets "1" to the CY flag and returns. Otherwise, it resets "0" to the CY flag and returns. This routine is available while interrupts are inhibited.
+* **Input**: ---
+* **Output**: CY flag = ON, when CTRL + STOP is pressed
+* **Function**: scans keys and decides whether CTRL key and STOP key are pressed at the same time. When both are pressed, this routine sets "1" to the CY flag and returns. Otherwise, it resets "0" to the CY flag and returns. This routine is available while interrupts are inhibited.
 
 
 <p>&nbsp;</p>
@@ -1697,52 +1597,30 @@ To send output to the printer, the following BIOS routines are offered.
 
 #### LPTOUT (00A5H/MAIN)
 
-***Input:***
-```
-A register ⟵ character code
-```
-
-***Output:***
-```
-CY flag = ON at abnormal termination
-```
-
-***Function:*** sends a character specified by the A register to the printer.
+* **Input**: A register ⟵ character code
+* **Output**: CY flag = ON at abnormal termination
+* **Function**: sends a character specified by the A register to the printer.
 
 
 <p>&nbsp;</p>
 
 #### LPTSTT (00A8/MAIN)
 
-***Input:*** ---
-
-***Output:***
-```
-A register ⟵ printer status
-```
-
-***Function:*** examines the current printer status. After calling this routine, the printer can be used when the A register is 255 and the Z flag is 0; when the A register is 0 and the Z flag is 1, the printer cannot be used.
+* **Input**: ---
+* **Output**: A register ⟵ printer status
+* **Function**: examines the current printer status. After calling this routine, the printer can be used when the A register is 255 and the Z flag is 0; when the A register is 0 and the Z flag is 1, the printer cannot be used.
 
 
 <p>&nbsp;</p>
 
 #### OUTDLP (014DH,MAIN)
 
-***Input:***
-```
-A register ⟵ character code
-```
-
-***Output:***
-```
-CY flag = ON at abnormal termination
-```
-
-***Function:*** sends a character specified by the A register to the printer. Differences between this routine and LPTOUT routine is as following: 
-
-* prints corresponding number of spaces for TAB code 
-* transforms hiragana to katakana for printers other than MSX standard
-* returns Device I/O error at abnormal termination
+* **Input**: A register ⟵ character code
+* **Output**: CY flag = ON at abnormal termination
+* **Function**: sends a character specified by the A register to the printer. Differences between this routine and LPTOUT routine is as following: 
+  * prints corresponding number of spaces for TAB code 
+  * transforms hiragana to katakana for printers other than MSX standard
+  * returns Device I/O error at abnormal termination
 
 <p>&nbsp;</p>
 
@@ -1866,34 +1744,18 @@ The following BIOS routines are offered for accessing the joystick. These routin
 
 #### GTSTCK (00D5H/MAIN) - read joystick
 
-***Input:***
-```
-A ⟵ joystick number (0 = cursor key, 1 and 2 = joystick)
-```
-
-***Output:***
-```
-A ⟵ direction of joystick or cursor key
-```
-
-***Function:*** returns the current status of the joystick or the cursor keys in the A register. The value is the same as the STICK function in BASIC.
+* **Input**: A ⟵ joystick number (0 = cursor key, 1 and 2 = joystick)
+* **Output**: A ⟵ direction of joystick or cursor key
+* **Function**: returns the current status of the joystick or the cursor keys in the A register. The value is the same as the STICK function in BASIC.
 
 
 <p>&nbsp;</p>
 
 #### GTTRIG (00D8H/MAIN) - read trigger button
 
-***Input:***
-```
-A ⟵ trigger button number (0 = space bar, 1 and 2 = trigger button A, 3 and 4 = trigger button B)
-```
-
-***Output:***
-```
-A ⟵ status of trigger button or space bar (0FFH = pressed, 00H = released)
-```
-
-***Function:*** returns the current status of the trigger buttons or the space bar in the A register. The value is 0FFH when the trigger is pressed, otherwise it is 0.
+* **Input**: A ⟵ trigger button number (0 = space bar, 1 and 2 = trigger button A, 3 and 4 = trigger button B)
+* **Output**: A ⟵ status of trigger button or space bar (0FFH = pressed, 00H = released)
+* **Function**: returns the current status of the trigger buttons or the space bar in the A register. The value is 0FFH when the trigger is pressed, otherwise it is 0.
 
 
 ##### _List 5.7  Joystick use_
@@ -2032,17 +1894,9 @@ BIOS routines for accessing the paddle are described below.
 
 #### GTPDL (00DEH/MAIN) - read paddle information
 
-***Input:***
-```
-A ⟵ paddle number (1 to 12)
-```
-
-***Output:***
-```
-A ⟵ turning angle (0 to 255)
-```
-
-***Function:*** examines the status of the paddle specified in the A register and returns the result in the A register.
+* **Input**: A ⟵ paddle number (1 to 12)
+* **Output**: A ⟵ turning angle (0 to 255)
+* **Function**: examines the status of the paddle specified in the A register and returns the result in the A register.
 
 
 <p>&nbsp;</p>
@@ -2054,17 +1908,9 @@ The touch panel, light pen, mouse, and track ball (cat) are accessible using the
 
 #### GTPAD (00DBH/MAIN) - access to various I/O devices
 
-***Input:***
-```
-A ⟵ device ID (0 to 19)
-```
-
-***Output:***
-```
-A ⟵ objective information
-```
-
-***Function:*** obtains various information as shown in [Table 5.5](#table-55--gtpad-bios-function) according to the value specified in the A register. This is the same as the PAD function of BASIC. "XXX1" in the table means the "XXX" device connected to the universal I/O interface 1; "XXX2" means the one connected to the universal I/O interface #2.
+* **Input**: A ⟵ device ID (0 to 19)
+* **Output**: A ⟵ objective information
+* **Function**: obtains various information as shown in [Table 5.5](#table-55--gtpad-bios-function) according to the value specified in the A register. This is the same as the PAD function of BASIC. "XXX1" in the table means the "XXX" device connected to the universal I/O interface 1; "XXX2" means the one connected to the universal I/O interface #2.
 
 
 ##### _Table 5.5  GTPAD BIOS Function_
@@ -2789,17 +2635,9 @@ The following BIOS routines are offered to access the clock and the battery-powe
 
 #### REDCLK (015FH/SUB) - read CLOCK-IC data
 
-***Input:***
-```
-C ⟵ CLOCK-IC address (see [Figure 5.35](#figure-535--clock-ic-register-specification-method))
-```
-
-***Output:***
-```
-A ⟵ data obtained (only 4 low order bits valid)
-```
-
-***Function:*** reads CLOCK-IC register in the address specified by the C register and stores in the A register. Since the address specification includes the block selection information as shown in [Figure 5.35](#figure-535--clock-ic-register-specification-method), it is not necessary to set the MODE register and then read the objective register.
+* **Input**: C ⟵ CLOCK-IC address (see [Figure 5.35](#figure-535--clock-ic-register-specification-method))
+* **Output**: A ⟵ data obtained (only 4 low order bits valid)
+* **Function**: reads CLOCK-IC register in the address specified by the C register and stores in the A register. Since the address specification includes the block selection information as shown in [Figure 5.35](#figure-535--clock-ic-register-specification-method), it is not necessary to set the MODE register and then read the objective register.
 
 
 ##### _Figure 5.35  CLOCK-IC register specification method_
@@ -2819,15 +2657,11 @@ C register      |  . |  . | M1 : M0 | A3 : A2 : A1 : A0 |
 
 #### WRTCLK (01F9H/SUB) - write CLOCK-IC data
 
-***Input:***
-```
-C ⟵ CLOCK-IC address (see Figure 5.35)
-A ⟵ data to be written (4 low order bits)
-```
-
-***Output:*** ---
-
-***Function:*** write the contents of the A register in the CLOCK-IC at the address specified by the C register. The address is specified in the format shown in [Figure 5.35](#figure-535--clock-ic-register-specification-method) as REDCLK.
+* **Input**:
+  * C ⟵ CLOCK-IC address (see Figure 5.35)
+  * A ⟵ data to be written (4 low order bits)
+* **Output**: ---
+* **Function**: write the contents of the A register in the CLOCK-IC at the address specified by the C register. The address is specified in the format shown in [Figure 5.35](#figure-535--clock-ic-register-specification-method) as REDCLK.
 
 
 [List 5.10](#list-510--setting-the-prompt) shows an example of this BIOS routine.

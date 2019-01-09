@@ -1920,15 +1920,19 @@ These pointers are reserved for future expansion, so should not be used with app
 
 For more sophisticated expansions of statements it is useful if arguments can be passed to the CMD command. As the HL register points to the next location after "CMD" in the BASIC text when the assembly language routine is called, it can be done by appreciating the successive string. The following is a list of internal routines, useful for these.
 
+<p>&nbsp;</p>
 
-* `CHRGTR (4666H/MAIN)` - Extract one character from text (see [Figure 2.14](#figure-214--inputoutput-state-of-chrgtr))
-```
-Input:   HL ⟵ Address pointing to text
-Output:  HL ⟵ Address of the extracted character
-         A  ⟵ Extracted character
-         Z  flag ⟵ ON at the end of line (: or 00H)
-         CY flag ⟵ ON if 0 to 9
-```
+#### CHRGTR (4666H/MAIN)
+
+Extract one character from text (see [Figure 2.14](#figure-214--inputoutput-state-of-chrgtr))
+
+* **Input**: HL ⟵ Address pointing to text
+* **Output**:
+  * HL ⟵ Address of the extracted character
+  * A  ⟵ Extracted character
+  * Z  flag ⟵ ON at the end of line (: or 00H)
+  * CY flag ⟵ ON if 0 to 9
+
 Purpose: Extract one character from the text at (HL + 1). Spaces are skipped.
 
 
@@ -1979,16 +1983,18 @@ Purpose: Extract one character from the text at (HL + 1). Spaces are skipped.
 |                         HL                                              |
 ---------------------------------------------------------------------------
 ```
-<br/>
+<p>&nbsp;</p>
 
-* `FRMEVL (4C64/MAIN)` - Evaluate an expression in text (see [Figure 2.15](#figure-215--inputoutput-state-of-frmevl))
+#### FRMEVL (4C64/MAIN)
 
-```
-Input:   HL ⟵ Starting address of the expression in text
-Output:  HL ⟵ Address after the expression
-         [VALTYP (F663H)] ⟵ Value 2, 3, 4 or 8 according to the expression
-         [DAC (F7F6H)]    ⟵ Result of the evaluation of the expression
-```
+Evaluate an expression in text (see [Figure 2.15](#figure-215--inputoutput-state-of-frmevl))
+
+* **Input**: HL ⟵ Starting address of the expression in text
+* **Output**:
+  * HL ⟵ Address after the expression
+  * [VALTYP (F663H)] ⟵ Value 2, 3, 4 or 8 according to the expression
+  * [DAC (F7F6H)]    ⟵ Result of the evaluation of the expression
+
 Purpose: Evaluate an expression and make output according to its type.
 
 
@@ -2022,35 +2028,45 @@ Purpose: Evaluate an expression and make output according to its type.
 |                               -----                                       |
 -----------------------------------------------------------------------------
 ```
-<br/>
+<p>&nbsp;</p>
 
-* `FRMQNT (542F/MAIN)` - Evaluate an expression un 2-byte integer type.
-```
-Input:   HL ⟵ Starting address of the expression in text
-Output:  HL ⟵ Address after the expression
-         DE ⟵ Result of evaluation of the expression
-```
+#### FRMQNT (542F/MAIN)
+
+Evaluate an expression in 2-byte integer type.
+
+* **Input**: HL ⟵ Starting address of the expression in text
+* **Output**:
+  * HL ⟵ Address after the expression
+  * DE ⟵ Result of evaluation of the expression
+
 Purpose: Evaluate an expression and make output in integer type (INT). When the result is beyond the range of 2-byte integer type, an "Overflow" error occurs and the system returns to the BASIC command level.
+
 <p>&nbsp;<p/>
 
 
-* `GETBYT (521C/MAIN)` - Evaluate an expression in 1-byte integer type.
-```
-Input:   HL ⟵ Starting address of the expression in text
-Output:  HL ⟵ Next address of expression
-         A, E ⟵ Result of expression evaluation
-                 (A and E contains the same value.)
-```
+#### GETBYT (521C/MAIN)
+
+Evaluate an expression in 1-byte integer type.
+
+* **Input**: HL ⟵ Starting address of the expression in text
+* **Output**:
+  * HL ⟵ Next address of expression
+  * A, E ⟵ Result of expression evaluation (A and E contains the same value.)
+
 Purpose: Evaluate an expression and make 1-byte integer output. When the result is beyond the range of 1-byte integer type, an "Illegal function call" error occurs and the execution returns to BASIC command level.
+
 <p>&nbsp;<p/>
 
 
-* `FRESTR (67D0/MAIN)` - Register a string.
-```
-Input:   [VALTYP (F663H)] ⟵ Type (if not string type, an error occurs)
-         [DAC (F7F6H)]    ⟵ Pointer to string descriptor
-Output:  HL ⟵ Pointer to string descriptor
-```
+#### FRESTR (67D0/MAIN)
+
+Register a string.
+
+* **Input**:
+  * [VALTYP (F663H)] ⟵ Type (if not string type, an error occurs)
+  * [DAC (F7F6H)]    ⟵ Pointer to string descriptor
+* **Output**: HL ⟵ Pointer to string descriptor
+
 Purpose: Register the result of the string type obtained by FRMEVL and obtain its string descriptor. When evaluating a string, this is generally combined with FRMEVL described above to use as follows:
 
 ```
@@ -2067,20 +2083,21 @@ LD      A,(DE)
  .
  .
 ```
-<br/>
+<p>&nbsp;</p>
 
-* `PTRGET (5EA4/MAIN)` - Obtain the address for the storage of a variable (see [Figure 2.16](#figure-216--inputoutput-state-of-ptrget)).
-```
-Input:   HL ⟵ Starting address of the variable name in text
-                [SUBFLG (F6A5H)] ⟵ 0: Simple variable,
-                                    other than 0: array variable
-Output:  HL ⟵ Address after the variable name
-         DE ⟵ Address where the contents of the objective variable
-               is stored
-```
+#### PTRGET (5EA4/MAIN)
+
+Obtain the address for the storage of a variable (see [Figure 2.16](#figure-216--inputoutput-state-of-ptrget)).
+
+* **Input**:
+  * HL ⟵ Starting address of the variable name in text
+  * [SUBFLG (F6A5H)] ⟵ 0: Simple variable, other than 0: array variable
+* **Output**:
+  * HL ⟵ Address after the variable name
+  * DE ⟵ Address where the contents of the objective variable is stored
 
 Purpose: Obtain the address for the storage of a variable (or an array variable). Allocation of the area is also done when the area for the objective variable has not been allocated. When the value of SUBFLG is set to other than 0, the starting address of the array is obtained, other than individual elements of the array.
-<br/>
+
 
 ##### _Figure 2.16  Input/output state of PTRGET_
 
@@ -2154,13 +2171,15 @@ Purpose: Obtain the address for the storage of a variable (or an array variable)
 |                   -----------                                         |
 -------------------------------------------------------------------------
 ```
-<br/>
+<p>&nbsp;</p>
 
-* `NEWSTT (4601H/MAIN)` - Execute a text
-```
-Input:   HL ⟵ Address of the text to be executed
-Output:  ----
-```
+#### NEWSTT (4601H/MAIN
+
+Execute a text
+
+* **Input**: HL ⟵ Address of the text to be executed
+* **Output**:  ----
+
 Purpose: Execute a text. The state of the text is necessary to be as same as shown in [Figure 2.17](#figure-217--memory-setting-for-newstt).
 
 

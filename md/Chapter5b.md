@@ -290,96 +290,65 @@ This is easily done when the program resides in other than page 0, but there can
 There are several ways to execute inter-slot calls, as described below. They are included in MAIN-ROM as BIOS calls. Some of them are offered in MSX-DOS, so inter-slot calls can be executed under MSX-DOS.
 
 
+<p>&nbsp;</p>
+
 _(1) Inter-slot call routines in BIOS_
 
 #### RDSLT (000CH/MAIN) - read value at specified address of specified slot
 
-***Input:***
-```
-A register <-- slot specification
-HL register <-- address to be read at
-```
-
-***Output:***
-```
-A register <-- value which has been read out
-```
-
-***Use:*** `AF, BC, DE`
-
-***Function:*** reads the value at the specified address of the specified slot and stores it in the A register. The slot specification is done using the A register in the form shown in [Figure 5.40](#figure-540--format-for-the-slot). At this point, when the objective slot is the basic slot, set "0" to the 6 high order bits and define the slot #0 to #3 using the 2 low order bits. When specifying the expansion slot, specify the basic slot by bit 0 and bit 1 and the expansion slot by bit 2 and bit 3 and set bit 7 to "1".
+* **Input**:
+  * A register ⟵ slot specification
+  * HL register ⟵ address to be read at
+* **Output**: A register ⟵ value which has been read out
+* **Use**: AF, BC, DE
+* **Function**: reads the value at the specified address of the specified slot and stores it in the A register. The slot specification is done using the A register in the form shown in [Figure 5.40](#figure-540--format-for-the-slot). At this point, when the objective slot is the basic slot, set "0" to the 6 high order bits and define the slot #0 to #3 using the 2 low order bits. When specifying the expansion slot, specify the basic slot by bit 0 and bit 1 and the expansion slot by bit 2 and bit 3 and set bit 7 to "1".
 
 
 <p>&nbsp;</p>
 
 #### WRSLT (0014H/MAIN) - write value at specified address of specified slot
 
-***Input:***
-```
-A register <-- slot specification (same format as in Figure 5.40)
-HL register <-- address to be written in
-E register <-- data to be written
-```
-
-***Output:*** ---
-
-***Use:*** `AF, BC, D`
-
-***Function:*** writes E register value in the address specified by HL register of the slot specified by the A register (the specification format is the same as in [Figure 5.40](#figure-540--format-for-the-slot)).
+* **Input**:
+  * A register ⟵ slot specification (same format as in Figure 5.40)
+  * HL register ⟵ address to be written in
+  * E register ⟵ data to be written
+* **Output**: ---
+* **Use**: AF, BC, D
+* **Function**: writes E register value in the address specified by HL register of the slot specified by the A register (the specification format is the same as in [Figure 5.40](#figure-540--format-for-the-slot)).
 
 
 <p>&nbsp;</p>
 
 #### CALSLT (001CH/MAIN) - call specified address of specified slot
 
-***Input:***
-```
-8 high order bits of IY register <-- slot
-(same format as in Figure 5.40)
-IX register <-- address to be called
-```
-
-***Output:*** depends on the result of the called program
-
-***Use:*** depends on the result of the called program
-
-***Function:*** calls the routine at the address specified by IX register of the slot specified by the 8 high order bits of IY register (the specification format is the same as in [Figure 5.40](#figure-540--format-for-the-slot)).
+* **Input**:
+  * 8 high order bits of IY register ⟵ slot (same format as in [Figure 5.40](#figure-540--format-for-the-slot))
+  * IX register ⟵ address to be called
+* **Output**: depends on the result of the called program
+* **Use**: depends on the result of the called program
+* **Function**: calls the routine at the address specified by IX register of the slot specified by the 8 high order bits of IY register (the specification format is the same as in [Figure 5.40](#figure-540--format-for-the-slot)).
 
 
 <p>&nbsp;</p>
 
 #### ENASLT (0024H/MAIN) - swicth slots
 
-***Input:***
-```
-A register <-- slot (same format as in Figure 5.40)
-HL register <-- specifies the page to switch the slot by 2 high order bits
-```
-
-***Output:*** ---
-
-***Use:*** all
-
-***Function:*** switches the page specified by the 2 high order bits of the HL register to the slot specified by the A register.
+* **Input**:
+  * A register ⟵ slot (same format as in [Figure 5.40](#figure-540--format-for-the-slot))
+  * HL register ⟵ specifies the page to switch the slot by 2 high order bits
+* **Output**: ---
+* **Use**: all
+* **Function**: switches the page specified by the 2 high order bits of the HL register to the slot specified by the A register.
 
 
 <p>&nbsp;</p>
 
 #### CALLF (0030H/MAIN) - call specified address of specified slot
 
-***Input:***
-```
-specifies the slot and the address in the inline parameter format
-```
-
-***Output:*** depends on the result of the called program
-
-***Use:*** depends on the result of the called program
-
-***Function:*** calls the specified address of the specified slot, but, different from CALSLT described above, the slot and the address is specified in the inline parameter format, as described below. That is, parameters are passet by one byte (same format as RDSLT) to specify that the slot is placed just after the instruction which calls CALLF and the next two bytes to specify the address are placed. "CALL 0030H" may be replaced by the RST (restart) instruction, "RST 30H". In this case, the inter-slot call is done in 4 bytes.
-
-
-<p>&nbsp;</p>
+* **Input**: specifies the slot and the address in the inline parameter format
+* **Output**: depends on the result of the called program
+* **Use**: depends on the result of the called program
+* **Function**: calls the specified address of the specified slot, but, different from CALSLT described above, the slot and the address is specified in the inline parameter format, as described below. That is, parameters are passet by one byte (same format as RDSLT) to specify that the slot is placed just after the instruction which calls CALLF and the next two bytes to specify the address are placed. "CALL 0030H" may be replaced by the RST (restart) instruction, "RST 30H". In this case, the inter-slot call is done in 4 bytes.
 
 ##### _Figure 5.42  Example of the inter-slot call execution_
 
@@ -394,65 +363,43 @@ specifies the slot and the address in the inline parameter format
 
 #### RSLREG (0138H/MAIN) - read the basic slot selection register
 
-***Input:*** ---
-
-***Output:***
-```
-A register <-- value which has been read
-```
-
-***Use:*** ---
-
-***Function:*** reads the contents of the basic slot selection register and stores it in the A register.
+* **Input**: ---
+* **Output**: A register ⟵ value which has been read
+* **Use**: ---
+* **Function**: reads the contents of the basic slot selection register and stores it in the A register.
 
 
 <p>&nbsp;</p>
 
 #### WSLREG (013BH/MAIN) - write in the basic slot selection register
 
-***Input:***
-```
-A register <-- value to be written
-```
-
-***Output:*** ---
-
-***Use:*** ---
-
-***Function:*** writes the A register value in the basic slot selection register and selects the slot.
+* **Input**: A register ⟵ value to be written
+* **Output**: ---
+* **Use**: ---
+* **Function**: writes the A register value in the basic slot selection register and selects the slot.
 
 
 <p>&nbsp;</p>
 
 #### SUBROM (015CH/MAIN) - call specified address in SUB-ROM
 
-***Input:***
-```
-IX register <-- address to be called, PUSH IX (see Appendix 2, SUB-ROM list)
-```
-
-***Output:*** depends on the result of the called program
-
-***Use:*** background register and IX, IY registers are reserved
-
-***Function:*** This is the routine to call BASIC SUB-ROM especially. The slot where SUB-ROM resides is automatically examined. Normally, EXTROM, described below, is used.
+* **Input**: IX register ⟵ address to be called, PUSH IX (see Appendix 2, SUB-ROM list)
+* **Output**: depends on the result of the called program
+* **Use**: background register and IX, IY registers are reserved
+* **Function**: This is the routine to call BASIC SUB-ROM especially. The slot where SUB-ROM resides is automatically examined. Normally, EXTROM, described below, is used.
 
 
 <p>&nbsp;</p>
 
 #### EXTROM (015FH/MAIN) - call specified address in SUB-ROM
 
-***Input:***
-```
-IX register <-- address to be called
-```
+* **Input**: IX register ⟵ address to be called
+* **Output**: depends on the result of the called program
+* **Use**: background register and IY register are reserved
+* **Function**: This is the routine to call BASIC SUB-ROM. The difference between this and SUB-ROM above is the point whether the IX register value is pushed.
 
-***Output:*** depends on the result of the called program
 
-***Use:*** background register and IY register are reserved
-
-***Function:*** This is the routine to call BASIC SUB-ROM. The difference between this and SUB-ROM above is the point whether the IX register value is pushed.
-
+<p>&nbsp;</p>
 
 _(2) Inter-slot call in MSX-DOS_
 
