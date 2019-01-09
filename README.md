@@ -1,6 +1,6 @@
 # MSX2 Technical Handbook
 
-This is the full reference of [the MSX2 system](https://en.wikipedia.org/wiki/MSX) as published by [ASCII Corporation](https://en.wikipedia.org/wiki/ASCII_Corporation) in 1987. I converted it to text files in 1997 (the OCR used consisted of my eyes and my fingers) and now here it is in markdown format for easier browsing and reading. There's also the BASIC KUN (also known as Turbo-BASIC) compiler reference as a bonus.
+This is the (almost) full reference of [the MSX2 system](https://en.wikipedia.org/wiki/MSX) as published by [ASCII Corporation](https://en.wikipedia.org/wiki/ASCII_Corporation) in 1987. I converted it to text files in 1997 (the OCR used consisted of my eyes and my fingers) and now here it is in markdown format for easier browsing and reading. There's also the BASIC KUN (also known as Turbo-BASIC) compiler reference as a bonus.
 
 These are the book chapters, chapters 4 and 5 are split in two files each due to their size:
 
@@ -18,7 +18,7 @@ These are the book chapters, chapters 4 and 5 are split in two files each due to
 * [Appendix 5: VRAM map](md/Appendix5.md)
 * [Appendix 6: I/O map](md/Appendix6.md)
 * Appendix 7: Cartridge hardware
-* Appendices 8 and 10: Control codes and escape sequences
+* [Appendices 8 and 10: Control codes and escape sequences](md/Appendices8and10.md)
 * Appendix 9: Character set
 
 * BASIC KUN compiler
