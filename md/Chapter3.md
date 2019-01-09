@@ -1651,13 +1651,10 @@ The CALL statement is also used in operations that return values or restore regi
 
 This section introduces system call usages in the following notation:
 
-```
-----------------------------------------------------------------------------
-| Function:     function number                                            |
-| Setup:        value needed to be set in register or memory by programmer |
-| Return value: value set in register by system call                       |
-----------------------------------------------------------------------------
-```
+* **Function**: function number
+* **Setup**: value needed to be set in register or memory by programmer
+* **Return value**: value set in register by system call
+
 
 #### Function:
 
@@ -1685,56 +1682,55 @@ There are forty-two MSX system calls. These are listed in [Table 3.11](#table-31
 
 ##### _Table 3.11  List of System Calls_
 
-```
-Function no.                            Function
 
-   00H                  system reset
-   01H                  get one character from console (input wait, echo back, control code check)
-   02H                  send one character to console
-   03H                  get one character from auxiliary device
-   04H                  send one character to auxiliary device
-   05H                  send one character to printer
-   06H                  get one character from console (no input wait, no echo back, no control code check)
-                        / one character output
-   07H                  get one character from console (input wait, no echo back, no control code check)
-   08H                  get one character from console (input wait, no echo back, control code check)
-   09H                  send string
-   0AH                  get string
-   0BH                  check input from console
-   0CH                  get version number
-   0DH                  disk reset
-   0EH                  select default drive
-   0FH                  open file
-   10H                  close file
-   11H                  search the first file matched with wildcard
-   12H                  search the second and after the second file matched wildcard
-   13H                  delete file
-   14H                  read sequential file
-   15H                  write sequential file
-   16H                  create file
-   17H                  rename file
-   18H                  get login vector
-   19H                  get default drive name
-   1AH                  set DMA address
-   1BH                  get disk information
-   1CH-20H              no function
-   21H                  write random file
-   22H                  read random file
-   23H                  get file size
-   24H                  set random record field
-   25H                  no function
-   26H                  write random block
-   27H                  read random block
-   28H                  write random file (00H is set to unused portion)
-   29H                  no function
-   2AH                  get date
-   2BH                  set date
-   2CH                  get time
-   2DH                  set time
-   2EH                  set verify flag
-   2FH                  read logical sector
-   30H                  write logical sector
-```
+| Function no. | Function |
+| --- | --- |
+| 00H | system reset
+| 01H | get one character from console (input wait, echo back, control code check)
+| 02H | send one character to console
+| 03H | get one character from auxiliary device
+| 04H | send one character to auxiliary device
+| 05H | send one character to printer
+| 06H | get one character from console (no input wait, no echo back, no control code check) / one character output
+| 07H | get one character from console (input wait, no echo back, no control code check)
+| 08H | get one character from console (input wait, no echo back, control code check)
+| 09H | send string
+| 0AH | get string
+| 0BH | check input from console
+| 0CH | get version number
+| 0DH | disk reset
+| 0EH | select default drive
+| 0FH | open file
+| 10H | close file
+| 11H | search the first file matched with wildcard
+| 12H | search the second and after the second file matched wildcard
+| 13H | delete file
+| 14H | read sequential file
+| 15H | write sequential file
+| 16H | create file
+| 17H | rename file
+| 18H | get login vector
+| 19H | get default drive name
+| 1AH | set DMA address
+| 1BH | get disk information
+| 1CH-20H | no function
+| 21H | write random file
+| 22H | read random file
+| 23H | get file size
+| 24H | set random record field
+| 25H | no function
+| 26H | write random block
+| 27H | read random block
+| 28H | write random file (00H is set to unused portion)
+| 29H | no function
+| 2AH | get date
+| 2BH | set date
+| 2CH | get time
+| 2DH | set time
+| 2EH | set verify flag
+| 2FH | read logical sector
+| 30H | write logical sector
+
 
 **Note**: System call function numbers are from 00H to 30H; the following seven numbers are blank: 1CH to 20H, 25H, 29H
 
@@ -1928,13 +1924,14 @@ BUFMEM: DS      256
 The following system calls are intended for input/output operations. Some examples include console I/O (screen/keyboard), auxiliary I/O (external input/output), and printer I/O. Since subroutines such as getting information from the keyboard or controlling printers are necessary for most programs, you will find the system calls described in this section useful for general programming.
 
 
-#### Console input
 
-```
-Function:       01H
-Setup:          none
-Return value:   A register ⟵ one character from console
-```
+<p>&nbsp;</p>
+
+#### Console input
+* **Function**: 01H
+* **Setup**: none
+* **Return value**: A register ⟵ one character from console
+
 
 When there is no input (no key pressed and input buffer empty), an input is wait for. Input characters are echoed back to the console. The following control character input is allowed: Ctrl-C causes program execution to be halted and a return to the MSX-DOS command level; Ctrl-P causes any sucessive input to also echoed to the printer until Ctrl-N is accepted; Ctrl-S causes the display to stop until any key is pressed.
 
@@ -1945,118 +1942,122 @@ Ctrl-N ........ halt printer echo
 Ctrl-S ........ pause display
 ```
 
-#### Console output
 
-```
-Function:       02H
-Setup:          E register ⟵ character code to be sent out
-Return value:   none
-```
+<p>&nbsp;</p>
+
+#### Console output
+* **Function**: 02H
+* **Setup**: E register ⟵ character code to be sent out
+* **Return value**: none
+
 
 This system call displays the character specified by the E register on the screen. It also checks the four control characters, listed above.
 
 
-#### External input
 
-```
-Function:       03H
-Setup:          none
-Return value:   A register ⟵ one character from AUX device
-```
+<p>&nbsp;</p>
+
+#### External input
+* **Function**: 03H
+* **Setup**: none
+* **Return value**: A register ⟵ one character from AUX device
+
 
 This system call checks four control characters.
 
+
+
+<p>&nbsp;</p>
 
 #### External output
+* **Function**: 04H
+* **Setup**: E register ⟵ character code to send to AUX device
+* **Return value**: none
 
-```
-Function:       04H
-Setup:          E register ⟵ character code to send to AUX device
-Return value:   none
-```
 
 This system call checks four control characters.
 
 
-#### Printer output
 
-```
-Function:       05H
-Setup:          A register ⟵ one character from console
-```
+<p>&nbsp;</p>
+
+#### Printer output
+* **Function**: 05H
+* **Setup**: A register ⟵ one character from console
+* **Return value**: ```
 
 This system call does not echo back. It treats control characters in the same way as [function 01H](#console-input).
 
 
-#### Direct console input/output
 
-```
-Function:       06H
-Setup:          E register ⟵ character code to be send to the console
-                When 0FFH is specified, the character will be input from the console.
-Return value:   When the E register is set to 0FFH (input), the result of input is in the A register.
-                The value set in the A register is the character code of the key, if it was pressed;
-                otherwise, the value is 00H. When the E register is set to a value other than 0FFH (output),
-                there is no return value.
-```
+<p>&nbsp;</p>
+
+#### Direct console input/output
+* **Function**: 06H
+* **Setup**: E register ⟵ character code to be send to the console. When 0FFH is specified, the character will be input from the console.
+* **Return value**: When the E register is set to 0FFH (input), the result of input is in the A register. The value set in the A register is the character code of the key, if it was pressed; otherwise, the value is 00H. When the E register is set to a value other than 0FFH (output), there is no return value.
+
 
 This system call does not support control characters and does not echo back input. This system call checks four control characters.
 
 
-#### Direct console input - 1
 
-```
-Function:       07H
-Setup:          none
-Return value:   A register ⟵ one character from console
-```
+<p>&nbsp;</p>
+
+#### Direct console input - 1
+* **Function**: 07H
+* **Setup**: none
+* **Return value**: A register ⟵ one character from console
+
 
 This system call does not support control characters, nor echo back.
 
 
-#### Direct console input - 2
 
-```
-Function:       08H
-Setup:          none
-Return value:   A register ⟵ one character from console
-```
+
+<p>&nbsp;</p>
+
+#### Direct console input - 2
+* **Function**: 08H
+* **Setup**: none
+* **Return value**: A register ⟵ one character from console
+
 
 This system call does not echo back. It treats control characters in the same way as [function 01H](#console-input).
 
 
-#### String output
 
-```
-Function:       09H
-Setup:          DE register ⟵ starting address of string, prepared on memory, to be sent to the console.
-Return value:   none
-```
+<p>&nbsp;</p>
+
+#### String output
+* **Function**: 09H
+* **Setup**: DE register ⟵ starting address of string, prepared on memory, to be sent to the console.
+* **Return value**: none
+
 
 24H ("$") is appended to the end of the string as the end symbol. This system call checks and performs four control character functions, as listed previously.
 
 
-#### String input
 
-```
-Function:       0AH
-Setup:          The address of memory where the maximum number of input characters (1 to 0FFH) is set
-                should be set in the DE register.
-Return value:   Number of characters actually sent from console is set in the address, one added
-                to the address indicated by the DE register; string sent from console is set in the area
-                from the address, two added to the address indicated by the DE register.
-```
+<p>&nbsp;</p>
+
+#### String input
+* **Function**: 0AH
+* **Setup**: The address of memory where the maximum number of input characters (1 to 0FFH) is set should be set in the DE register.
+* **Return value**: Number of characters actually sent from console is set in the address, one added to the address indicated by the DE register; string sent from console is set in the area from the address, two added to the address indicated by the DE register.
+
 
 Return key input is considered as the end of console input. However, when the number of input characters exceeds the specified number of characters (contents indicated by DE register, 1 to 255), characters within the specified number of characters will be treated as an input string and set in memory, and the operation ends. The rest of characters including the return key are ignored. Editing with the template is available to string input using this system call. This system call checks and performs four control character function, as listed previously.
 
 
-#### Console status check
 
-```
-Function:       0BH
-Setup:          none
-Return value:   0FFH is set in the A register when the keyboard is being pressed; otherwise, 00H is set.
-```
+<p>&nbsp;</p>
+
+#### Console status check
+* **Function**: 0BH
+* **Setup**: none
+* **Return value**: 0FFH is set in the A register when the keyboard is being pressed; otherwise, 00H is set.
+
 
 This system call checks and performs four control character function, as listed previously.
 
@@ -2068,57 +2069,62 @@ This system call checks and performs four control character function, as listed 
 The following system calls set the MSX system environment; for example, changing the default drive, or setting various default values of the system.
 
 
-#### System reset
 
-```
-Function:       00H
-Setup:          none
-Return value:   none
-```
+<p>&nbsp;</p>
+
+#### System reset
+* **Function**: 00H
+* **Setup**: none
+* **Return value**: none
+
 
 When this is called in MSX-DOS, the system is reset by jumping to 0000H. When MSX DISK-BASIC call this, it is "warm started". That is, it returns to BASIC command level without destroying programs currently loaded.
 
 
-#### Version number acquisition
 
-```
-Function:       0CH
-Setup:          none
-Return value:   HL register ⟵ 0022H
-```
+<p>&nbsp;</p>
+
+#### Version number acquisition
+* **Function**: 0CH
+* **Setup**: none
+* **Return value**: HL register ⟵ 0022H
+
 
 This system call is for acquiring various CP/M version numbers, on MSX-DOS, however, 0022H is always returned.
 
 
-#### Disk reset
 
-```
-Function:       0DH
-Setup:          none
-Return value:   none
-```
+<p>&nbsp;</p>
+
+#### Disk reset
+* **Function**: 0DH
+* **Setup**: none
+* **Return value**: none
+
 
 If there is a sector which has been changed but not written to the disk, this system call writes it to the disk, then it sets the default drive to drive A and sets DMA to 0080H.
 
 
-#### Default drive setting
 
-```
-Function:        0EH
-Setup:          E register ⟵ default drive number (A = 00H, B = 01H, ...)
-Return value:   none
-```
+<p>&nbsp;</p>
+
+#### Default drive setting
+* **Function**: 0EH
+* **Setup**: E register ⟵ default drive number (A = 00H, B = 01H, ...)
+* **Return value**: none
+
 
 Disk access by the system calls are made to the drive indicated by the default drive number, unless otherwise specified. Note that, when the drive number, which is set in the FCB specified upon calling the system call, is other than 00H, the default drive setting made by this system call is ignored.
 
 
-#### Login vector acquisition
 
-```
-Function:       18H
-Setup:          none
-Return value:   HL register ⟵ online drive information
-```
+<p>&nbsp;</p>
+
+#### Login vector acquisition
+* **Function**: 18H
+* **Setup**: none
+* **Return value**: HL register ⟵ online drive information
+
 
 The online drive is the drive connected to MSX normally when the disk system is booted up. Executing this system call causes each drive to be examined whether it is online, and the result is returned in the HL register as shown in [Figure 3.22](#figure-322--login-vector). When the bit is "1", the corresponding drive is online; otherwise it is not.
 
@@ -2137,109 +2143,120 @@ The online drive is the drive connected to MSX normally when the disk system is 
 ------------------------------------------------------------------------
 ```
 
+
+<p>&nbsp;</p>
+
 #### Default drive acquisition
+* **Function**: 19H
+* **Setup**: none
+* **Return value**: A register ⟵ defaut drive number (A = 00H, B = 01H, ...)
 
-```
-Function:       19H
-Setup:          none
-Return value:   A register ⟵ defaut drive number (A = 00H, B = 01H, ...)
-```
 
+
+
+<p>&nbsp;</p>
 
 #### Setting of address to be transferred to
+* **Function**: 1AH
+* **Setup**: DE register ⟵ address setting to be transferred to (DMA address)
+* **Return value**: none
 
-```
-Function:       1AH
-Setup:          DE register ⟵ address setting to be transferred to (DMA address)
-Return value:   none
-```
 
 Though DMA address is initialized to 0080H at system reset, it can be reset to any address by using this system call.
 
 
-#### Disk information acquisition
 
-```
-Function:       1BH
-Setup:          E register ⟵ number of the objective drive
-                              (default drive = 00H, A = 01H, B = 02H, ...)
-Return value:   A register ⟵ number of logical sectors per one cluster
-                              (FFH if E register is set inappropriate)
-                BC register ⟵ logical sector size
-                DE register ⟵ amount of clusters
-                IX register ⟵ DPB starting address
-                IY register ⟵ FAT starting address on memory
-```
+<p>&nbsp;</p>
+
+#### Disk information acquisition
+* **Function**: 1BH
+* **Setup**: E register ⟵ number of the objective drive (default drive = 00H, A = 01H, B = 02H, ...)
+* **Return value**:
+  * A register ⟵ number of logical sectors per one cluster (FFH if E register is set inappropriate)
+  * BC register ⟵ logical sector size
+  * DE register ⟵ amount of clusters
+  * IX register ⟵ DPB starting address
+  * IY register ⟵ FAT starting address on memory
+
 
 This system call gets the information about the disk in the specified drive. Specifying 00H for the drive number specifies the default drive. For other than that, specify 01H for drive A, 02H for drive B, and so on.
 
 This system call has been created for MSX-DOS and is not compatible with CP/M.
 
 
-#### Date acquisition
 
-```
-Function:       2AH
-Setup:          none
-Return value:   HL register ⟵ year
-                D register ⟵ month
-                E register ⟵ day of month
-                A register ⟵ day of week
-```
+<p>&nbsp;</p>
+
+#### Date acquisition
+* **Function**: 2AH
+* **Setup**: none
+* **Return value**:
+  * HL register ⟵ year
+  * D register ⟵ month
+  * E register ⟵ day of month
+  * A register ⟵ day of week
+
 
 This system call has been created for MSX-DOS and is not compatible with CP/M.
 
+
+
+<p>&nbsp;</p>
 
 #### Date setting
+* **Function**: 2BH
+* **Setup**:
+  * HL register ⟵ year
+  * D register ⟵ month
+  * E register ⟵ day of month
+* **Return value**: A indicates whether the system call has done succesfully. If successful, the A register is set to 00H; otherwise, 0FFH.
 
-```
-Function:       2BH
-Setup:          HL register ⟵ year
-                D register ⟵ month
-                E register ⟵ day of month
-Return value:   A indicates whether the system call has done succesfully. 
-                If successful, the A register is set to 00H; otherwise, 0FFH.
-```
 
 This system call has been created for MSX-DOS and is not compatible with CP/M.
 
+
+
+<p>&nbsp;</p>
 
 #### Time acquisition
+* **Function**: 2CH
+* **Setup**: none
+* **Return value**:
+  * H register ⟵ hour
+  * L register ⟵ minute
+  * D register ⟵ second
+  * E register ⟵ 1/100 second
 
-```
-Function:       2CH
-Setup:          none
-Return value:   H register ⟵ hour
-                L register ⟵ minute
-                D register ⟵ second
-                E register ⟵ 1/100 second
-```
 
 This system call has been created for MSX-DOS and is not compatible with CP/M.
 
+
+
+<p>&nbsp;</p>
 
 #### Time setting
+* **Function**: 2DH
+* **Setup**:
+  * H register ⟵ hour
+  * L register ⟵ minute
+  * D register ⟵ second
+  * E register ⟵ 1/100 second
+* **Return value**: If successful, the A register is set to 00H; otherwise, 0FFH
 
-```
-Function:       2DH
-Setup:          H register ⟵ hour
-                L register ⟵ minute
-                D register ⟵ second
-                E register ⟵ 1/100 second
-Return value:   If successful, the A register is set to 00H; otherwise, 0FFH
-```
 
 This system call has been created for MSX-DOS and is not compatible with CP/M.
 
 
-#### Verify flag setting
 
-```
-Function:       2EH
-Setup:          E register ⟵ 00H, when resetting verify flag
-                E register ⟵ value other than 00H, when setting the verify flag
-Return value:   none
-```
+<p>&nbsp;</p>
+
+#### Verify flag setting
+* **Function**: 2EH
+* **Setup**:
+  * E register ⟵ 00H, when resetting verify flag
+  * E register ⟵ value other than 00H, when setting the verify flag
+* **Return value**: none
+
 
 Setting the verify flag causes successive writing to the disk to be done in mode "verify on". That is, by reading the contents written on the disk, the check is made to compare them with the contents to be written.
 
@@ -2257,37 +2274,28 @@ Logical sectors enable users of MSX-DOS or MSX DISK-BASIC to access the disk wit
 This section describes the system calls which access the disk by use of logical sectors.
 
 
-#### Reading from the disk using logical sectors
 
-```
-Function:       2FH
-Setup:          The logical sector number to be read from (for more than
-                one logical sector, the starting logical sector number)
-                should be set in the DE register. The number of logical
-                sectors to be read should be set in the H register, and
-                the drive number (00H for drive A, 01H for drive B, and
-                so on. The same follows for function 30H below) to be used
-                to read should be set in the L register.
-Return value:   The contents read are set in the DMA buffer.
-```
+<p>&nbsp;</p>
+
+#### Reading from the disk using logical sectors
+* **Function**: 2FH
+* **Setup**: The logical sector number to be read from (for more than one logical sector, the starting logical sector number) should be set in the DE register. The number of logical sectors to be read should be set in the H register, and the drive number (00H for drive A, 01H for drive B, and so on. The same follows for function 30H below) to be used to read should be set in the L register.
+* **Return value**: The contents read are set in the DMA buffer.
+
 
 This system call reads out a specified number of continuous logical sectors from the specified logical sector of the specified drive and stores the contents in memory after DMA. It then stores the contents of what it has read in memory after DMA. [Function 1AH](#setting-of-address-to-be-transferred-to) (which specifies the address it is to be transferred to) assures that there is enough available space in memory.
 
 This system call has been created for MSX-DOS and is not compatible with CP/M.
 
 
-#### Writing to the disk using logocal sectors
 
-```
-Function:       30H
-Setup:          Contents to be written should be set in memory area after
-                the address indicated by DMA. The logical sector number from
-                where the writing begins should be set in the DE register.
-                The number of logical sectors to be written should be set
-                in the H register. The drive number to be written to should
-                be set in the L register.
-Return value:   none
-```
+<p>&nbsp;</p>
+
+#### Writing to the disk using logocal sectors
+* **Function**: 30H
+* **Setup**: Contents to be written should be set in memory area after the address indicated by DMA. The logical sector number from where the writing begins should be set in the DE register. The number of logical sectors to be written should be set in the H register. The drive number to be written to should be set in the L register.
+* **Return value**: none
+
 
 This system call has been created for MSX-DOS and is not compatible with CP/M.
 
@@ -2403,236 +2411,226 @@ This section describes system calls for file access using FCB, including random 
 3. Input/output for devices (CON, PRN, NUL, AUX)
 
 
-#### Opening files
 
-```
-Function:       0FH
-Setup:          DE register ⟵ starting address of FCB which is not opened
-Return value:   00H is set in the A register when a file is opened succeessfully;
-                otherwise 0FFH is set. When a file is opened successfully, each field of the FCB is set.
-```
+<p>&nbsp;</p>
+
+#### Opening files
+* **Function**: 0FH
+* **Setup**: DE register ⟵ starting address of FCB which is not opened
+* **Return value**: 00H is set in the A register when a file is opened succeessfully; otherwise 0FFH is set. When a file is opened successfully, each field of the FCB is set.
+
 
 When 00H is specified for a drive number, the default drive set by [function 0EH (default drive setting)](#default-drive-setting) is used. To open a file on another drive, specify 01H for drive A, 02H for drive B and so on.
 
 When a file is opened by this system call, all FCB fields except record size, current block, current record, and random record are set using information from the directory area on the disk. Fields which are not set should be set by the user after executing this system call, if needed. The state that each field of FCB is set is "the state that file is opened" when using system calls using FCB, and, in this case, system calls which access the file using FCB, described below, can be used.
 
 
-#### Closing files
 
-```
-Function:       10H
-Setup:          DE register ⟵ starting address of opened FCB
-Return value:   00H is set in the A register when file is closed scuccessfully; otherwise, 0FFH is set.
-```
+<p>&nbsp;</p>
+
+#### Closing files
+* **Function**: 10H
+* **Setup**: DE register ⟵ starting address of opened FCB
+* **Return value**: 00H is set in the A register when file is closed scuccessfully; otherwise, 0FFH is set.
+
 
 By writing the current contents of FCB in memory to the corresponding directory area on the disk, file information can be kept current. When the file is only read, it does not need to be closed by using this system call.
 
 
-#### File search - 1
 
-```
-Function:       11H
-Setup:          DE register ⟵ starting address of FCB which is not opened
-Return value:   00H is set in the A register when the file is found;
-                otherwise 0FFH is set. When the file is found, the directory
-                entry (32 bytes) of the file on the disk is set in the area
-                indicated by DMA, and FCB drive number is set (thus, 33 bytes
-                are used).
-```
+<p>&nbsp;</p>
+
+#### File search - 1
+* **Function**: 11H
+* **Setup**: DE register ⟵ starting address of FCB which is not opened
+* **Return value**: 00H is set in the A register when the file is found; otherwise 0FFH is set. When the file is found, the directory entry (32 bytes) of the file on the disk is set in the area indicated by DMA, and FCB drive number is set (thus, 33 bytes are used).
+
 
 Wildcard characters can be used in the name of the file. For example, a specification "????????.c" causes any file name with an extension of "c" to be searched for, and the directory information of the file first found is written in after DMA. To find all matching files or to see whether there is only one matching file, use [function 12H](#file-search---2) described below.
 
 
-#### File search - 2
 
-```
-Function:       12H
-Setup:          none
-Return value:   00H is set in the A register when the file is found;
-                otherwise 0FFH is set. When the file is found, the directory
-                entry (32 bytes) of the file on the disk is set in the area
-                indicated by DMA, and the FCB drive number is set
-                (thus, 33 bytes are used).
-```
+<p>&nbsp;</p>
+
+#### File search - 2
+* **Function**: 12H
+* **Setup**: none
+* **Return value**: 00H is set in the A register when the file is found; otherwise 0FFH is set. When the file is found, the directory entry (32 bytes) of the file on the disk is set in the area indicated by DMA, and the FCB drive number is set (thus, 33 bytes are used).
+
 
 This system call should be used to search for multiple files meeting the file name specification by wildcard characters in [function 11H](#file-search---1). So this function should not be used by itself.
 
 This system call allows the directory information of files meeting the specifications in [function 11H](#file-search---1) to be listed in order, one by one.
 
 
-#### Deleting files
 
-```
-Function:       13H
-Setup:          DE register ⟵ starting address of FCB which is not opened
-Return value:   00H is set in the A register when file is successfully
-                deleted., otherwise 0FFH is set.
-```
+<p>&nbsp;</p>
+
+#### Deleting files
+* **Function**: 13H
+* **Setup**: DE register ⟵ starting address of FCB which is not opened
+* **Return value**: 00H is set in the A register when file is successfully deleted., otherwise 0FFH is set.
+
 
 Using wildcard characters for the file name may cause more than one file to be deleted. Exercise caution when using wildcards to delete files.
 
 
-#### Sequential readout
 
-```
-Function:       14H
-Setup:          DE register ⟵ starting address of opened FCB
-                FCB current block ⟵ starting block for readout
-                FCB current record ⟵ starting record for readout
-Return value:   00H is set in the A register when readout is successful;
-                otherwise 01H is set. When successful, one record which has
-                been read is set in the area indicated by DMA.
-```
+<p>&nbsp;</p>
+
+#### Sequential readout
+* **Function**: 14H
+* **Setup**:
+  * DE register ⟵ starting address of opened FCB
+  * FCB current block ⟵ starting block for readout
+  * FCB current record ⟵ starting record for readout
+* **Return value**: 00H is set in the A register when readout is successful; otherwise 01H is set. When successful, one record which has been read is set in the area indicated by DMA.
+
 
 The FCB current block and record will be updated automatically after the readout. That is, in successive readouts, the current block and record do not need to be set. The record size for readout is fixed at 128 bytes.
 
 
-#### Sequential writing to the disk
 
-```
-Function:       15H
-Setup:          DE register ⟵ starting address of opened FCB
-                FCB current block ⟵ starting block for writing
-                FCB current record ⟵ starting record for writing
-                128 bytes starting from DMA ⟵ data to be written
-Return value:   00H is set in the A register when writing is successful;
-                otherwise 01H is set.
-```
+<p>&nbsp;</p>
+
+#### Sequential writing to the disk
+* **Function**: 15H
+* **Setup**:
+  * DE register ⟵ starting address of opened FCB
+  * FCB current block ⟵ starting block for writing
+  * FCB current record ⟵ starting record for writing
+  * 128 bytes starting from DMA ⟵ data to be written
+* **Return value**: 00H is set in the A register when writing is successful; otherwise 01H is set.
+
 
 The FCB current block and record will be updated automatically after the readout.
 
 
-#### Creating files
 
-```
-Function:       16H
-Setup:          DE register ⟵ starting address of FCB which is not opened
-Retu4rn value:  00H is set in the A register when the file is created
-                successfully; otherwise 0FFH is set.
-```
+<p>&nbsp;</p>
+
+#### Creating files
+* **Function**: 16H
+* **Setup**: DE register ⟵ starting address of FCB which is not opened
+* **Return value**: 00H is set in the A register when the file is created successfully; otherwise 0FFH is set.
+
 
 The record size, current block and record, and the random record of the FCB should be set after executing this system call.
 
 
-#### Renaming files
 
-```
-Function:       17H
-Setup:          New file name should be set within 11 bytes after the
-                18th byte of the FCB (2nd byte of file size field
-                of FCB = 16 bytes after old file name) corresponding to
-                old file name (that is, it should be set in 18th to 28th
-                byte), the FCB address should be set in the DE register.
-Return value:   00H is set in the A register when the file name is renamed
-                successfully; otherwise 0FFH is set.
-```
+<p>&nbsp;</p>
+
+#### Renaming files
+* **Function**: 17H
+* **Setup**: New file name should be set within 11 bytes after the 18th byte of the FCB (2nd byte of file size field of FCB = 16 bytes after old file name) corresponding to old file name (that is, it should be set in 18th to 28th byte), the FCB address should be set in the DE register.
+* **Return value**: 00H is set in the A register when the file name is renamed successfully; otherwise 0FFH is set.
+
 
 Wildcard characters can be used for both the new and old file names. For example, specifying "????????.o" for the old file name and "????????.obj" for the new file name causes the extension of all files having ".o" to be changed to ".obj".
 
 
-#### Random reading from the disk
 
-```
-Function:       21H
-Setup:          DE register ⟵ starting address of opened FCB
-                random record in FCB ⟵ record for readout
-Return value:   00H is set in the A register when readout is successful;
-                otherwise 01H is set. When successful, the contents of one
-                record which has been read are set in the area indicated
-                by DMA.
-```
+<p>&nbsp;</p>
+
+#### Random reading from the disk
+* **Function**: 21H
+* **Setup**:
+  * DE register ⟵ starting address of opened FCB
+  * random record in FCB ⟵ record for readout
+* **Return value**: 00H is set in the A register when readout is successful; otherwise 01H is set. When successful, the contents of one record which has been read are set in the area indicated by DMA.
+
 
 The lenght of the record is fixed to 128 bytes.
 
+
+
+<p>&nbsp;</p>
 
 #### Random writing to the disk
+* **Function**: 22H
+* **Setup**:
+  * DE register ⟵ starting address of opened FCB
+  * random record in FCB ⟵ record to be written to
+  * 128 bytes starting from DMA ⟵ data to be written
+* **Return value**: 00H is set in the A register when writing is successful; otherwise 01H is set.
 
-```
-Function:       22H
-Setup:          DE register ⟵ starting address of opened FCB
-                random record in FCB ⟵ record to be written to
-                128 bytes starting from DMA ⟵ data to be written
-Return value:   00H is set in the A register when writing is successful;
-                otherwise 01H is set.
-```
 
 The lenght of the record is fixed to 128 bytes.
 
 
-#### File size acquisition
 
-```
-Function:       23H
-Setup:          DE register ⟵ starting address of FCB which is not opened
-Return value:   00H is set in the A register when the function is successful;
-                otherwise 00H is set. When successful, the size of the
-                specified file is set in increments of 128 bytes, in the
-                first three bytes of the random record field.
-```
+<p>&nbsp;</p>
+
+#### File size acquisition
+* **Function**: 23H
+* **Setup**: DE register ⟵ starting address of FCB which is not opened
+* **Return value**: 00H is set in the A register when the function is successful; otherwise 00H is set. When successful, the size of the specified file is set in increments of 128 bytes, in the first three bytes of the random record field.
+
 
 The file size is calculated in increments of 128 bytes. That is, 2 would be set for files ranging in size from 129 bytes to 256 bytes. Thus a file with 257 bytes would return a value of 3.
 
 
+
+<p>&nbsp;</p>
+
 #### Random record field setting
+* **Function**: 24H
+* **Setup**:
+  * DE register ⟵ starting address of opened FCB
+  * FCB current block ⟵ objective block
+  * FCB current record ⟵ objective record
+* **Return value**: Current record position, calculated from the current block and record fields of specified FCB, is set in the random record field.
 
-```
-Function:       24H
-Setup:          DE register ⟵ starting address of opened FCB
-                FCB current block ⟵ objective block
-                FCB current record ⟵ objective record
-Return value:   Current record position, calculated from the current block
-                and record fields of specified FCB, is set in the random
-                record field.
-```
 
+
+
+<p>&nbsp;</p>
 
 #### Random writing to the disk - 2 (random block access)
+* **Function**: 26H
+* **Setup**:
+  * DE register ⟵ the starting address from the FCB
+  * FCB record size ⟵ size of record to be written
+  * FCB random record ⟵ the record ID number
+  * HL register ⟵ the number of records to be written
+  * DMA memory buffer ⟵ the data to be written
+* **Return value**: 00H is set in the A register when writing is successful; otherwise 01H is set.
 
-```
-Function:       26H
-Setup:          DE register ⟵ the starting address from the FCB
-                FCB record size ⟵ size of record to be written
-                FCB random record ⟵ the record ID number
-                HL register ⟵ the number of records to be written
-                DMA memory buffer ⟵ the data to be written
-Return value:   00H is set in the A register when writing is successful;
-                otherwise 01H is set.
-```
 
 After writing to the disk, the value of the random record field is automatically updated and points to the next record. The size of one record can be set to any value from 1 byte to 65535 bytes by setting the desired value in the FCB record size field. When 0 records are to be written, the file lenght is calculated at the record size multiplied by the record number. The rest is discarded.
 
 This system call has been created for MSX-DOS and is not compatible with CP/M.
 
 
-#### Random readout - 2 (random block access)
 
-```
-Function:       27H
-Setup:          DE register ⟵ starting address of opened FCB
-                FCB record size ⟵ record size to be read
-                FCB random record ⟵ record to start reading
-                HL register ⟵ number of records to be read
-Return value:   00H is set in the A register when data is read successfully;
-                otherwise 01H is read. The number of records actually read
-                is set back in the HL register. When this number is almost
-                one, the data which has been read is set in the area
-                indicated by DMA.
-```
+<p>&nbsp;</p>
+
+#### Random readout - 2 (random block access)
+* **Function**: 27H
+* **Setup**:
+  * DE register ⟵ starting address of opened FCB
+  * FCB record size ⟵ record size to be read
+  * FCB random record ⟵ record to start reading
+  * HL register ⟵ number of records to be read
+* **Return value**: 00H is set in the A register when data is read successfully; otherwise 01H is read. The number of records actually read is set back in the HL register. When this number is almost one, the data which has been read is set in the area indicated by DMA.
+
 
 After readout, the random record field is automatically updated. After executing this system call, the total number of records actually read is set in the HL register. That is, if the end of file is reached before the specified number of records have been read, the actual number of records read will be returned in the HL register.    
 This system call has been created for MSX-DOS and is not compatible with CP/M.
 
 
-#### Random writing - 3
 
-```
-Function:       28H
-Setup:          DE register ⟵ starting address of opened FCB
-                FCB random record ⟵ record to be written
-                128 bytes in DMA buffer ⟵ data to be written
-Return value:   00H is set in the A register when writing is successful;
-                otherwise, 01H is set.
-```
+<p>&nbsp;</p>
+
+#### Random writing - 3
+* **Function**: 28H
+* **Setup**:
+  * DE register ⟵ starting address of opened FCB
+  * FCB random record ⟵ record to be written
+  * 128 bytes in DMA buffer ⟵ data to be written
+* **Return value**: 00H is set in the A register when writing is successful; otherwise, 01H is set.
+
 
 The lenght of records is fixed at 128 bytes.
 
