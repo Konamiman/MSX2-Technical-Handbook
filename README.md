@@ -23,7 +23,7 @@ These are the book chapters, chapters 4 and 5 are split in two files each due to
 
 * [BASIC KUN compiler](md/KunBASIC.md)
 
-The original text files are in [the txt folder](txt), unmodified since I first published them in [konamiman.com](http://www.konamiman.com) except that some typos have been corrected and all tabs have been converted to spaces (file sizes listed in [index.txt](txt/index.txt) aren't valid anymore due to these corrections).
+The original text files are in [the txt directory](txt).
 
 
 ### Contributing
