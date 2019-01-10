@@ -35,10 +35,6 @@ The BASIC of MSX2 has been upgraded: the new version is called MSX BASIC version
 
 [2.11 Additions for RAM Disk](#211-additions-for-ram-disk)
 
-[1. Load/save a BASIC program (always saved in ASCII format)](#1-loadsave-a-basic-program-always-saved-in-ascii-format)
-
-[2. Read/write a sequential file](#2-readwrite-a-sequential-file)
-
 [2.12 Other Additions](#212-other-additions)
 
 [3. INTERNAL STRUCTURE OF BASIC](#3-internal-structure-of-basic)
@@ -1385,8 +1381,8 @@ SP     -->  |--------------------| Area pointed by SP register
             | Stack           ^  |
             | area            |  |
 STKTOP -->  |--------------------| --+
-            | String          ^  |   | Set by 1st parameter
-            | area            |  |   | of CLEAR
+            | String          ^  |   | Set by 1st parameter of CLEAR
+            | area            |  |   |
 MEMSIZ -->  |--------------------| --+
             | File            ^  |
             | control block   |  |
@@ -1714,17 +1710,14 @@ See the appendix at the end of this book for character codes. Graphic characters
       Hexadecimal number (&H)   | 0C | XX : XX |
                                 ----------------
 
-                                ---------------- Absolute address of the
-      Line number (after RUN)   | 0D | XX : XX | destination line for the
-                                ---------------- branch instruction
-                                                 in memory.
+                                ----------------
+      Line number (after RUN)   | 0D | XX : XX | Absolute address of the destination line
+                                ---------------- for the branch instruction in memory.
 
-                                                 Destination line number
-                                ---------------- for the branch instruction.
-     Line number (before RUN)   | 0E | XX : XX | After RUN, identification
-                                ---------------- code is made 0DH and the
-                                                 line number is changed to
-                                                 the absoulte address.
+                                ---------------- Destination line number for the branch instruction.
+     Line number (before RUN)   | 0E | XX : XX | After RUN, identification code is made 0DH and
+                                ---------------- the line number is changed to the absoulte address.
+                                                 
                                 -----------
    Integer from 10 to 255 (%)   | 0F : XX |
                                 -----------
@@ -1737,14 +1730,12 @@ Integer from 256 to 32767 (%)   | 1C | XX : XX |
                                 --------------------------
     Single precision real (!)   | 1D | XX : XX : XX : XX |
                                 --------------------------
-                                --------------------------
-    Double precision real (#)   | 1F | XX : XX : XX : XX :
-                                --------------------------
-                                     : XX : XX : XX : XX |
-                                     ---------------------
+                                ----------------------------------------------
+    Double precision real (#)   | 1F | XX : XX : XX : XX : XX : XX : XX : XX |
+                                ----------------------------------------------
                                 ------------------
-                  Binary (&B)   | "&"| "B"| . . .  Characters of "0" or "1"
-                                ------------------ following "&B"
+                  Binary (&B)   | "&"| "B"| . . .  Characters of "0" or "1" following "&B"
+                                ------------------
 ```
 
 Numbers called "identification codes" are assigned numeric values to distinguish them from reserved words and variable names, and by referring to them the following values can be recognised.
@@ -1814,11 +1805,11 @@ Double precision real type                + 0    + 1            + 7
                                         |nent  |tissa | . . . |tissa |
                                         ---------------       --------
 
-String type                               + 0    + 1    + 2     These three
-    Address pointed by DE register  --> ----------------------  bytes are
-                                        |      | Low  | High |  called the
-                                        ----------------------  string
-                                           ^   |             |  descriptor.
+String type                               + 0    + 1    + 2
+    Address pointed by DE register  --> ----------------------
+                                        |      | Low  | High |  These three bytes are called
+                                        ----------------------  the string descriptor.
+                                           ^   |             |
                     Number of characters --+   +-------------+
                                             Points to the address
                                                 of the string
