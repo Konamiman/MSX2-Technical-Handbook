@@ -1,6 +1,6 @@
 # CHAPTER 1 - MSX SYSTEM OVERVIEW
 
-The MSX2 was designed to be fully compatible with the MSX1, but there are many enhanced features in the MSX2. Chapter 1 introduces the enhanced features of the MSX2, and shows block figures and standard tables. This information is conceptual, but will be needed to understand dexcriptions in volume 2 and later.
+The MSX2 was designed to be fully compatible with the MSX1, but there are many enhanced features in the MSX2. Chapter 1 introduces the enhanced features of the MSX2, and shows block figures and standard tables. This information is conceptual, but will be needed to understand descriptions in volume 2 and later.
 
 
 <p>&nbsp;</p>
@@ -39,9 +39,9 @@ To begin with, let us took back to the original purpose or intention of MSX and 
 
 MSX was announced as a new 8-bit computer standard in the autumn of 1983. In early days the word "compatibility" was not understood correctly and there were misunderstandings that MSX could execute programs from other computers. Since MSX can execute programs only for MSX, it was said that were was no difference from the PC series (NEC) or FM series (Fujitsu) personal computers, which could only execute programs using their format.
 
-Several years passed before personal computers became popular. In the early days only dedicated enthousiasts bought computers, which were difficult to use, and, needless to say, incompatible. They were satisfied to tinker with the computer and study it. But now computer use has expanded to include several classes of users. In other words, the personal computer is becoming a commodity item such as televisions or radio cassette recorders. Therefore, "compatibility" is coming to be a problem. If each TV station needs a different television set or if each radio cassette recorder needs a different tape, do you suppose they would be popular? Software or programs of the computer as a home electric product must be compatible.
+Several years passed before personal computers became popular. In the early days only dedicated enthusiasts bought computers, which were difficult to use, and, needless to say, incompatible. They were satisfied to tinker with the computer and study it. But now computer use has expanded to include several classes of users. In other words, the personal computer is becoming a commodity item such as televisions or radio cassette recorders. Therefore, "compatibility" is coming to be a problem. If each TV station needs a different television set or if each radio cassette recorder needs a different tape, do you suppose they would be popular? Software or programs of the computer as a home electric product must be compatible.
 
-The design team for MSX considered these problems. Since a computer is most powerful when left flexible and easy to expand, a "final" standard format was not practical. There are too many matters to define and hardware in constantly improving. Therefore MSX started with fixing format of the most fundamental harware and software such as DOS and BASIC, and the hardware bus which is the basis for expansion. Since the computer is used by itself and does not interact with other computers, the problem is small. But formats must be fixed if the computer is to be connected to "peripherals" and handle or accumulate various data. Fortunately MSX had the approval of many home appliance electric companies and an MSX format was established early. This allowed the system to be well known so that several manufacturers could make compatible peripherals for the MSX standard.
+The design team for MSX considered these problems. Since a computer is most powerful when left flexible and easy to expand, a "final" standard format was not practical. There are too many matters to define and hardware is constantly improving. Therefore MSX started with fixing format of the most fundamental harware and software such as DOS and BASIC, and the hardware bus which is the basis for expansion. Since the computer is used by itself and does not interact with other computers, the problem is small. But formats must be fixed if the computer is to be connected to "peripherals" and handle or accumulate various data. Fortunately MSX had the approval of many home appliance electric companies and an MSX format was established early. This allowed the system to be well known so that several manufacturers could make compatible peripherals for the MSX standard.
 
 Some of the useful features included in the MSX system include the use of double precision BCD for normal BASIC arithmetic and the same file format as MS-DOS. The real capabilities of the MSX machine will come to light as it is used across several fields.
 
@@ -50,7 +50,7 @@ Some of the useful features included in the MSX system include the use of double
 
 ### 1.2 Environment of the MSX
 
-Over one million MSX machines had been sold by December 1985 and are used mainly as game machines or primers by primary and junior high school students. But MSX use has gradually spread to include such uses as communication terminals, Japanese word processing, factory automation, and audio visual control. For improving its capabilities, a disk system and MSX-DOS have been prepared, and languages such as C, FORTH, and LOGO are available. BIOS, which is the collection of input/output routines in BASIC ROM, and BDOS, which resides in the disk interface ROM and has compatibility with CP/M system calls have both been improved. So an excellent programming environment is now available. Chinese Character input, light pen and mouse input, and the RS-232C interface have been standardised, and stantardisation of other peripherals is proceeding. The keyboard and character set are consistent with international standards, and there are minor variations to satisfy the needs of individual countries.
+Over one million MSX machines had been sold by December 1985 and are used mainly as game machines or primers by primary and junior high school students. But MSX use has gradually spread to include such uses as communication terminals, Japanese word processing, factory automation, and audio visual control. For improving its capabilities, a disk system and MSX-DOS have been prepared, and languages such as C, FORTH, and LOGO are available. BIOS, which is the collection of input/output routines in BASIC ROM, and BDOS, which resides in the disk interface ROM and has compatibility with CP/M system calls, have both been improved. So an excellent programming environment is now available. Chinese Character input, light pen and mouse input, and the RS-232C interface have been standardised, and stantardisation of other peripherals is proceeding. The keyboard and character set are consistent with international standards, and there are minor variations to satisfy the needs of individual countries.
 
 Several new peripherals have been developed. Standard devices include printers, disk drives, and mice; audio/visual devices include laser drives, VTRs, synthesizer controllers, and video acquisition systems. Factory Automation devices include robot controllers, room temperature controllers, various adaptors for modem and telephone lines, and a health controller combined with a hemadynamometer has been developed. So you can see that the potential uses for MSX computers has really grown.
 
@@ -529,9 +529,9 @@ FFFFH    | Register  |
 
 #### 2.1.2 Interfacing with peripherals
 
-MSX2 interfacing with peripherals is standarised in detail.
+MSX2 interfacing with peripherals is standardised in detail.
 
-The following is a list of standarised interfaces:
+The following is a list of standardised interfaces:
 
 - Display interface
 - Audio interface
