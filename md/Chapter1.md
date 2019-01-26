@@ -108,102 +108,14 @@ feature         |                              |  each maker              |
 
 ##### _Figure 1.1  MSX2 system configuration_
 
-1. Minimum configuration
+![Figure 1.1](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.1.png)
 
-```
-Sound I/O <--+  Video I/O   Printer I/O   Cartridge Slot x 1
-             |     ^             ^            |
-             |     |             |            |
-             |   -----------------------------+---------
-             |   |                            |        |
-             +-- | Z80A                       V        |
-                 |                           ----      |
-                 | ROM 48K                   |  |      |
-                 |                           |  |      |
-Joystick x 2 --> | RAM 64K                   |  |      |
-                 |                           |  |      |
-                 | VDP(V9938) VRAM 64K       ----      |
-                 |                                     |
-                 | PPI   PSG                           |
-                 |                                     |
-------------     |      ----------------               |
-| Cassette | --> |      |   Keyboard   |               |
-------------     ---------------------------------------
-```
-
-2. Software support range
-
-```
-                                        +-- Lightpen, Superimpose, Video
-                                        |                          digitize
-Sound I/O <--+  Video I/O   Printer I/O | Cartridge Slot x 3
-             |     ^             ^      |     |
-             |     |             |      |     |
-             |   -----------------------------+---------
-             |   |                       +----+----+   |
-             +-- | Z80A                  V    V    V   |:::::::::::::::::::::
-                 |                      ---- ---- ---- +:---- ---- ---- ----:
-                 | ROM 48K              |  | |  | |  | | |  | |  | |  | |  |:
-                 |                      |  | |  | |  | | |  | |  | |  | |  |:
-Joystick x 2 --> | RAM 64K              |  | |  | |  | | |  | |  | |  | |  |:
-                 |                      |  | |  | |  | | |  | |  | |  | |  |:
-Trackball,       | VDP(V9938) VRAM 128K ---- ---- ---- +:---- ---- ---- ----:
-mouse, etc       |                                     |:::::::::::::::::::::
-                 | PPI   PSG                           |
-                 |                                     | Extended Cartridge
-------------     |      ----------------               | Slot x 4
-| Cassette | --> |      |   Keyboard   |               |
-------------     ---------------------------------------
-```
 
 ##### _Figure 1.2  MSX1 system configuration_
 
+![Figure 1.2](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.2.png)
 
-1. Minimum configuration
 
-```
-Sound I/O <--+  Video I/O                 Cartridge Slot x 1
-             |     ^                          |
-             |     |                          |
-             |   -----------------------------+---------
-             |   |                            |        |
-             +-- | Z80A                       V        |
-                 |                           ----      |
-                 | ROM 32K                   |  |      |
-                 |                           |  |      |
-Joystick x 1 --> | RAM 8K                    |  |      |
-                 |                           |  |      |
-                 | VDP(TMS9918) VRAM 16K     ----      |
-                 |                                     |
-                 | PPI   PSG                           |
-                 |                                     |
-------------     |      ----------------               |
-| Cassette | --> |      |   Keyboard   |               |
-------------     ---------------------------------------
-```
-
-2. Software support range
-
-```
-Sound I/O <--+  Video I/O   Printer I/O   Cartridge Slot x 3
-             |     ^             ^            |
-             |     |             |            |
-             |   -----------------------------+---------
-             |   |                       +----+----+   |
-             +-- | Z80A                  V    V    V   |:::::::::::::::::::::
-                 |                      ---- ---- ---- +:---- ---- ---- ----:
-                 | ROM 32K              |  | |  | |  | | |  | |  | |  | |  |:
-                 |                      |  | |  | |  | | |  | |  | |  | |  |:
-Joystick x 2 --> | RAM 64K              |  | |  | |  | | |  | |  | |  | |  |:
-                 |                      |  | |  | |  | | |  | |  | |  | |  |:
-Trackball,       | VDP(TMS9918)VRAM 16K ---- ---- ---- +:---- ---- ---- ----:
-mouse, etc       |                                     |:::::::::::::::::::::
-                 | PPI   PSG                           |
-                 |                                     | Extended Cartridge
-------------     |      ----------------               | Slot x 4
-| Cassette | --> |      |   Keyboard   |               |
-------------     ---------------------------------------
-```
 
 #### MSX-BASIC
 
