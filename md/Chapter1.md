@@ -229,72 +229,8 @@ First of all, look at the block diagram in [Figure 1.3](#figure-13--msx2-block-d
 
 ##### _Figure 1.3  MSX2 block diagram_
 
-```
-------------
-| CPU Z80A |
-------------
-     |
-     |  -----  -------------------------------
-     +--|   |--| ROM 48K (MSX-BASIC ver 2.0) |
-     |  |   |  -------------------------------
-     |  | S |  ----------------
-     |  |   |--| MAIN RAM 64K |
-     |  | L |  ----------------
-     |  |   |  :::::::::::::::::  :::::::::::::::::
-     |  | O |::: MEMORY MAPPER :::: RAM 64K to 4M :
-     |  |   |  :::::::::::::::::  :::::::::::::::::
-     |  | T |  :::::::::::::
-     |  |   |::: CARTRIDGE :  I/O Cartridge (Disk, RS-232C)
-     |  |   |  :::::::::::::  RAM Cartridge
-     |  -----                 ROM Cartridge (Game, Application)
-     |                        Slot Expansion Box, Etc.
-     |
-     |  -----------------   --- Joystick Input
-     +--| PSG AY-3 8910 |---|
-     |  -----------------   --- Audio Output
-     |
-     |  ::::::::::::::::::::::::  ::::::::::::::::::::::::::::::::
-     |::: MSX-AUDIO (FM sound) :::: Audio Memory Maximum of 256K :
-     |  ::::::::::::::::::::::::  ::::::::::::::::::::::::::::::::
-     |
-     |  ----------------------
-     +--| CASSETTE INTERFACE |::::: Cassette
-     |  ----------------------
-     |
-     |  ---------------------
-     +--| PRINTER INTERFACE |:::::: Printer
-     |  ---------------------
-     |
-     |  ---------------------------------
-     +--| BATTERY BACKUP RAM + CLOCK IC |
-     |  ---------------------------------
-     |
-     |  -------------              ------------
-     +--| PPI 8255A |--------+-----| Keyboard |
-     |  -------------        |     ------------
-     |                       |     ---------------
-     |                       +-----| Slot Holder |
-     |                             ---------------
--------------
-| MSX-VIDEO |----------------------- RGB/Video/RF Output
--------------
-     |
-     |  ------------:::::::::::::::::::::::::::
-     +--| VRAM 64K | VRAM 64K : Expansion RAM :
-     |  ------------:::::::::::::::::::::::::::
-     |
-     |  ::::::::::::::::
-     |--: SUMPERIMPOSE :--------+--- Video Input
-     |  ::::::::::::::::        |
-     |                          |
-     |  ::::::::::::            |
-     +--: DIGITISE :------------+
-        ::::::::::::
+![Figure 1.3](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.3.png)
 
-Note: The dotted lines represent optional features.
-```
-
-<p>&nbsp;</p>
 
 #### 2.1.1 Address map
 
