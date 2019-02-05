@@ -407,18 +407,4 @@ A remarkable point is that BASIC and DOS use the same disk format in the MSX mac
 
 ##### _Figure 1.8  Software hierarchy of MSX1 and MSX2_
 
-```
-------------------------------------
-|        o               |         |
-|        |               |         |
-| BASIC  |  DISK-BASIC   | MSX-DOS |----+
-|        |               |         |    |
-|        |               |         |    |
-|        |       ------------------|    | Interslot Call
-|        |       |      BDOS       |    |
-|----------------------------------|    |
-|               BIOS               |<---+
-|/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\|
-|             Hardware             |
-------------------------------------
-```
+![Figure 1.8](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.8.png)
