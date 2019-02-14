@@ -1464,7 +1464,7 @@ GRAPHIC 2 and GRAPHIC 3 modes are the screen modes as described below:
 |                       any Figure can be defined for each pattern         |
 |                       only two colours can be used in horizontal 8 dots  |
 | memory requirements:  for pattern font .............. 6144 bytes         |
-|                       for colour tbale .............. 6144 bytes         |
+|                       for colour table .............. 6144 bytes         |
 | sprite:               sprite mode 1 for GRAPHIC 2                        |
 |                       sprite mode 2 for GRAPHIC 3                        |
 | BASIC:                compatible to SCREEN 2 for GRAPHIC 2               |
