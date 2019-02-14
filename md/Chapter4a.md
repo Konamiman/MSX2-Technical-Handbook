@@ -1241,7 +1241,7 @@ GRAPHIC 1 Mode is the screen mode as shown below:
 |                       any Figure can be defined for each pattern         |
 |                       different colour for each 8 pattern can be set     |
 | memory requirements:  for pattern font .............. 2048 bytes         |
-|                       for colour tbale ..............   32 bytes         |
+|                       for colour table ..............   32 bytes         |
 | sprite:               sprite mode 1                                      |
 | BASIC:                compatible with SCREEN 1                           |
 ----------------------------------------------------------------------------
