@@ -73,7 +73,7 @@ First of all, the sentence and function for each instruction of BASIC are listed
 
 ##### _Figure 2.1  Instruction list format_
 
-![Figure 2.1](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%202.1.png)
+![Figure 2.1](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.1.png)
 
 #### (a) Syntax of instructions
 
@@ -642,7 +642,7 @@ When the flag is 0 (the value of border colour is one of the values from 0 to 15
 
 ##### _Figure 2.2  Bitwise meanings for the border colour on screen mode 6_
 
-![Figure 2.2](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%202.2.png)
+![Figure 2.2](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.2.png)
 
 * `COLOR = (<palette number>, <red brightness>, <green brightness>, <blue brightness>)`
 
@@ -868,7 +868,7 @@ The COPY statements transfer screen data and are valid when the screen mode is f
 
 ##### _Figure 2.3  Directions for writing the screen data_
 
-![Figure 2.3](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%202.3.png)
+![Figure 2.3](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.3.png)
 
 `<Array variable>` is of the integer type, or single precision real type, or double precision real type. It should be prepared with enough area to get the screen data. Its size can be calculated by [Expression 1](#expression-1) as shown below. `<Pixel size>` is the number of bits to be used to express one dot on the screen. It is 4 when the screen mode is 5 or 7, 2 for mode 6, and 8 for mode 8. Screen data is stored in the format shown in [Figure 2.4](#figure-24--screen-data-format).
 
@@ -945,7 +945,7 @@ COLOR SPRITE$ = CHR$ (colour of the first line) + CHR$ (colour of the second lin
 
 ##### _Figure 2.5  Relation of the sprite and `<string expression>`_
 
-![Figure 2.5](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%202.5.png)
+![Figure 2.5](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.5.png)
 
 ##### _Table 2.11  Bitwise meanings of string expression_
 
@@ -1385,11 +1385,11 @@ The variable area is located just after the BASIC program area. It is secured to
 
 ##### _Figure 2.8  Storage format of simple variables_
 
-![Figure 2.8](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%202.8.png)
+![Figure 2.8](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.8.png)
 
 ##### _Figure 2.9  Storage format of array variables_
 
-![Figure 2.9](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%202.9.png)
+![Figure 2.9](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.9.png)
 
 **Note:** variable data format is the same as the storage format of simple variables. The lower of the 2-byte value is stored first, and the higher byte last.
 

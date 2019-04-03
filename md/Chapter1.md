@@ -108,12 +108,12 @@ feature         |                              |  each maker              |
 
 ##### _Figure 1.1  MSX2 system configuration_
 
-![Figure 1.1](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.1.png)
+![Figure 1.1](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%201.1.png)
 
 
 ##### _Figure 1.2  MSX1 system configuration_
 
-![Figure 1.2](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.2.png)
+![Figure 1.2](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%201.2.png)
 
 
 
@@ -229,7 +229,7 @@ First of all, look at the block diagram in [Figure 1.3](#figure-13--msx2-block-d
 
 ##### _Figure 1.3  MSX2 block diagram_
 
-![Figure 1.3](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.3.png)
+![Figure 1.3](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%201.3.png)
 
 
 #### 2.1.1 Address map
@@ -407,4 +407,4 @@ A remarkable point is that BASIC and DOS use the same disk format in the MSX mac
 
 ##### _Figure 1.8  Software hierarchy of MSX1 and MSX2_
 
-![Figure 1.8](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.8.png)
+![Figure 1.8](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%201.8.png)
