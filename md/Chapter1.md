@@ -108,102 +108,14 @@ feature         |                              |  each maker              |
 
 ##### _Figure 1.1  MSX2 system configuration_
 
-1. Minimum configuration
+![Figure 1.1](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.1.png)
 
-```
-Sound I/O <--+  Video I/O   Printer I/O   Cartridge Slot x 1
-             |     ^             ^            |
-             |     |             |            |
-             |   -----------------------------+---------
-             |   |                            |        |
-             +-- | Z80A                       V        |
-                 |                           ----      |
-                 | ROM 48K                   |  |      |
-                 |                           |  |      |
-Joystick x 2 --> | RAM 64K                   |  |      |
-                 |                           |  |      |
-                 | VDP(V9938) VRAM 64K       ----      |
-                 |                                     |
-                 | PPI   PSG                           |
-                 |                                     |
-------------     |      ----------------               |
-| Cassette | --> |      |   Keyboard   |               |
-------------     ---------------------------------------
-```
-
-2. Software support range
-
-```
-                                        +-- Lightpen, Superimpose, Video
-                                        |                          digitize
-Sound I/O <--+  Video I/O   Printer I/O | Cartridge Slot x 3
-             |     ^             ^      |     |
-             |     |             |      |     |
-             |   -----------------------------+---------
-             |   |                       +----+----+   |
-             +-- | Z80A                  V    V    V   |:::::::::::::::::::::
-                 |                      ---- ---- ---- +:---- ---- ---- ----:
-                 | ROM 48K              |  | |  | |  | | |  | |  | |  | |  |:
-                 |                      |  | |  | |  | | |  | |  | |  | |  |:
-Joystick x 2 --> | RAM 64K              |  | |  | |  | | |  | |  | |  | |  |:
-                 |                      |  | |  | |  | | |  | |  | |  | |  |:
-Trackball,       | VDP(V9938) VRAM 128K ---- ---- ---- +:---- ---- ---- ----:
-mouse, etc       |                                     |:::::::::::::::::::::
-                 | PPI   PSG                           |
-                 |                                     | Extended Cartridge
-------------     |      ----------------               | Slot x 4
-| Cassette | --> |      |   Keyboard   |               |
-------------     ---------------------------------------
-```
 
 ##### _Figure 1.2  MSX1 system configuration_
 
+![Figure 1.2](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.2.png)
 
-1. Minimum configuration
 
-```
-Sound I/O <--+  Video I/O                 Cartridge Slot x 1
-             |     ^                          |
-             |     |                          |
-             |   -----------------------------+---------
-             |   |                            |        |
-             +-- | Z80A                       V        |
-                 |                           ----      |
-                 | ROM 32K                   |  |      |
-                 |                           |  |      |
-Joystick x 1 --> | RAM 8K                    |  |      |
-                 |                           |  |      |
-                 | VDP(TMS9918) VRAM 16K     ----      |
-                 |                                     |
-                 | PPI   PSG                           |
-                 |                                     |
-------------     |      ----------------               |
-| Cassette | --> |      |   Keyboard   |               |
-------------     ---------------------------------------
-```
-
-2. Software support range
-
-```
-Sound I/O <--+  Video I/O   Printer I/O   Cartridge Slot x 3
-             |     ^             ^            |
-             |     |             |            |
-             |   -----------------------------+---------
-             |   |                       +----+----+   |
-             +-- | Z80A                  V    V    V   |:::::::::::::::::::::
-                 |                      ---- ---- ---- +:---- ---- ---- ----:
-                 | ROM 32K              |  | |  | |  | | |  | |  | |  | |  |:
-                 |                      |  | |  | |  | | |  | |  | |  | |  |:
-Joystick x 2 --> | RAM 64K              |  | |  | |  | | |  | |  | |  | |  |:
-                 |                      |  | |  | |  | | |  | |  | |  | |  |:
-Trackball,       | VDP(TMS9918)VRAM 16K ---- ---- ---- +:---- ---- ---- ----:
-mouse, etc       |                                     |:::::::::::::::::::::
-                 | PPI   PSG                           |
-                 |                                     | Extended Cartridge
-------------     |      ----------------               | Slot x 4
-| Cassette | --> |      |   Keyboard   |               |
-------------     ---------------------------------------
-```
 
 #### MSX-BASIC
 
@@ -317,72 +229,8 @@ First of all, look at the block diagram in [Figure 1.3](#figure-13--msx2-block-d
 
 ##### _Figure 1.3  MSX2 block diagram_
 
-```
-------------
-| CPU Z80A |
-------------
-     |
-     |  -----  -------------------------------
-     +--|   |--| ROM 48K (MSX-BASIC ver 2.0) |
-     |  |   |  -------------------------------
-     |  | S |  ----------------
-     |  |   |--| MAIN RAM 64K |
-     |  | L |  ----------------
-     |  |   |  :::::::::::::::::  :::::::::::::::::
-     |  | O |::: MEMORY MAPPER :::: RAM 64K to 4M :
-     |  |   |  :::::::::::::::::  :::::::::::::::::
-     |  | T |  :::::::::::::
-     |  |   |::: CARTRIDGE :  I/O Cartridge (Disk, RS-232C)
-     |  |   |  :::::::::::::  RAM Cartridge
-     |  -----                 ROM Cartridge (Game, Application)
-     |                        Slot Expansion Box, Etc.
-     |
-     |  -----------------   --- Joystick Input
-     +--| PSG AY-3 8910 |---|
-     |  -----------------   --- Audio Output
-     |
-     |  ::::::::::::::::::::::::  ::::::::::::::::::::::::::::::::
-     |::: MSX-AUDIO (FM sound) :::: Audio Memory Maximum of 256K :
-     |  ::::::::::::::::::::::::  ::::::::::::::::::::::::::::::::
-     |
-     |  ----------------------
-     +--| CASSETTE INTERFACE |::::: Cassette
-     |  ----------------------
-     |
-     |  ---------------------
-     +--| PRINTER INTERFACE |:::::: Printer
-     |  ---------------------
-     |
-     |  ---------------------------------
-     +--| BATTERY BACKUP RAM + CLOCK IC |
-     |  ---------------------------------
-     |
-     |  -------------              ------------
-     +--| PPI 8255A |--------+-----| Keyboard |
-     |  -------------        |     ------------
-     |                       |     ---------------
-     |                       +-----| Slot Holder |
-     |                             ---------------
--------------
-| MSX-VIDEO |----------------------- RGB/Video/RF Output
--------------
-     |
-     |  ------------:::::::::::::::::::::::::::
-     +--| VRAM 64K | VRAM 64K : Expansion RAM :
-     |  ------------:::::::::::::::::::::::::::
-     |
-     |  ::::::::::::::::
-     |--: SUMPERIMPOSE :--------+--- Video Input
-     |  ::::::::::::::::        |
-     |                          |
-     |  ::::::::::::            |
-     +--: DIGITISE :------------+
-        ::::::::::::
+![Figure 1.3](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.3.png)
 
-Note: The dotted lines represent optional features.
-```
-
-<p>&nbsp;</p>
 
 #### 2.1.1 Address map
 
@@ -559,18 +407,4 @@ A remarkable point is that BASIC and DOS use the same disk format in the MSX mac
 
 ##### _Figure 1.8  Software hierarchy of MSX1 and MSX2_
 
-```
-------------------------------------
-|        o               |         |
-|        |               |         |
-| BASIC  |  DISK-BASIC   | MSX-DOS |----+
-|        |               |         |    |
-|        |               |         |    |
-|        |       ------------------|    | Interslot Call
-|        |       |      BDOS       |    |
-|----------------------------------|    |
-|               BIOS               |<---+
-|/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\|
-|             Hardware             |
-------------------------------------
-```
+![Figure 1.8](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics/pics/Figure%201.8.png)
