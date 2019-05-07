@@ -983,7 +983,7 @@ _(the following is the same as with MSX1)_
 #### QUEUEN (FB3EH, 1)
 * **contents**: used internally by PLAY statement
 
-#### MUSICF (FC3FH, 1)
+#### MUSICF (FB3FH, 1)
 * **contents**: interrupt flag for playing music
 
 #### PLYCNT (FB40H, 1)
