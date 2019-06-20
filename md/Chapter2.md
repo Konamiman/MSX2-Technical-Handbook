@@ -1444,22 +1444,7 @@ Figure 2.10 shows the work area allocated when a disk is mounted. Note that this
 
 ##### _Figure 2.10  Work area for disk_
 
-```
-                             :         User's         :
-                             :          area          :
-BLDCHK + 1 (F377H + 1)  -->  |------------------------| --+
-                             |  BLOAD, BSAVE routine  |   |
-                             |      (19H bytes)       |   |
-       FCBBASE (F353H)  -->  |------------------------|   | Reserved when a
-                             |       FCB entry        |   | disk is mounted
-                             | (25H * (FILMAX) bytes) |   |
-        HIMSAV (F349H)  -->  |------------------------|   |
-                             |     Disk interface     |   |
-                             |       work area        |   |
-                 F380H  -->  |------------------------| --+
-                             :         System         :
-                             :        work area       :
-```
+![Figure 2.10](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.10.png)
 
 <p>&nbsp;</p>
 
@@ -1470,46 +1455,10 @@ Programs are stored in memory as shown in [Figure 2.11](#figure-211--text-storag
 
 ##### _Figure 2.11  Text storage format_
 
-```
-   Text start code (8000H)
-   ------
-   | 00 |
-   ------
-                                                            Code for the
-   Link pointer  Line number               Text           end of line (EOL)
-   -----------   -----------   --------------      ---------   ------
-   | XX | XX |   | XX | XX |   | XX | XX |   . . .    | XX |   | 00 |
-   -----------   -----------   --------------      ---------   ------
-        |          List of the first line number
-+-------+
-|
-|  -----------   -----------   ---------     ---------   ------
-+->| XX | XX |   | XX | XX |   | XX |   . . .   | XX |   | 00 |
-   -----------   -----------   ---------     ---------   ------
-        |
-+-------+
-|
-|       .             .                   .
-+->     .             .                   .
-        .             .                   .  Line number
-        .             .                   .
-        .             .                   .
+![Figure 2.11](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.11.png)
 
-        |
-+-------+
-|
-|  -----------   -----------   ---------     ---------   ------
-+->| XX | XX |   | XX | XX |   | XX |   . . .   | XX |   | 00 |
-   -----------   -----------   ---------     ---------   ------
-        |          List of the last line number
-+-------+
-|
-|  -----------
-+->| 00 | 00 |   Code for the end of text (EOT)
-   -----------
+**Note:** Link pointers and line numbers are stored with their low bytes first and high bytes last.
 
-Note: Link pointers and line numbers are stored with their low bytes first and high bytes last.
-```
 
 * Link pointer
 
@@ -1595,41 +1544,7 @@ See the appendix at the end of this book for character codes. Graphic characters
 
 ##### _Figure 2.12  Numeral formats in text_
 
-```
-                                ----------------
-            Octal number (&O)   | 0B | XX : XX |
-                                ----------------
-                                ----------------
-      Hexadecimal number (&H)   | 0C | XX : XX |
-                                ----------------
-
-                                ----------------
-      Line number (after RUN)   | 0D | XX : XX | Absolute address of the destination line
-                                ---------------- for the branch instruction in memory.
-
-                                ---------------- Destination line number for the branch instruction.
-     Line number (before RUN)   | 0E | XX : XX | After RUN, identification code is made 0DH and
-                                ---------------- the line number is changed to the absoulte address.
-                                                 
-                                -----------
-   Integer from 10 to 255 (%)   | 0F : XX |
-                                -----------
-                                ------
-      Integer from 0 to 9 (%)   |    | 11 to 1A
-                                ------
-                                ----------------
-Integer from 256 to 32767 (%)   | 1C | XX : XX |
-                                ----------------
-                                --------------------------
-    Single precision real (!)   | 1D | XX : XX : XX : XX |
-                                --------------------------
-                                ----------------------------------------------
-    Double precision real (#)   | 1F | XX : XX : XX : XX : XX : XX : XX : XX |
-                                ----------------------------------------------
-                                ------------------
-                  Binary (&B)   | "&"| "B"| . . .  Characters of "0" or "1" following "&B"
-                                ------------------
-```
+![Figure 2.12](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.12.png)
 
 Numbers called "identification codes" are assigned numeric values to distinguish them from reserved words and variable names, and by referring to them the following values can be recognised.
 
@@ -1679,34 +1594,7 @@ When the argument is passed from BASIC to the assembly language program, its typ
 
 ##### _Figure 2.13  How values are passed as arguments_
 
-```
-2-byte integer type                       + 0    + 1    + 2    + 3
-  Address pointed at by HL register --> -----------------------------
-                                        |  XX  |  XX  | Low  | High |
-                                        -----------------------------
-                                         Note: "XX" may be anything
-
-Single precision real type                + 0    + 1    + 2    + 3
-    Address pointed by HL register  --> -----------------------------
-                                        |Expo- |Man-  |Man-  |Man-  |
-                                        |nent  |tissa |tissa |tissa |
-                                        -----------------------------
-
-Double precision real type                + 0    + 1            + 7
-    Address pointed by HL register  --> ---------------       --------
-                                        |Expo- |Man-  | . . . |Man-  |
-                                        |nent  |tissa | . . . |tissa |
-                                        ---------------       --------
-
-String type                               + 0    + 1    + 2
-    Address pointed by DE register  --> ----------------------
-                                        |      | Low  | High |  These three bytes are called
-                                        ----------------------  the string descriptor.
-                                           ^   |             |
-                    Number of characters --+   +-------------+
-                                            Points to the address
-                                                of the string
-```
+![Figure 2.13](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.13.png)
 
 ##### _List 2.1  Example of the argument of string type_
 
@@ -1822,51 +1710,8 @@ Purpose: Extract one character from the text at (HL + 1). Spaces are skipped.
 
 ##### _Figure 2.14  Input/output state of CHRGTR_
 
-```
----------------------------------------------------------------------------
-| Input                                                                   |
-|                                                                         |
-| ------------------------------------------------- BASIC text            |
-| . . . | A |   | = | 0 | : |   | B | = | 0 | . . . (in intermediate code |
-| ------------------------------------------------- format, actually)     |
-|         ^                                                               |
-|         |                                                               |
-|         HL                                                              |
-|-------------------------------------------------------------------------|
-| First execution                                                         |
-|                       -----                                             |
-|                 +-> A | = |                                             |
-|                 |     -----                                             |
-| -------------------------------------------------                       |
-| . . . | A |   | = | 0 | : |   | B | = | 0 | . . . spaces are skipped    |
-| -------------------------------------------------                       |
-|                 ^                                                       |
-|                 |                                                       |
-|                 HL                                                      |
-|-------------------------------------------------------------------------|
-| Second execution                                                        |
-|                           -----     -----                               |
-|                     +-> A | 0 |  CY | 1 |                               |
-|                     |     -----     -----                               |
-| ------------------------------------------------- CY flag is ON         |
-| . . . | A |   | = | 0 | : |   | B | = | 0 | . . . when reading a number |
-| -------------------------------------------------                       |
-|                     ^                                                   |
-|                     |                                                   |
-|                     HL                                                  |
-|-------------------------------------------------------------------------|
-| Third execution                                                         |
-|                               -----    -----                            |
-|                         +-> A | : |  Z | 1 |                            |
-|                         |     -----    -----                            |
-| ------------------------------------------------- Z flag is ON          |
-| . . . | A |   | = | 0 | : |   | B | = | 0 | . . . when reading          |
-| ------------------------------------------------- the end of line       |
-|                         ^                                               |
-|                         |                                               |
-|                         HL                                              |
----------------------------------------------------------------------------
-```
+![Figure 2.14](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.14.png)
+
 <p>&nbsp;</p>
 
 #### FRMEVL (4C64/MAIN)
@@ -1884,34 +1729,8 @@ Purpose: Evaluate an expression and make output according to its type.
 
 ##### _Figure 2.15  Input/output state of FRMEVL_
 
-```
------------------------------------------------------------------------------
-| Input                                                                     |
-|                                                                           |
-|  -----------------------------------------------------------------------  |
-|  ...| B | = | A | * | 3 | + | 1 | 0 | 0 | / | 2 | 0 | : | C | = | 0 |...  |
-|  -----------------------------------------------------------------------  |
-|               ^                                                           |
-|               |                                                           |
-|               HL                                                          |
-|---------------------------------------------------------------------------|
-| Output                                                                    |
-|                                                                           |
-|  -----------------------------------------------------------------------  |
-|  ...| B | = | A | * | 3 | + | 1 | 0 | 0 | / | 2 | 0 | : | C | = | 0 |...  |
-|  -----------------------------------------------------------------------  |
-|             |                                       | ^                   |
-|             +---------------------------------------+ |                   |
-|                                 |                     HL                  |
-|                           --------------                                  |
-|                      DAC  | calculated |                                  |
-|                           |   result   |                                  |
-|                           --------------                                  |
-|                               -----  The case of double precision         |
-|                      VALTYP   | 8 |  real number, for example             |
-|                               -----                                       |
------------------------------------------------------------------------------
-```
+![Figure 2.15](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.15.png)
+
 <p>&nbsp;</p>
 
 #### FRMQNT (542F/MAIN)
@@ -1985,76 +1804,8 @@ Purpose: Obtain the address for the storage of a variable (or an array variable)
 
 ##### _Figure 2.16  Input/output state of PTRGET_
 
-```
--------------------------------------------------------------------------
-| Input         ---------------------------------                       |
-|               . . . | A | A | = | B | B | . . .                       |
-|               ---------------------------------                       |
-|                       ^                                               |
-|                       |                                               |
-|                       HL                                              |
-|                               -----                                   |
-|                       SUBFLG  | 0 |                                   |
-|                               -----                                   |
-|-----------------------------------------------------------------------|
-| Output        ---------------------------------                       |
-|               . . . | A | A | = | B | B | . . .                       |
-|               ---------------------------------                       |
-|                               ^                                       |
-|                               |                                       |
-|                               HL                                      |
-|                                                                       |
-|                   ----------- address where the contents              |
-|               DE  | XX | XX | of variable AA reside                   |
-|                   -----------                                         |
--------------------------------------------------------------------------
+![Figure 2.16](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.16.png)
 
--------------------------------------------------------------------------
-| Input         ---------------------------------------------           |
-|               . . . | A | A | ( | 3 | ) | = | B | B | . . .           |
-|               ---------------------------------------------           |
-|                       ^                                               |
-|                       |                                               |
-|                       HL                                              |
-|                               -----                                   |
-|                       SUBFLG  | 0 |                                   |
-|                               -----                                   |
-|-----------------------------------------------------------------------|
-| Output        ---------------------------------------------           |
-|               . . . | A | A | ( | 3 | ) | = | B | B | . . .           |
-|               ---------------------------------------------           |
-|                                           ^                           |
-|                                           |                           |
-|                                           HL                          |
-|                                                                       |
-|                   ----------- address where the contents              |
-|               DE  | XX | XX | of variable AA(3) reside                |
-|                   -----------                                         |
--------------------------------------------------------------------------
-
--------------------------------------------------------------------------
-| Input         ---------------------------------------------           |
-|               . . . | A | A | ( | 3 | ) | = | B | B | . . .           |
-|               ---------------------------------------------           |
-|                       ^                                               |
-|                       |                                               |
-|                       HL                                              |
-|                               -----                                   |
-|                       SUBFLG  | 1 |                                   |
-|                               -----                                   |
-|-----------------------------------------------------------------------|
-| Output        ---------------------------------------------           |
-|               . . . | A | A | ( | 3 | ) | = | B | B | . . .           |
-|               ---------------------------------------------           |
-|                                           ^                           |
-|                                           |                           |
-|                                           HL                          |
-|                                                                       |
-|                   ----------- starting address of                     |
-|               DE  | XX | XX | array variable AA(n)                    |
-|                   -----------                                         |
--------------------------------------------------------------------------
-```
 <p>&nbsp;</p>
 
 #### NEWSTT (4601H/MAIN
@@ -2069,18 +1820,7 @@ Purpose: Execute a text. The state of the text is necessary to be as same as sho
 
 ##### _Figure 2.17  Memory setting for NEWSTT_
 
-```
-Intermediate codes of BASIC are contained here.
-   +-----------------+
-   |                 |
-     3AH   94H   00H
-   -------------------------
-   |  :  | NEW |     | . . .
-   -------------------------
-      ^         word
-      |         stop
-      HL
-```
+![Figure 2.17](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.17.png)
 
 Since these internal routines are for BASIC texts, the same error handling as BASIC is done when an error occurs. In this case, by changing H.ERROR (FFB1H), the user can handle the error (the E register contains the error number) (see [List 2.3](#list-23--changing-error-handling-routine)).
 
