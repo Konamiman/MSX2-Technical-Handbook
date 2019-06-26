@@ -1444,7 +1444,7 @@ Figure 2.10 shows the work area allocated when a disk is mounted. Note that this
 
 ##### _Figure 2.10  Work area for disk_
 
-![Figure 2.10](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.10.png)
+![Figure 2.10](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.10.png)
 
 <p>&nbsp;</p>
 
@@ -1455,7 +1455,7 @@ Programs are stored in memory as shown in [Figure 2.11](#figure-211--text-storag
 
 ##### _Figure 2.11  Text storage format_
 
-![Figure 2.11](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.11.png)
+![Figure 2.11](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.11.png)
 
 **Note:** Link pointers and line numbers are stored with their low bytes first and high bytes last.
 
@@ -1544,7 +1544,7 @@ See the appendix at the end of this book for character codes. Graphic characters
 
 ##### _Figure 2.12  Numeral formats in text_
 
-![Figure 2.12](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.12.png)
+![Figure 2.12](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.12.png)
 
 Numbers called "identification codes" are assigned numeric values to distinguish them from reserved words and variable names, and by referring to them the following values can be recognised.
 
@@ -1594,7 +1594,7 @@ When the argument is passed from BASIC to the assembly language program, its typ
 
 ##### _Figure 2.13  How values are passed as arguments_
 
-![Figure 2.13](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.13.png)
+![Figure 2.13](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.13.png)
 
 ##### _List 2.1  Example of the argument of string type_
 
@@ -1710,7 +1710,7 @@ Purpose: Extract one character from the text at (HL + 1). Spaces are skipped.
 
 ##### _Figure 2.14  Input/output state of CHRGTR_
 
-![Figure 2.14](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.14.png)
+![Figure 2.14](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.14.png)
 
 <p>&nbsp;</p>
 
@@ -1729,7 +1729,7 @@ Purpose: Evaluate an expression and make output according to its type.
 
 ##### _Figure 2.15  Input/output state of FRMEVL_
 
-![Figure 2.15](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.15.png)
+![Figure 2.15](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.15.png)
 
 <p>&nbsp;</p>
 
@@ -1804,7 +1804,7 @@ Purpose: Obtain the address for the storage of a variable (or an array variable)
 
 ##### _Figure 2.16  Input/output state of PTRGET_
 
-![Figure 2.16](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.16.png)
+![Figure 2.16](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.16.png)
 
 <p>&nbsp;</p>
 
@@ -1820,7 +1820,7 @@ Purpose: Execute a text. The state of the text is necessary to be as same as sho
 
 ##### _Figure 2.17  Memory setting for NEWSTT_
 
-![Figure 2.17](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/add-pics-2/pics/Figure%202.17.png)
+![Figure 2.17](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.17.png)
 
 Since these internal routines are for BASIC texts, the same error handling as BASIC is done when an error occurs. In this case, by changing H.ERROR (FFB1H), the user can handle the error (the E register contains the error number) (see [List 2.3](#list-23--changing-error-handling-routine)).
 
