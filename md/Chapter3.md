@@ -222,16 +222,7 @@ When MSX-DOS is invoked, the following message appears on the screen:
 
 ##### _Figure 3.3  Screen at atartup_
 
-```
------------------------------------
-|                                 |
-|   MSX-DOS version 1.03          |
-|   Copyright 1984 by Microsoft   |
-|                                 |
-|   COMMAND version 1.11          |
-|                                 |
------------------------------------
-```
+![Figure 3.3](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%203.3.png)
 
 The upper two lines show the version of MSXDOS.SYS and its copyright. The last line shows the version of COMMAND.COM.
 
@@ -339,27 +330,7 @@ When comparing existing file names and file names with wildcards, the portion le
 
 ##### _Figure 3.4  Wildcard expansion_
 
-```
-              ---------------------------------   -------------
-ABCDE.123 --> | A | B | C | D | E |   |   |   |   | 1 | 2 | 3 |
-              ---------------------------------   -------------
-                ^   ^   ^   ^   ^   ^   ^   ^       ^   ^   ^
-                |   |   |   |   |   |   |   |       |   |   |
-                O   O   O   O   X   O   O   O       O   O   X
-                |   |   |   |   |   |   |   |       |   |   |
-                V   V   V   V   V   V   V   V       V   V   V
-              ---------------------------------   -------------
-  A???.?? --> | A | ? | ? | ? |   |   |   |   |   | ? | ? |   |
-              ---------------------------------   -------------
-                ^   ^   ^   ^   ^   ^   ^   ^       ^   ^   ^
-                |   |   |   |   |   |   |   |       |   |   |
-                O   O   O   O   O   O   O   O       O   O   O
-                |   |   |   |   |   |   |   |       |   |   |
-                V   V   V   V   V   V   V   V       V   V   V
-              ---------------------------------   -------------
-     AZ.9 --> | A | Z |   |   |   |   |   |   |   | 9 |   |   |
-              ---------------------------------   -------------
-```
+![Figure 3.4](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%203.4.png)
 
 An asterisk (\*) is interpreted as either 8 question marks or 3 question marks (?) depending on if it is in the file name position or file extension position. For example, a file name "A*B" is not interpreted as "any strings which begin with A and end with B". It is interpreted as "any strings which begin with A", as shown below.
 
@@ -513,7 +484,7 @@ In addition to the template operation keys, the following control keys are also 
 | HOME              | A>XXX ABCDE          | XXX ABCDE                    |
 |                   |                      | -                            |
 ---------------------------------------------------------------------------
-````
+```
 
 #### Disk errors
 
@@ -522,28 +493,7 @@ When an error occurs during disk access, MSX-DOS retries sometimes. Still more e
 
 ##### _Figure 3.5  Error display_
 
-```
------------------------------------------------------------------------
-|                                                                     |
-|       <error type>   error   <action>   drive   <drive name>        |
-|       ------------           --------           ------------        |
-|            |                     |                    |             |
-|     -----------------       -----------          ----------         |
-|     | Write protect |       | Reading |          | A to H |         |
-|     | Not ready     |       | Writing |          ----------         |
-|     | Disk          |       -----------                             |
-|     -----------------                                               |
-|                                                                     |
-|       Abort, Retry, Ignore?                                         |
-|                                                                     |
-|---------------------------------------------------------------------|
-|                                                                     |
-|  Abort:  stops the disk access and ends the command execution       |
-|  Retry:  tries again                                                |
-|  Ignore: stops the disk access and continues the command execution  |
-|                                                                     |
------------------------------------------------------------------------
-```
+![Figure 3.5](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%203.5.png)
 
 The following error might occur other than listed above. It indicates that the pointer in FAT is pointing to a cluster which does not exist. When this error occurs, the diskette will be unusable.
 
@@ -661,21 +611,7 @@ is executed, it is interpreted as shown in figure 3.6 and a file "FL-X7.V21" is 
 
 ##### _Figure 3.6  Wildcard specification of destination file_
 
-```
----------------------------------    -------------
-| F | L | ? | X | ? | ? | ? | ? |    | V | ? | ? |  <file spec 2>
----------------------------------    -------------
-  |   |       |                        |
-  V   V       V                        V
----------------------------------    -------------
-| F | L | - | X | 7 |   |   |   |    | V | 2 | 1 |  Only wildcard portion is replaced with <file spec 1>
----------------------------------    -------------
-          ^       ^   ^   ^   ^            ^   ^
-          |       |   |   |   |            |   |
----------------------------------    -------------
-| A | B | - | 0 | 7 |   |   |   |    | 0 | 2 | 1 |  <file spec 1>
----------------------------------    -------------
-```
+![Figure 3.6](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%203.6.png)
 
 Using wildcards in the specification of `<file spec 1>` enables the duplication of many files at the same time.
 
@@ -1241,51 +1177,14 @@ Figure 3.2 shows an example of a FAT. The first byte is called the "FAT ID" whic
 
 ##### _Figure 3.12  FAT example_
 
-```
-                |4 bits |4 bits |
-     FAT        -----------------
-start address ->|   F       B   | ----- FAT ID
-                |---------------|
-             +1 |   F       F   | --+
-                |---------------|   |-- dummy
-             +2 |   F       F   |   |
-                |---------------| --+
-             +3 |   0       3   |
-                |---------------|   FAT entry 2 : link = 003H ---+
-             +4 |   4   |   0   |       +------------------------+
-                |---------------|       V
-             +5 |   0       0   |   FAT entry 3 : link = 004H ---+
-                |---------------|       +------------------------+
-             +6 |   F       F   |       V
-                |---------------|   FAT entry 4 : link = FFFH (end)
-             +7 |   6   |   F   |
-                |---------------|
-             +8 |   0       0   |   FAT entry 5 : link = 006H ---+
-                |---------------|       +------------------------+
-             +9 |   F       F   |       V
-                |---------------|   FAT entry 6 : link = FFFH (end)
-            +10 |       |   F   |
-                        ---------
-```
+![Figure 3.12](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%203.12.png)
 
 The linkage information is the value indicating the next cluster number. FFFH means that the file ends with that cluster. The example of [Figure 3.12](#figure-312--fat-example) shows a file of three clusters, (cluster #2 -> cluster #3 -> cluster #4), and a file of two clusters, (cluster #5 -> cluster #6). The linkage from the cluster with the smaller number is only for easy comprehension. In actual practice, numbers are not necessarily ordered.
 
 
 ##### _Figure 3.13  Reading FAT_
 
-```
-                |               |
-                |---------------|
-                |   2       1   | ----- link = 321H
-                |---------------|
-                |   4   |   3   |
-                |---------------|
-                |   6       5   | ----- link = 654H
-                |---------------|
-                |       .       |
-                        .
-                        .
-```
+![Figure 3.13](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%203.13.png)
 
 #### Directory
 
@@ -1533,49 +1432,7 @@ A special procedure is required to open a file when using FCB. "Opening a file" 
 
 ##### _Figure 3.20  Before/after opening FCB_
 
-```
-before the open            after the opem
-
-   -----                       -----
- 0 | S | drive number        0 | S | default drive (00H) is converted to real drive (01H to 06H)
- 1 | S | -----               1 | S |
- 2 | S |   ^                 2 | S |
- 3 | S |   |                 3 | S |
- 4 | S |   |                 4 | S |
- 5 | S |   |                 5 | S |
- 6 | S | file name           6 | S |
- 7 | S |   |                 7 | S |
- 8 | S |   |                 8 | S |
- 9 | S |   |                 9 | S |
-10 | S |   V                10 | S |
-11 | S | -----              11 | S |
-12 |   |                    12 |   | \  current block
-13 |   |                    13 |   | /
-14 |   |                    14 |   | \  record size
-15 |   |                    15 |   | /
-16 |   |                    16 | S | --+
-17 |   |                    17 | S |   | file
-18 |   |                    18 | S |   | size
-19 |   |                    19 | S | --+
-20 |   |                    20 | S | \ date
-21 |   |                    21 | S | /
-22 |   |                    22 | S | \ time
-23 |   |                    23 | S | /
-24 |   |                    24 | S | device ID
-25 |   |                    25 | S | directory location
-26 |   |                    26 | S | \ top cluster number number of the file
-27 |   |                    27 | S | /
-28 |   |                    28 | S | \ last cluster number accessed
-29 |   |                    29 | S | /
-30 |   |                    30 | S | \ relative location from top cluster of the file
-31 |   |                    31 | S | /
-32 |   |                    32 |   | current record
-33 |   |                    33 |   | --+
-34 |   |                    34 |   |   | random
-35 |   |                    35 |   |   | record
-36 |   |                    36 |   | --+
-   -----                       -----
-```
+![Figure 3.20](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%203.20.png)
 
 #### Closing a file
 
@@ -1591,22 +1448,7 @@ In this case, the FCB fields, "record size" and "random record" are used to spec
 
 ##### _Figure 3.21  File and record_
 
-```
-   +--                +- ----------------
-   |      record size |  |  record  #0  |
-   |                  +- |--------------|    -----------------
-   |                     |  record  #1  | ⟵ | random record |
-   |                     |--------------|    -----------------
-   |                     |  record  #2  |      point to the record currently accessed
- whole                   |--------------|
- file                    |      .       |
-   |                            .
-   |                            .
-   |                     |              |
-   |                     |--------------|
-   |                     |  record  #n  |
-   +--                   ----------------
-```
+![Figure 3.21](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%203.21.png)
 
 #### Sequential access (file management by fixed-length record + current record + current block)
 

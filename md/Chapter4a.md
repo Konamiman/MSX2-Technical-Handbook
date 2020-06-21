@@ -249,23 +249,7 @@ Expanded RAM memory cannot be directly displayed to the screen as can that of VR
 
 ##### _Figure 4.1  VRAM and expanded RAM_
 
-```
-                         Address counter
-
-        -----------------    00000H     -----------------
-        |               |       |       |               |
-        |               |       |       |               |
-        |               |       |       |               |
-        |               |       |       |               |
-        |---------------|    0FFFFH     -----------------
-        |               |       |              RAM
-        |               |       |          (data use)
-        |               |       |
-        |               |       |
-        -----------------    1FFFFH
-              VRAM
-          (screen use)
-```
+![Figure 4.1](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.1.png)
 
 <p>&nbsp;</p>
 
@@ -324,20 +308,7 @@ The first way is to directly specify the data and where it is to be written to. 
 
 ##### _Figure 4.2  Direct access to R#n_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-Port #1 |    :    :    :  Data   :    :    :    |   1.Puts data to port #1.
-        -----------------------------------------
-
-        -----------------------------------------
-Port #1 | 1  | 0  | R5 | R4 | R3 | R2 | R1 | R0 |   2. Then puts register number with two high bits
-        -----------------------------------------      set to "10" to port #1.
-        |         |                             |
-        +---------+-----------------------------+      
-          fixed      register number (0 to 46)
-         at "10"
-```
+![Figure 4.2](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.2.png)
 
 Port#1 is also used to set VRAM addresses and is described in [section 2.2](#22-vram-access-from-the-cpu). The most significant bit of the second byte sent to this port is the address/register flag and determines the operation to take place. When the bit is set to "1", writing data to a control register as described here will take place.
 
@@ -349,28 +320,7 @@ The second way is to write data to the register specified as the objective regis
 
 ##### _Figure 4.3  Indirect access to R#n (non-autoincrement mode)_
 
-```
-First byte
-
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#17    | 1  | 0  | R5 | R4 | R3 | R2 | R1 | R0 |   1.Set register number n to R#17,
-        -----------------------------------------     with two high order bits set to "10".
-        |         |                             |
-        +---------+-----------------------------+
-          fixed           n (0 to 46)
-         at "10"
-
-        -----------------------------------------
-Port#3  |    :    :    :  Data   :    :    :    |   2.Send data to port#3. The data is stored in register R#n.
-        -----------------------------------------
-
-Following bytes
-
-        -----------------------------------------
-Port#3  |    :    :    :  Data   :    :    :    |   3.After these are done, data can be written to
-        -----------------------------------------     register R#n only by sending to port #3.
-```
+![Figure 4.3](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.3.png)
 
 _(3) Indirect Access (autoincrement mode)_
 
@@ -381,28 +331,7 @@ Since this method allows writing data to continuous control registers effectivel
 
 ##### _Figure 4.4  Indirect access to R#n (autoincrement mode)_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#17    | 0  | 0  | R5 | R4 | R3 | R2 | R1 | R0 |   1.Set register number n to R#17,
-        -----------------------------------------     with two high order bits set to "00".
-        |         |                             |
-        +---------+-----------------------------+
-          fixed           n (0 to 46)
-         at "00"
-
-        -----------------------------------------
-Port#3  |    :    :    :  Data   :    :    :    |   2.Send data to port#3. The data is stored in register R#n.
-        -----------------------------------------
-
-        -----------------------------------------
-Port#3  |    :    :    :  Data   :    :    :    |   3.Data sent to next port#3 is stored to register R#(n+1).
-        -----------------------------------------
-                                                      
-                            .                                  .
-                            .                                  .
-                            .                                  .
-```
+![Figure 4.4](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.4.png)
 
 <p>&nbsp;</p>
 
@@ -415,29 +344,8 @@ After data is sent to port#2 twice, R#16 is automatically incremented. This feat
 
 ##### _Figure 4.5  Setting a colour palette register_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#16    | 0  | 0  | 0  | 0  | R3 | R2 | R1 | R0 |   1.Set palette number n to R#16,
-        -----------------------------------------     with four high order bits set to "0000".
-        |                   |                   |
-        +---------------------------------------+     
-           fixed at "0000"      n (0 to 15)
+![Figure 4.5](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.5.png)
 
-        -----------------------------------------
-Port#2  |    | Red bright.  |    | Blue bright. |   2.Send red and blue brightness to port#2.
-        -----------------------------------------
-             |              |    |              |
-             +--------------+    +--------------+
-                  0 to 7              0 to 7
-
-        -----------------------------------------
-Port#2  |    |    |    |    |    | Green bright.|   2.Send green brightness to port#2. (*)
-        -----------------------------------------
-                                 |              |
-                                 +--------------+
-                                      0 to 7
-```
 (*) Since R#16 is incremented at this point, setting next palette can be done by sending data to port#2 continuously.
 
 
@@ -450,19 +358,7 @@ Status registers are read-only registers. Their contents can be read from port#1
 
 ##### _Figure 4.6  Acessing status registers_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#15    | 0  | 0  | 0  | 0  | R3 | R2 | R1 | R0 |   1.Set register number n to R#15,
-        -----------------------------------------     with four high order bits set to "0000".
-        |                   |                   |
-        +-------------------+-------------------+     
-           fixed at "0000"       n (0 to 9)
-
-        -----------------------------------------
-Port#1  |    :    :    :  Data   :    :    :    |   2.Read data from port#1.
-        -----------------------------------------
-```
+![Figure 4.6](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.6.png)
 
 <p>&nbsp;</p>
 
@@ -478,15 +374,7 @@ The first 64K bytes of VRAM (00000H to 0FFFFH) and the 64K bytes of expanded RAM
 
 ##### _Figure 4.7  VRAM/expanded RAM bank switching_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#45    | .  | X  | .  | .  | .  | .  | .  | .  |   When bit 6 of R#45 is "0" VRAM is selected;
-        -----------------------------------------   when it is 1, expanded RAM is selected.
-               |    0:VRAM
-               +-->
-                    1:Expanded RAM
-```
+![Figure 4.7](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.7.png)
 
 _(2) Setting the VRAM page (three high order bits)_
 
@@ -495,12 +383,7 @@ The 17-bit address for accessing the 128K bytes of VRAM is set in the address co
 
 ##### _Figure 4.8  Setting the VRAM page (3 high order bits)_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#14    | 0  | 0  | 0  | 0  | 0  | A16| A15| A14|   Set 3 high order bits of address counter in the
-        -----------------------------------------   field from bit 2 to bit 0 on R#14.
-```
+![Figure 4.8](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.8.png)
 
 _(3) Setting the VRAM address (14 low order bits)_
 
@@ -509,19 +392,7 @@ The 14 low order bits of the address should be sent to port#1 in two bytes. [Fig
 
 ##### _Figure 4.9  Setting 14 low order bits_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-Port#1  | A7 | A6 | A5 | A4 | A3 | A2 | A1 | A0 |   1.Send A7 to A0 to port#1.
-        -----------------------------------------
-
-        -----------------------------------------
-Port#1  | 0  |    | A13| A12| A11| A10| A9 | A8 |   2.Send A13 to A8 to port#1, continuously.
-        -----------------------------------------     Bit 7 must be set to "0".
-          |    |    0:reading VRAM                    Bit 6 determines reading/writing data.
-         "0"   +-->
-                    1:writing VRAM
-```
+![Figure 4.9](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.9.png)
 
 _(4) Reading/writing VRAM_
 
@@ -532,12 +403,7 @@ The address counter is automatically incremented each time a byte of data is rea
 
 ##### _Figure 4.10  Access to VRAM through port#0_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-Port#0  | D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 |   Access to VRAM is done through port#0.
-        -----------------------------------------   Address counter is automatically incremented.
-```
+![Figure 4.10](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.10.png)
 
 <p>&nbsp;</p>
 

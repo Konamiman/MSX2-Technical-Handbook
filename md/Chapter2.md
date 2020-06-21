@@ -2026,20 +2026,7 @@ When using the RS-232C cartridge, change the hook for an interrupt. For example,
 
 #### _Figure 2.18  Initialisation of the hook_
 
-```
-Initialisation of the hook of program 1
-
-------------- -------> -------------
-|   Hook    | <---+    | Program 1 |
--------------     +--- -------------
-
-
-Initialisation of the hook of program 2
-
-------------- -------> -------------    +---> -------------
-|   Hook    | <---+    | Program 2 | ---+     | Program 1 |
--------------     +--- ------------- <------- -------------
-```
+![Figure 2.18](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.18.png)
 
 ### VRAM capacity
 
@@ -2155,15 +2142,7 @@ Another way is to execute the next command in internal routine NEWSTT (see [4.4 
 
 #### _Figure 2.20  Input setting of NEWSTT for the warm start_
 
-```
-  3AH   81H   00H
-----------------------
-|  :  | END |     |       = (:END)
-----------------------
-   ^         word
-   |         stop
-   HL
-```
+![Figure 2.20](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%202.20.png)
 
 ### Auto start
 
