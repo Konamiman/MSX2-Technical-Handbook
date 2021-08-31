@@ -1350,7 +1350,7 @@ INIPAL: PUSH    IX
 
 #### GETPLT (0149H)
 * **Function**: obtains the colour code from the palette
-* **Input**: D for the palette number (0 to 15)
+* **Input**: A for the palette number (0 to 15)
 * **Output**: 
   * 4 high order bits of B for red code 
   * 4 low order bits of B for blue code
