@@ -2572,7 +2572,7 @@ dots |                 |           interlace mode table
 1130 FOR I=32 TO 192
 1140   SET PAGE 1,0
 1150   LINE (I,0)-STEP(0,120),0
-1160   LINE (I+33),0)-STEP(0,120),15
+1160   LINE (I+33,0)-STEP(0,120),15
 1170   SET PAGE 1,1
 1180   LINE (256-I,91)-STEP(0,120),0
 1190   LINE (221-I,91)-STEP(0,120),15
