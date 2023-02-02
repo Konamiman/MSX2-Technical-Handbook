@@ -88,7 +88,7 @@ system variables from BASIC.
 
 (1) Control register group (R#0 to R#23, R#32 to R#46)
 
-This is a read-only 8-bit register group controlling MSX-VIDEO actions. 
+This is a write-only 8-bit register group controlling MSX-VIDEO actions. 
 Registers are expressed using the notation R#n. R#0 to R#23 are used to set 
 the screen mode. R#32 to R#46 are used to execute VDP commands. These VDP 
 commands will be described in detail in section 5. Control registers R#24 to 
