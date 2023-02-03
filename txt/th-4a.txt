@@ -497,7 +497,7 @@ The 14 low order bits of the address should be sent to port#1 in two bytes.
 Figure 4.9 shows the details. Make sure that the most significant bit of the 
 second byte sent is set to 0. This sets the address/register flag to address 
 mode. The second most significant bit sets the read/write flag. 1 signifies 
-writing to VRAM and 2 signifies reading from VRAM.
+writing to VRAM and 0 signifies reading from VRAM.
 
 
    Figure 4.9  Setting 14 low order bits
