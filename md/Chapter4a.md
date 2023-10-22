@@ -562,16 +562,10 @@ Set TEXT2 mode as shown in [Figure 4.15](#figure-415--setting-text2-mode).
 
 ##### _Figure 4.15  Setting TEXT2 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | .  | 0  | 1  | 0  | .  |
-        -----------------------------------------
+![Figure 4.15](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.15.png)
 
-        -----------------------------------------
-R#1     | .  | .  | .  | 1  | 0  | .  | .  | .  |
-        -----------------------------------------
-```
+<p>&nbsp;</p>
+
 
 ##### Setting number of lines (24 lines/26.5 lines)
 
@@ -580,17 +574,10 @@ TEXT2 mode can switch the screen to 24 lines or 26.5 lines depending on the valu
 
 ##### _Figure 4.16  Switching number of lines_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#9     | LN | .  | .  | .  | .  | .  | .  | .  |
-        -----------------------------------------
-          |    0:24 lines
-          +-->
-               1:26.5 lines
-```
+![Figure 4.16](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.16.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.2.2 Screen structure of TEXT 2
 
@@ -609,42 +596,10 @@ Specify the location of the pattern name table in R#2. The 5 high order bits of 
 
 ##### _Figure 4.17  Structure of TEXT2 pattern name table_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#2     | 0  | A16| A15| A14| A13| A12| 1  | 1  | ---+
-        -----------------------------------------    |
-                                                     |
-        +--------------------------------------------+
-        |
-        |       |         |
-        |       -----------
-        +---> 0 |  (0,0)  |           0    1    2    3            79   X
-                |---------|         ----------------------     -------
-              1 |  (1,0)  |       0 | 0  | 1  | 2  | 3  | . . . | 79 |
-                |---------|         |----+----+----+----+-     -+----|
-              2 |  (2,0)  |       1 | 80 | 81 | 82 | 83 | . . . | 159|
-                |---------|         |----+----+----+----+-     -+----|
-              . |    .    |         |    |    |    |    | . . . |    |
-              .      .            .                  .               .
-              .      .            .                  .               .
-                |         |       .                  .               .
-                |---------|         |    |    |                 |    |
-             79 | (79,0)  |         |----+----+-               -+----|
-                |---------|      25 |2000|2001|                 |2079|
-             80 |  (0,1)  |         |----+----+-               -+----|
-                |---------|      26 |2080|2081|                 |2159|
-              . |    .    |         ------------  .  .  .  .  .-------
-              .      .            Y
-              .      .
-                |         |             Screen correspondence table
-                |---------|
-           2159 | (79,26) |
-                |---------|
-                |         |
+![Figure 4.17](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.17.png)
 
-             Pattern Name Table
-```
+<p>&nbsp;</p>
+
 
 ##### Blink table
 
@@ -653,34 +608,9 @@ In TEXT2 mode, it is possible to set the blink attribute for each character. The
 
 ##### _Figure 4.18  Blink table structure of TEXT2_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        ----------------------------------------- --+
-R#3     | A13| A12| A11| A10| A9 | 1  | 1  | 1  |   |
-        -----------------------------------------   |
-                                                    +--+
-        -----------------------------------------   |  |
-R#10    | 0  | 0  | 0  | 0  | 0  | A16| A15| A14|   |  |
-        ----------------------------------------- --+  |
-                                                       |
-+------------------------------------------------------+
-|
-|   MSB     7       6       5       4       3       2       1       0     LSB
-|       -----------------------------------------------------------------
-+---> 0 | (0,0) | (1,0) | (2,0) | (3,0) | (4,0) | (5,0) | (6,0) | (7,0) |
-        |-------+-------+-------+-------+-------+-------+-------+-------|
-      1 | (8,0) | (9,0) |(10,0) |(11,0) |(12,0) |(13,0) |(14,0) |(15,0) |
-        |-------+-------+-------+-------+-------+-------+-------+-------|
-        |   .   |   .   |   .   |  .    |   .   |   .   |   .   |   .   |
-            .       .       .      .        .       .       .       .
-            .       .       .      .        .       .       .       .
-        |       |       |       |       |       |       |       |       |
-        |-------+-------+-------+-------+-------+-------+-------+-------|
-    269 |(72,26)|(73,26)|(74,26)|(75,26)|(76,26)|(77,26)|(78,26)|(79,26)|
-        -----------------------------------------------------------------
+![Figure 4.18](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.18.png)
 
-                                 Blink table
-```
+<p>&nbsp;</p>
 
 Specify the starting address of the blink table by setting the 8 high order bits (A16 to A9) in R#3 and R#10. The location of the blink table is set by writing the 8 high order bits of the address (A16 to A9) in R#3 and R#10. The 9 low order bits of the address (A8 to A0) are always 0 ("000000000B"). So the address in which the blink table can be set always begins at a multiple of 512 bytes from 00000H.
 
@@ -694,45 +624,19 @@ The foreground colour is specified by the 4 high order bits of R#7 and the backg
 
 ##### _Figure 4.19  Setting screen colour and blink colour_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#7     |    :    :    :    |    :    :    :    | ⟵ original character colout
-        -----------------------------------------
-        |                   |                   |
-        +-------------------+-------------------+
-     Specifies the colour       Specifies the colour of "0" of the pattern
-     of "1" of the pattern      and of the background colour
+![Figure 4.19](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.19.png)
 
-        -----------------------------------------
-R#12    |    :    :    :    |    :    :    :    | ⟵ character colour when blinking
-        -----------------------------------------
-        |                   |                   |
-        +-------------------+-------------------+
-Specifies the colour of "1"     Specifies the colour of "0" of
-of the pattern when blinking    the pattern when blinking
-```
+<p>&nbsp;</p>
 
 The blinking rate is set in R#13. The 4 high order bits define the display time in the original colour, and the 4 low order bits define the display time in the blink colour. The period of time is defined in units of 1/6 seconds.
 
 
 ##### _Figure 4.20  Setting blink rate_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#13    |    :    T1   :    |    :    T0   :    |
-        -----------------------------------------
-        |                   |                   |
-        +-------------------+-------------------+
-time to display the colour     time to display the colour
-specified by R#12              specified by R#7
+![Figure 4.20](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.20.png)
 
-        --------------------                   -------- .... colour specified in R#7
-        |<- T0/6 seconds ->|<- T1/6 seconds -> |
----------                  --------------------- ........... colour specified in R#12
-           normal colour      blinking colour
-```
+<p>&nbsp;</p>
+
 
 ##### _List 4.1  Blink example_
 
@@ -802,16 +706,10 @@ Set MULTI COLOUR mode as shown in [Figure 4.21](#figure-421--setting-multi-colou
 
 ##### _Figure 4.21  Setting MULTI COLOUR mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | .  | 0  | 0  | 0  | .  |
-        -----------------------------------------
+![Figure 4.21](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.21.png)
 
-        -----------------------------------------
-R#1     | .  | .  | .  | 0  | 1  | .  | .  | .  |
-        -----------------------------------------
-```
+<p>&nbsp;</p>
+
 
 ##### Pattern generator table
 
@@ -820,47 +718,9 @@ In this mode, patterns are constructed as 2 x 2 blocks and one pattern name corr
 
 ##### _Figure 4.22  Pattern generator table structure of MULTI COLOUR_
 
-```
-  2 blocks
-<-(8 dots) ->                 MSB  7    6    5    4    3    2    1    0   LSB
-------------- ^                ^ -----------------------------------------
-|  A  |  B  | | 2 blocks       | |  "A" colour code  |  "B" colour code  |
-|-----+-----| | (8 dots)  2 bytes|-------------------+-------------------|
-|  C  |  D  | |                | |  "C" colour code  |  "D" colour code  |
-------------- V                V -----------------------------------------
+![Figure 4.22](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.22.png)
 
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#4     | 0  | 0  | A16| A15| A14| A13| A12| A11| -----+
-        -----------------------------------------      |
-                                                       |
-+------------------------------------------------------+
-|
-|                                     MSB  7   6   5   4   3   2   1   0  LSB
-|     |                 |      --------- ---------------------------------
-+---> |-----------------| 0    | A | B | | "A" col. code | "B" col. code |
-      | Pattern name #0 |      |---+---| |---------------+---------------|(1)
-      |    (8 bytes)    |      | C | D | | "C" col. code | "D" col. code |
-      |-----------------| 8    --------- ---------------------------------
-      | Pattern name #1 |
-      |    (8 bytes)    |      --------- ---------------------------------
-      |-----------------| 16   | E | F | | "E" col. code | "F" col. code |
-      |        .        |      |---+---| |---------------+---------------|(2)
-               .               | G | H | | "G" col. code | "H" col. code |
-               .               --------- ---------------------------------
-      |                 |
-      |-----------------| 2040 --------- ---------------------------------
-      | Pattern name#255|      | I | J | | "I" col. code | "J" col. code |
-      |     (8 bytes)   |      |---+---| |---------------+---------------|(3)
-      |-----------------| 2048 | K | L | | "K" col. code | "L" col. code |
-      |                 |      --------- ---------------------------------
-
-    Pattern generator table    --------- ---------------------------------
-                               | M | N | | "M" col. code | "N" col. code |
-                               |---+---| |---------------+---------------|(4)
-                               | O | P | | "O" col. code | "P" col. code |
-                               --------- ---------------------------------
-```
+<p>&nbsp;</p>
 
 (1) This table is in effect when Y is 0, 4, 8, 12, 16, or 20
 (2) This table is in effect when Y is 1, 5, 9, 13, 17, or 21
@@ -875,86 +735,17 @@ This is the table for displaying specified patterns at desired locations on the 
 
 ##### _Figure 4.23  Setting BASIC pattern name table_
 
-```
-Pattern 0
-            X     0   1   2   3   4   5   . . .   26  27  28  29  30  31
----------   Y   --------------------------     --------------------------
-|   |   |     0 | 0 | 1 | 2 | 3 | 4 | 5 | . . . | 26| 27| 28| 29| 30| 31|
-|---+---|       |---+---+---+---+---+---+-     -+---+---+---+---+---+---|
-|   |   |     1 | 0 | 1 | 2 | 3 | 4 |               | 27| 28| 29| 30| 31|
-|---+---| ----> |---+---+---+---+---+-             -+---+---+---+---+---|
-|   |   |     2 | 0 | 1 | 2 | 3 |                       | 28| 29| 30| 31|
-|---+---|       |---+---+---+---+-                     -+---+---+---+---|
-|   |   |     3 | 0 | 1 | 2 | 3 | . . . . . . . . . . . | 28| 29| 30| 31|
-|---+---|       |---+---+---+---+-                     -+---+---+---+---|
-|   |   |     4 | 32| 33| 34| 35|                       | 60| 61| 62| 63|
-|---+---|       |---+---+---+---+-                     -+---+---+---+---|
-|   |   |     5 | 32| 33| .                                   . | 62| 63|
-|---+---|       |---+---+-.                                   .-+--------
-|   |   |     6 | 32|     .                                   .     | 63|
-|---+---|       |---+-    .                                   .    -+---|
-|   |   |     7 | 32|     .                                   .     | 63|
----------       |---+-    .                                   .    -+---|
-              8 | 64|     .         (64 x 64 blocks)          .     | 95|
-Pattern 0       |---+-    .                                   .    -+---|
-appears       . | 64|     .                                   .     | 95|
-here as a     . |---+-    .                                   .    -+---|
-result        .           .                                   .       .
-              .           .   ---------                       .       .
-              .           .   |   |   |  1 data unit          .       .
-              . ----+-    .   |---+---|  corresponds          .    -+----
-              . |128|     .   |   |   |  to a 2 x 2 block     .     |159|
-                |---+-    .   ---------                       .    -+---|
-             20 |160|     .                                   .     |191|
-                |---+---+-.                                   .-+---+---|
-             21 |160|161| .                                   . |190|191|
-                |---+---+---+---+-                     -+---+---+---+---|
-             22 |160|161|162|163| . . . . . . . . . . . |188|189|190|191|
-                |---+---+---+---+---+---+-     -+---+---+---+---+---+---|
-             23 |160|161|162|163|164|165| . . . |186|187|188|189|190|191|
-                --------------------------     --------------------------
-```
+![Figure 4.23](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.23.png)
+
+<p>&nbsp;</p>
+
 
 ##### _Figure 4.24  Pattern name table structure of MULTI COLOUR mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#2     | 0  | A16| A15| A14| A13| A12| A11| A10| ---+
-        -----------------------------------------    |
-                                                     |
-        +--------------------------------------------+
-        |
-        |       |         |
-        |       |----------
-        +---> 0 |  (0,0)  |           0    1    2    3            31   X
-                |---------|         ----------------------     -------
-              1 |  (1,0)  |       0 | 0  | 1  | 2  | 3  | . . . | 31 |
-                |---------|         |----+----+----+----+-     -+----|
-              2 |  (2,0)  |       1 | 32 | 33 | 34 | 35 | . . . | 63 |
-                |---------|         |----+----+----+----+-     -+----|
-              . |    .    |         |    |    |    |    | . . . |    |
-              .      .            .                  .               .
-              .      .            .                  .               .
-                |         |       .                  .               .
-                |---------|         |    |    |                 |    |
-             31 | (31,0)  |         |----+----+-               -+----|
-                |---------|      22 | 704| 705|                 | 735|
-             32 |  (0,1)  |         |----+----+-               -+----|
-                |---------|      23 | 736| 737|                 | 767|
-              . |    .    |         ------------  .  .  .  .  .-------
-              .      .            Y
-              .      .
-                |         |             Screen correspondence table
-                |---------|
-            767 | (31,23) |
-                |---------|
-                |         |
-
-             Pattern Name Table
-```
+![Figure 4.24](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.24.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.3.3 Specifying the screen colour in MULTI COLOUR mode
 
@@ -963,18 +754,10 @@ The border colour of the screen can be specified by R#7 (see [Figure 4.25](#figu
 
 ##### _Figure 4.25  Border colour specification_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#7     |    :    :    :    |    :    :    :    |
-        -----------------------------------------
-        |                   |                   |
-        +-------------------+-------------------+
-               invalid         specifies the border colour
-                               of the screen (0 to 15)
-```
+![Figure 4.25](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.25.png)
 
 <p>&nbsp;</p>
+
 
 ### 3.4 GRAPHIC 1 Mode
 
@@ -1005,18 +788,10 @@ GRAPHIC 1 mode can be set as shown in [Figure 4.26](#figure-426--setting-graphic
 
 ##### _Figure 4.26  Setting GRAPHIC 1 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | .  | 0  | 0  | 0  | .  |
-        -----------------------------------------
-
-        -----------------------------------------
-R#1     | .  | .  | .  | 0  | 0  | .  | .  | .  |
-        -----------------------------------------
-```
+![Figure 4.26](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.26.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.4.2 Screen structure of GRAPHIC 1 mode
 
@@ -1028,71 +803,10 @@ In this mode, 256 kinds of patterns, corresponding to codes 0 to 255, can be dis
 
 ##### _Figure 4.27  Pattern generator table of GRAPHIC 1 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#4     | 0  | 0  | A16| A15| A14| A13| A12| A11| ---+
-        -----------------------------------------    |
-                                                     |
-        +--------------------------------------------+
-        |
-        |   MSB   7    6    5    4    3    2    1    0    LSB
-        |       ----------------------------------------- --+
-        +---> 0 |    |    | #  |    |    |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-              1 |    | #  |    | #  |    |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-              2 | #  |    |    |    | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-              3 | #  |    |    |    | #  |    |    |    |   | Pattern #0
-                |----+----+----+----+----+----+----+----|   |
-              4 | #  | #  | #  | #  | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-              5 | #  |    |    |    | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |  ------
-              6 | #  |    |    |    | #  |    |    |    |   |  |    | = 0
-                |----+----+----+----+----+----+----+----|   |  ------
-              7 |    |    |    |    |    |    |    |    |   |
-                |----+----+----+----+----+----+----+----| --+
-              8 | #  | #  | #  | #  |    |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |  ------
-              9 | #  |    |    |    | #  |    |    |    |   |  | #  | = 1
-                |----+----+----+----+----+----+----+----|   |  ------
-             10 | #  |    |    |    | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-             11 | #  | #  | #  | #  |    |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   | Pattern #1
-             12 | #  |    |    |    | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-             13 | #  |    |    |    | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-             14 | #  | #  | #  | #  |    |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-             15 |    |    |    |    |    |    |    |    |   |
-                ----------------------------------------- --+
-             .                      .
-             .                      .
-             .                      .
-                ----------------------------------------- --+
-           2040 | #  |    | #  |    | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-           2041 |    | #  |    | #  |    | #  |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-           2042 | #  |    | #  |    | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-           2043 |    | #  |    | #  |    | #  |    |    |   |
-                |----+----+----+----+----+----+----+----|   | Pattern #255
-           2044 | #  |    | #  |    | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-           2045 |    | #  |    | #  |    | #  |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-           2046 | #  |    | #  |    | #  |    |    |    |   |
-                |----+----+----+----+----+----+----+----|   |
-           2047 |    | #  |    | #  |    | #  |    |    |   |
-                ----------------------------------------- --+
+![Figure 4.27](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.27.png)
 
-                        Pattern generator table
-```
+<p>&nbsp;</p>
+
 
 ##### Colour table
 
@@ -1101,37 +815,10 @@ The colour specification for each of the 8 patterns are done by the colour table
 
 ##### _Figure 4.28  Colour table structure of GRAPHIC 1 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        ----------------------------------------- --+
-R#3     | A13| A12| A11| A10| A9 | A8 | A7 | A6 |   |
-        -----------------------------------------   |
-                                                    +--+
-        -----------------------------------------   |  |
-R#10    | 0  | 0  | 0  | 0  | 0  | A16| A15| A14|   |  |
-        ----------------------------------------- --+  |
-                                                       |
-+------------------------------------------------------+
-|
-|      Pattern "1" colour code     Pattern "0" colour code
-|       +-----------------------+-----------------------+
-|       |                       |                       |
-|   MSB    7     6     5     4     3     2     1     0    LSB Pattern number
-|       -------------------------------------------------
-+---> 0 | FC3 | FC2 | FC1 | FC0 | BC3 | BC2 | BC1 | BC0 |         0 to 7
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-      1 | FC3 | FC2 | FC1 | FC0 | BC3 | BC2 | BC1 | BC0 |         8 to 15
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-        |  .  |  .  |  .  |  .  |  .  |  .  |  .  |  .  |
-           .     .     .     .     .     .     .     .
-           .     .     .     .     .     .     .     .
-        |     |     |     |     |     |     |     |     |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-     31 | FC3 | FC2 | FC1 | FC0 | BC3 | BC2 | BC1 | BC0 |       248 to 255
-        -------------------------------------------------
+![Figure 4.28](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.28.png)
 
-                         Colour table
-```
+<p>&nbsp;</p>
+
 
 ##### Pattern name table
 
@@ -1140,44 +827,10 @@ The size of the pattern name table is 768 bytes and the table corresponds to the
 
 ##### _Figure 4.29  Pattern name table structure of GRAPHIC 1 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#2     | 0  | A16| A15| A14| A13| A12| A11| A10| ---+
-        -----------------------------------------    |
-                                                     |
-        +--------------------------------------------+
-        |
-        |       |         |
-        |       -----------
-        +---> 0 |  (0,0)  |           0    1    2    3            31   X
-                |---------|         ----------------------     -------
-              1 |  (1,0)  |       0 | 0  | 1  | 2  | 3  | . . . | 31 |
-                |---------|         |----+----+----+----+-     -+----|
-              2 |  (2,0)  |       1 | 32 | 33 | 34 | 35 | . . . | 63 |
-                |---------|         |----+----+----+----+-     -+----|
-              . |    .    |         |    |    |    |    | . . . |    |
-              .      .            .                  .               .
-              .      .            .                  .               .
-                |         |       .                  .               .
-                |---------|         |    |    |                 |    |
-             31 | (31,0)  |         |----+----+-               -+----|
-                |---------|      22 | 704| 705|                 | 735|
-             32 |  (0,1)  |         |----+----+-               -+----|
-                |---------|      23 | 736| 737|                 | 767|
-              . |    .    |         ------------  .  .  .  .  .-------
-              .      .            Y
-              .      .
-                |         |             Screen correspondence table
-                |---------|
-            767 | (31,23) |
-                |---------|
-                |         |
-
-             Pattern Name Table
-```
+![Figure 4.29](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.29.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.4.3 Specifying the screen colour
 
@@ -1186,18 +839,10 @@ The border colour of the screen can be specified by R#7 (see [Figure 4.30](#figu
 
 ##### _Figure 4.30  Screen colour specification of GRAPHIC 1 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#7     |    :    :    :    |    :    :    :    |
-        -----------------------------------------
-        |                   |                   |
-        +-------------------+-------------------+
-               invalid         specifies the border colour
-                               of the screen (0 to 15)
-```
+![Figure 4.30](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.30.png)
 
 <p>&nbsp;</p>
+
 
 ### 3.5 GRAPHIC 2, GRAPHIC 3 modes
 
@@ -1230,31 +875,10 @@ GRAPHIC 2, and GRAPHIC 3 modes are set as [Figure 4.31](#figure-431--setting-gra
 
 ##### _Figure 4.31  Setting GRAPHIC 2, GRAPHIC 3 modes_
 
-```
-GRAPHIC 2 mode setting
-
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | .  | 0  | 0  | 1  | .  |
-        -----------------------------------------
-
-        -----------------------------------------
-R#1     | .  | .  | .  | 0  | 0  | .  | .  | .  |
-        -----------------------------------------
-
-GRAPHIC 3 mode setting
-
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | .  | 0  | 1  | 0  | .  |
-        -----------------------------------------
-
-        -----------------------------------------
-R#1     | .  | .  | .  | 0  | 0  | .  | .  | .  |
-        -----------------------------------------
-```
+![Figure 4.31](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.31.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.5.2 Screen structure of GRAPHIC 2, GRAPHIC 3 modes
 
@@ -1266,66 +890,10 @@ In this mode, there are three pattern generator tables which are compatible with
 
 ##### _Figure 4.32  Pattern generator table structure of GRAPHIC 2, GRAPHIC 3_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#4     | 0  | 0  | A16| A15| A14| A13| 1  | 1  | ---+
-        -----------------------------------------    |
-                                                     |
-        +--------------------------------------------+
-        |
-        |                              MSB   7 6 5 4 3 2 1 0   LSB
-        |      ---------------             -------------------    -+
-        +--->  | Pattern 0   | 0           |     # # #       |  0  |
-               |-------------|             |   #       #     |  1  |
-               | Pattern 1   | 1           | #           #   |  2  |
-               |-------------|             | #           #   |  3  | Pattern
-Pattern        |      .      | .           | # # # # # # #   |  4  |    0
-generator             .        .           | #           #   |  5  |
-table                 .        .           | #           #   |  6  |
-for block 1    |             |             |                 |  7  |
-               |-------------|             | # # # # # #     |  8 -+
-               | Pattern 254 |             | #           #   |  9  |
-               |-------------|             | #           #   |  10 |
-               | Pattern 255 | 255         | # # # # # #     |  11 | Pattern
-               ---------------             | #           #   |  12 |    1
-                                           | #           #   |  13 |
-               ---------------             | # # # # # #     |  14 |
-               | Pattern 0   | 256         |                 |  15-+
-               |-------------|                      .
-               | Pattern 1   |                      .
-               |--------------                      .
-Pattern        |      .      |             | #   #   #   #   |  2040 -+
-generator             .                    |   #   #   #   # |  2041  |
-table                 .                    | #   #   #   #   |  2042  |
-for block 2    |             |             |   #   #   #   # |  2043  | Pattern
-               |-------------|             | #   #   #   #   |  2044  |   255
-               | Pattern 254 |             |   #   #   #   # |  2045  |
-               |-------------|             | #   #   #   #   |  2046  |
-               | Pattern 255 | 511         |   #   #   #   # |  2047  |
-               ---------------             -------------------       -+
+![Figure 4.32](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.32.png)
 
-               ---------------             ------------------------------
-               | Pattern 0   | 512         |                            |
-               |-------------|             |  ------------------------  |
-               | Pattern 1   |             |  |                      |  |
-               |-------------|             |  |        Block 1       |  |
-Pattern        |      .      | .           |  |                      |  |
-generator             .        .           |  |----------------------|  |
-table                 .        .           |  |                      |  |
-for block 3    |             |             |  |        Block 2       |  |
-               |-------------|             |  |                      |  |
-               | Pattern 254 |             |  |----------------------|  |
-               |-------------|             |  |                      |  |
-               | Pattern 255 | 767 pattern |  |        Block 3       |  |
-               ---------------             |  |                      |  |
+<p>&nbsp;</p>
 
-                                           |  ------------------------  |
-            Pattern generator table        |                            |
-                                           ------------------------------
-
-                                                        Screen
-```
 
 ##### Colour table
 
@@ -1334,69 +902,10 @@ The size of the colour table is the same as that of the pattern generator table 
 
 ##### _Figure 4.33  Colour table structure of GRAPHIC 2, GRAPHIC 3 modes_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        ----------------------------------------- ---+
-R#3     | A13| 1  | 1  | 1  | 1  | 1  | 1  | 1  |    |
-        -----------------------------------------    |
-                                                     |---+
-        -----------------------------------------    |   |
-R#10    | 0  | 0  | 0  | 0  | 0  | A16| A15| A14|    |   |
-        ----------------------------------------- ---+   |
-                                                         |
-        +------------------------------------------------+
-        |
-        |                              MSB   7 6 5 4 3 2 1 0   LSB
-        |      ---------------             -------------------    -+
-        +--->  | Pattern 0   | 0           | Pattern|Pattern |  0  |
-               |--------------             |   "0"  |  "1"   |  1  |
-               | Pattern 1   | 1           | colour | colour |  2  |
-               |--------------             |    (0 to 15)    |  3  | Pattern
-               |      .      | .           |        |        |  4  |    0
-Colour                .        .           |        |        |  5  |
-table                 .        .           |        |        |  6  |
-for block 1    |             |             |        |        |  7  |
-               |--------------             |        |        |  8 -+
-               | Pattern 254 |             |        |        |  9  |
-               |-------------|             |        |        |  10 |
-               | Pattern 255 | 255         |        |        |  11 | Pattern
-               ---------------             |        |        |  12 |    1
-                                           |        |        |  13 |
-               ---------------             |        |        |  14 |
-               | Pattern 0   | 256         |        |        |  15-+
-               |-------------|                      .
-               | Pattern 1   |                      .
-               |-------------|                      .
-               |      .      |             |        |        |  2040 -+
-Colour                .                    |        |        |  2041  |
-table                 .                    |        |        |  2042  |
-for block 2    |             |             |        |        |  2043  | Pattern
-               |-------------|             |        |        |  2044  |   255
-               | Pattern 254 |             |        |        |  2045  |
-               |-------------|             |        |        |  2046  |
-               | Pattern 255 | 511         |        |        |  2047  |
-               ---------------             -------------------       -+
+![Figure 4.33](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.33.png)
 
-               ---------------             ------------------------------
-               | Pattern 0   | 512         |                            |
-               |-------------|             |  ------------------------  |
-               | Pattern 1   |             |  |                      |  |
-               |-------------|             |  |        Block 1       |  |
-               |      .      | .           |  |                      |  |
-Colour                .        .           |  |----------------------|  |
-table                 .        .           |  |                      |  |
-for block 3    |             |             |  |        Block 2       |  |
-               |-------------|             |  |                      |  |
-               | Pattern 254 |             |  |----------------------|  |
-               |-------------|             |  |                      |  |
-               | Pattern 255 | 767 pattern |  |        Block 3       |  |
-               ---------------             |  |                      |  |
-                                           |  ------------------------  |
-                 Colour table              |                            |
-                                           ------------------------------
+<p>&nbsp;</p>
 
-                                                        Screen
-```
 
 ##### Pattern name table
 
@@ -1405,94 +914,10 @@ The pattern name table is divided into three stages - upper, middle, and lower; 
 
 ##### _Figure 4.34  Pattern name table for GRAPHIC modes 2 and 3_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#2     | 0  | A16| A15| A14| A13| A12| A11| A10| ---+
-        -----------------------------------------    |
-                                                     |
-        +--------------------------------------------+
-        |
-        |    Pattern name table
-        |       |         |
-        |       ----------- ----+       ------------------------------------
-        +---> 0 |  (0,0)  | 0   |       | (0,0)                     (31,0) |
-                |---------|     |       |                                  |
-              1 |  (1,0)  | 1   |   +-> |      Upper stage of screen       |
-                |---------|     |   |   | pattern display area (256 bytes) |
-              . |    .    | .   |   |   |                                  |
-              .      .      .   |---+   | (0,7)                     (31,7) |
-              .      .      .   |       |----------------------------------|
-                |         |     |       | (0,8)                     (31,8) |
-                |---------|     |       |                                  |
-             31 | (31,7)  | 255 |   +-> |      Middle stage of screen      |
-                |---------| ----+   |   | pattern display area (256 bytes) |
-             32 |  (0,8)  | 256 |   |   |                                  |
-                |---------|     |   |   | (0,15)                   (31,15) |
-              . |    .    | .   |   |   |----------------------------------|
-              .      .      .   |---+   | (0,16)                   (31,16) |
-              .      .      .   |       |                                  |
-                |         |     |   +-> |       Lower stage of screen      |
-                |---------|     |   |   | pattern display area (256 bytes) |
-            767 | (31,15) | 511 |   |   |                                  |
-                |---------| ----+   |   | (0,23)                   (31,23) |
-             32 |  (0,16) | 512 |   |   ------------------------------------
-                |---------|     |   |
-              . |    .    |     |   |       Screen correspondence table
-              .      .          |---+
-              .      .          |
-                |         |     |
-                |---------|     |
-            767 | (31,15) | 767 bytes
-                |---------| ----+
-                |         |
-```
-
-Actual contents of fixed pattern name table
-
-```
-          X axis
-            0          8           16       240        248      255
-           ----------------------- . . . . -----------------------
-Y axis   0 |  &H0     |  &H8     |         |  &HF0    |  &HF8    |
-           |  &H1     |  &H9     |         |  &HF1    |  &HF9    |
-           |  &H2     |  &HA     |         |  &HF2    |  &HFA    |
-           |  &H3     |  &HB     | . . . . |  &HF3    |  &HFB    |
-           |  &H4     |  &HC     |         |  &HF4    |  &HFC    |
-           |  &H5     |  &HD     |         |  &HF5    |  &HFD    |
-           |  &H6     |  &HE     |         |  &HF6    |  &HFE    |
-           |  &H7     |  &HF     |         |  &HF7    |  &HFF    |
-           |----------+----------| . . . . |----------+----------|
-         8 |  &H100   |  &H108   |         |  &H1F0   |  &H1F8   |
-           |  &H101   |  &H109   |         |  &H1F1   |  &H1F9   |
-           |  &H102   |  &H10A   |         |  &H1F2   |  &H1FA   |
-           |  &H103   |  &H10B   |         |  &H1F3   |  &H1FB   |
-           |  &H104   |  &H10C   | . . . . |  &H1F4   |  &H1FC   |
-           |  &H105   |  &H10D   |         |  &H1F5   |  &H1FD   |
-           |  &H106   |  &H10E   |         |  &H1F6   |  &H1FE   |
-           |  &H107   |  &H10F   |         |  &H1F7   |  &H1FF   |
-           -----------------------         -----------------------
-        16 |     .          .                    .          .    |
-         .       .          .                    .          .
-         .       .          .  (256 x 192 dots)  .          .
-         .       .          .                    .          .
-           |                                                     |
-           ----------------------- . . . . -----------------------
-       184 |  &H1700  |  &H1708  |         |  &H17F0  |  &H17F8  |
-           |  &H1701  |  &H1709  |         |  &H17F1  |  &H17F9  |
-           |  &H1702  |  &H170A  |         |  &H17F2  |  &H17FA  |
-           |  &H1703  |  &H170B  | . . . . |  &H17F3  |  &H17FB  |
-           |  &H1704  |  &H170C  |         |  &H17F4  |  &H17FC  |
-           |  &H1705  |  &H170D  |         |  &H17F5  |  &H17FD  |
-           |  &H1706  |  &H170E  |         |  &H17F6  |  &H17FE  |
-       191 |  &H1707  |  &H170F  |         |  &H17F7  |  &H17FF  |
-           ----------------------- . . . . -----------------------
-```
-
-**Note:** The values are offset from the base address of the pattern generator table.
-
+![Figure 4.34](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.34.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.5.3 Screen colour specification
 
@@ -1501,18 +926,10 @@ The border colour of the screen can be specified by R#7 (see [Figure 4.35](#figu
 
 ##### _Figure 4.35  Screen colour specification of GRAPHIC 2, GRAPHIC 3 modes_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#7     |    :    :    :    |    :    :    :    |
-        -----------------------------------------
-        |                   |                   |
-        +-------------------+-------------------+
-               invalid         specifies the border colour
-                               of the screen (0 to 15)
-```
+![Figure 4.35](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.35.png)
 
 <p>&nbsp;</p>
+
 
 ### 3.6 GRAPHIC 4 Mode
 
@@ -1545,18 +962,10 @@ Set GRAPHIC 4 mode as shown in [Figure 4.36](#figure-436--graphic-4-mode-setting
 
 ##### _Figure 4.36  GRAPHIC 4 mode setting_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | .  | 0  | 1  | 1  | .  |
-        -----------------------------------------
-
-        -----------------------------------------
-R#1     | .  | .  | .  | 0  | 0  | .  | .  | .  |
-        -----------------------------------------
-```
+![Figure 4.36](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.36.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.6.2 Screen structure of GRAPHIC 4 mode
 
@@ -1568,65 +977,10 @@ In GRAPHIC 4 mode, one byte of the pattern name table corresponds with 2 dots on
 
 ##### _Figure 4.37  Pattern name table structure of GRAPHIC 4 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#2     | 0  | A16| A15| 1  | 1  | 1  | 1  | 1  | --+
-        -----------------------------------------   |
-                                                    |
-+---------------------------------------------------+
-|
-|                     Pattern name table
-|
-|   MSB    7     6     5     4     3     2     1     0    LSB
-|       -------------------------------------------------
-+---> 0 |     :   (0,0)   :     |     :   (1,0)   :     |
-        +-----+-----+-----+-----+-----+-----+-----+-----+
-      1 |     :   (2,0)   :     |     :   (3,0)   :     |
-        +-----+-----+-----+-----+-----+-----+-----+-----+
-      . |                                               |
-      .
-      . |                                               |
-        +-----+-----+-----+-----+-----+-----+-----+-----+
-    127 |     :  (254,0)  :     |     :  (255,0)  :     |
-        +-----+-----+-----+-----+-----+-----+-----+-----+
-    128 |     :   (0,1)   :     |     :   (1,1)   :     |
-        +-----+-----+-----+-----+-----+-----+-----+-----+
-      . |                                               |
-      .
-      . |                                               |
-        +-----+-----+-----+-----+-----+-----+-----+-----+
-  27134 |     : (252,211) :     |     : (253,211) :     |
-        +-----+-----+-----+-----+-----+-----+-----+-----+
-  27135 |     : (254,211) :     |     : (255,211) :     |
-        -------------------------------------------------
-```
+![Figure 4.37](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.37.png)
 
-This table shows how colour codes are set for each dot. (0 to 15)
+<p>&nbsp;</p>
 
-```
-+---------> X
-|
-|    ---------------------- . . . . ----------------------
-|    |   0,0   |   1,0   |           |  254,0  |  255,0  |
-V    |---------+---------+           +---------+---------|
-     |   0,1   |                               |  255,1  |
-Y    |---------+                               +---------|
-     |    .               -----------               .    |
-          .               |   X,Y   |               .
-          .               -----------               .
-     |                                                   |
-     |---------+                               +---------|
-     |  0,191  |             LN = 0            | 255,191 |
-     ------------ . . . . . . . . . . . . . . ------------
-
-     |                                                   |
-     ----------+                               +----------
-     |  0,211  |             LN = 1            | 255,211 |
-     ------------ . . . . . . . . . . . . . . ------------
-
-                   Screen correspondence table
-```
 
 The dot at (X,Y) coordinate on the screen can be accessed by using Expression 4.1. The program of [List 4.2](#list-42--pset-for-graphic-4-mode-written-in-basic) illustrates the use of [Expression 4.1](#expression-41--the-expression-for-accessing-the-dot-at-xy-coordinate).
 
@@ -1678,18 +1032,10 @@ The border colour of the screen can be specified by R#7 (see [Figure 4.38](#figu
 
 ##### _Figure 4.38  Screen colour specification in GRAPHIC 4 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#7     |    :    :    :    |    :    :    :    |
-        -----------------------------------------
-        |                   |                   |
-        +-------------------+-------------------+
-               invalid         specifies the border colour
-                               of the screen (0 to 15)
-```
+![Figure 4.38](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.38.png)
 
 <p>&nbsp;</p>
+
 
 ### 3.7 GRAPHIC 5 Mode
 
@@ -1722,18 +1068,10 @@ Set GRAPHIC 5 mode as shown in [Figure 4.39](#figure-439--graphic-5-mode-setting
 
 ##### _Figure 4.39  GRAPHIC 5 mode setting_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | .  | 1  | 0  | 0  | .  |
-        -----------------------------------------
-
-        -----------------------------------------
-R#1     | .  | .  | .  | 0  | 0  | .  | .  | .  |
-        -----------------------------------------
-```
+![Figure 4.39](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.39.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.7.2 Pattern name table
 
@@ -1742,63 +1080,10 @@ In GRAPHIC 5 mode, one byte of the pattern name table corresponds with 4 dots on
 
 ##### _Figure 4.40  Pattern name table structure of GRAPHIC 5 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#2     | 0  | A16| A15| 1  | 1  | 1  | 1  | 1  | --+
-        -----------------------------------------   |
-                                                    |
-+---------------------------------------------------+
-|
-|                     Pattern name table
-|
-|   MSB    7     6     5     4     3     2     1     0    LSB
-|       -------------------------------------------------
-+---> 0 |   (0,0)   |   (1,0)   |   (2,0)   |   (3,0)   |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-      1 |   (4,0)   |   (5,0)   |   (6,0)   |   (7,0)   |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-      . |                                               |
-      .
-      . |                                               |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-    127 |  (508,0)  |  (509,0)  |  (510,0)  |  (511,0)  |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-    128 |   (0,1)   |   (1,1)   |    (2,1)  |   (3,1)   |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-      . |                                               |
-      .
-      . |                                               |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-  27135 | (508,211) | (509,211) | (510,211) | (511,211) |
-        -------------------------------------------------
-```
+![Figure 4.40](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.40.png)
 
-This table shows how colour codes are set for each dot. (0 to 3)
+<p>&nbsp;</p>
 
-```
-+---------> X
-|
-|    ---------------------- . . . . ----------------------
-|    |   0,0   |   1,0   |           |  510,0  |  511,0  |
-V    |---------+---------+           +---------+---------|
-     |   0,1   |                               |  511,1  |
-Y    |---------+                               +---------|
-     |    .               -----------               .    |
-          .               |   X,Y   |               .
-          .               -----------               .
-     |                                                   |
-     |---------+                               +---------|
-     |  0,191  |             LN = 0            | 511,191 |
-     ------------ . . . . . . . . . . . . . . ------------
-
-     |                                                   |
-     ----------+                               +----------
-     |  0,211  |             LN = 1            | 511,211 |
-     ------------ . . . . . . . . . . . . . . ------------
-
-                   Screen correspondence table
-```
 
 The dot at (X,Y) coordinate on the screen can be accessed by using Expression 4.2. The program of [List 4.3](#list-43--pset-for-graphic-5-mode-written-in-basic) confirms [Expression 4.2](#expression-42--the-expression-for-accessing-the-dot-at-xy-coordinate).
 
@@ -1855,44 +1140,10 @@ In GRAPHIC 5 mode, hardware tiling is done for the border colour of the screen a
 
 ##### _Figure 4.41  Screen colour specification in GRAPHIC 5 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#7     |    :    :    :    |    :    |    :    |
-        -----------------------------------------
-        |                   |         |         |
-        +-------------------+---------+---------+
-               invalid           |      border colour (0 to 3) at even dots
-                                 |
-                                 +----> border colour (0 to 3) at odd dots
-
-          +--> even dots (0,2,...,510)
-          |
-          |    odd dots (1,3,...,511)
-       -------------
-       |     |     | ⟵ graphic 2 dots
-       -------------
-
-       -------------
-       |           | ⟵ sprite 1 dot at another mode
-       -------------
-
-       -------------
-       |     |     | ⟵ sprite 1 dot is automatically done by
-       -------------    tiling function
-          |     |
-     +-------+-------+
-     |       |       |
-     -----------------
-MSB  |   :   |   :   |  LSB     sprite colour specification (4 bits)
-     -----------------
-      right    left
-      side     side
-      colour   colour
-    (0 to 3)  (0 to 3)
-```
+![Figure 4.41](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.41.png)
 
 <p>&nbsp;</p>
+
 
 ### 3.8 GRAPHIC 6 Mode
 
@@ -1927,18 +1178,10 @@ Set GRAPHIC 6 mode as shown in [Figure 4.42](#figure-442--graphic-6-mode-setting
 
 ##### _Figure 4.42  GRAPHIC 6 mode setting_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | .  | 1  | 0  | 1  | .  |
-        -----------------------------------------
-
-        -----------------------------------------
-R#1     | .  | .  | .  | 0  | 0  | .  | .  | .  |
-        -----------------------------------------
-```
+![Figure 4.42](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.42.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.8.2 Pattern name table
 
@@ -1947,70 +1190,10 @@ In GRAPHIC 6 mode, one byte of the pattern name table corresponds with 2 dots on
 
 ##### _Figure 4.43  Pattern name table structure of GRAPHIC 6 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#2     | 0  | 0  | A16| 1  | 1  | 1  | 1  | 1  | ------------------------+
-        -----------------------------------------                         |
-                     ^                                                    |
-                     |                                                    |
-This bit is used to specify a page to be displayed on the screen.         |
-The bit position of A16 is different only in the GRAPHIC 6 and 7 modes.   |
-                                                                          |
-                                                                          |
-+-------------------------------------------------------------------------+
-|
-|                     Pattern name table
-|
-|   MSB    7     6     5     4     3     2     1     0    LSB
-|       -------------------------------------------------
-+---> 0 |     :   (0,0)   :     |     :   (1,0)   :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-      1 |     :   (2,0)   :     |     :   (3,0)   :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-      . |                                               |
-      .
-      . |                                               |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-    255 |     :  (510,0)  :     |     :  (511,0)  :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-    256 |     :   (0,1)   :     |     :   (1,1)   :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-      . |                                               |
-      .
-      . |                                               |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-  54270 |     : (508,211) :     |     : (509,211) :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----+
-  54271 |     : (510,211) :     |     : (511,211) :     |
-        -------------------------------------------------
-```
+![Figure 4.43](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.43.png)
 
-This table shows how colour codes are set for each dot. (0 to 15)
+<p>&nbsp;</p>
 
-```
-+---------> X
-|
-|    ---------------------- . . . . ----------------------
-|    |   0,0   |   1,0   |           |  510,0  |  511,0  |
-V    |---------+---------+           +---------+---------|
-     |   0,1   |                               |  511,1  |
-Y    |---------+                               +---------|
-     |    .               -----------               .    |
-          .               |   X,Y   |               .
-          .               -----------               .
-     |                                                   |
-     |---------+                               +---------|
-     |  0,191  |             LN = 0            | 511,191 |
-     ------------ . . . . . . . . . . . . . . ------------
-
-     |                                                   |
-     |---------+                               +---------|
-     |  0,211  |             LN = 1            | 511,211 |
-     ------------ . . . . . . . . . . . . . . ------------
-
-                   Screen correspondence table
-```
 
 The dot at (X,Y) coordinate on the screen can be accessed by using Expression 4.1. The program of [List 4.2](#list-42--pset-for-graphic-4-mode-written-in-basic) illustrates the use of [Expression 4.1](#expression-41--the-expression-for-accessing-the-dot-at-xy-coordinate).
 
@@ -2059,18 +1242,10 @@ The border colour of the screen can be specified by R#7 (see [Figure 4.44](#figu
 
 ##### _Figure 4.44  Screen colour specification in GRAPHIC 6 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#7     |    :    :    :    |    :    :    :    |
-        -----------------------------------------
-        |                   |                   |
-        +-------------------+-------------------+
-               invalid         specifies the border colour
-                               of the screen (0 to 15)
-```
+![Figure 4.44](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.44.png)
 
 <p>&nbsp;</p>
+
 
 ### 3.9 GRAPHIC 7 Mode Use
 
@@ -2104,18 +1279,10 @@ Set GRAPHIC 7 mode as shown in [Figure 4.45](#figure-445--graphic-4-mode-setting
 
 ##### _Figure 4.45  GRAPHIC 4 mode setting_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | .  | 1  | 1  | 1  | .  |
-        -----------------------------------------
-
-        -----------------------------------------
-R#1     | .  | .  | .  | 0  | 0  | .  | .  | .  |
-        -----------------------------------------
-```
+![Figure 4.45](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.45.png)
 
 <p>&nbsp;</p>
+
 
 #### 3.9.2 Pattern name table
 
@@ -2126,93 +1293,17 @@ One byte of data represents the intensity of 3 bits for green, 3 bits for red, a
 
 ##### _Figure 4.46  Pattern name table structure of GRAPHIC 7 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#2     | 0  | 0  | A16| 1  | 1  | 1  | 1  | 1  | ------------------------+
-        -----------------------------------------                         |
-                     ^                                                    |
-                     |                                                    |
-This bit is used to specify a page to be displayed on the screen.         |
-The bit position of A16 is different only in the GRAPHIC 6 and 7 modes.   |
-                                                                          |
-                                                                          |
-+-------------------------------------------------------------------------+
-|
-|
-|                     Pattern name table
-|
-|   MSB    7     6     5     4     3     2     1     0    LSB
-|       -------------------------------------------------
-+---> 0 |     :     :     :   (0,0)   :     :     :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----|
-      1 |     :     :     :   (1,0)   :     :     :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----|
-      . |                                               |
-      .
-      . |                                               |
-        |-----------------------------------------------|
-        |   Green level   |    Red level    | Blue level|
-        |-----------------------------------------------|
-      . |                                               |
-      .
-      . |                                               |
-        |-----+-----+-----+-----+-----+-----+-----+-----|
-    255 |     :     :     :  (255,0)  :     :     :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----|
-    256 |     :     :     :   (0,1)   :     :     :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----|
-      . |                                               |
-      .
-      . |                                               |
-        |-----+-----+-----+-----+-----+-----+-----+-----|
-  54270 |     :     :     : (254,211) :     :     :     |
-        |-----+-----+-----+-----+-----+-----+-----+-----|
-  54271 |     :     :     : (255,211) :     :     :     |
-        -------------------------------------------------
-```
+![Figure 4.46](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.46.png)
 
-This table shows how colour codes are set for each dot. (0 to 255)
+<p>&nbsp;</p>
 
-```
-+---------> X
-|
-|    ---------------------- . . . . ----------------------
-|    |   0,0   |   1,0   |           |  254,0  |  255,0  |
-V    |---------+---------+           +---------+---------|
-     |   0,1   |                               |  255,1  |
-Y    |---------+                               +---------|
-     |    .               -----------               .    |
-          .               |   X,Y   |               .
-          .               -----------               .
-     |                                                   |
-     |---------+                               +---------|
-     |  0,191  |             LN = 0            | 255,191 |
-     ------------ . . . . . . . . . . . . . . ------------
-
-     |                                                   |
-     |---------+                               +---------|
-     |  0,211  |             LN = 1            | 255,211 |
-     ------------ . . . . . . . . . . . . . . ------------
-
-                   Screen correspondence table
-```
 
 ##### _Figure 4.47  RGB brightness information_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#2     |    GREEN     :     RED      :  BLUE   |
-        -----------------------------------------
-        |              |              |         |
-        +--------------+--------------+---------+
-               |               |         Blue level (0 to 3)
-               |               |
-               |               +-------> Red level (0 to 7)
-               |
-               +-----------------------> Green level (0 to 7)
-```
+![Figure 4.47](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.47.png)
+
+<p>&nbsp;</p>
+
 
 ##### _Expression 4.4_ The expression for accessing to the dot at (X,Y) coordinate
 
@@ -2222,6 +1313,7 @@ R#2     |    GREEN     :     RED      :  BLUE   |
 
 <p>&nbsp;</p>
 
+
 #### 3.9.3 Setting the screen colour
 
 The border colour of the screen can be specified by R#7 (see [Figure 4.48](#figure-448--screen-colour-specification-in-graphic-7-mode)).
@@ -2229,17 +1321,10 @@ The border colour of the screen can be specified by R#7 (see [Figure 4.48](#figu
 
 ##### _Figure 4.48  Screen colour specification in GRAPHIC 7 mode_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#7     |    :    :    :    :    :    :    :    |
-        -----------------------------------------
-        |                                       |
-        +---------------------------------------+
-   specifies the border colour of the screen (0 to 255)
-```
+![Figure 4.48](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.48.png)
 
 <p>&nbsp;</p>
+
 
 ## 4. MISCELLANEOUS FUNCTIONS FOR THE SCREEN DISPLAY
 
@@ -2253,16 +1338,10 @@ The screen ON/OFF function is controlled by bit 6 of R#1 (see [Figure 4.49](#fig
 
 ##### _Figure 4.49  Screen ON/OFF_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#1     | .  | X  | .  | .  | .  | .  | .  | .  |
-        -----------------------------------------
-               |
-               |     0: Screen OFF
-               +--->
-                     1: Screen ON
-```
+![Figure 4.49](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.49.png)
+
+<p>&nbsp;</p>
+
 
 BASIC program lines:
 
@@ -2278,35 +1357,10 @@ R#18 is used for adjusting the display location on the screen (see [Figure 4.50]
 
 ##### _Figure 4.50  Adjustment of the screen display_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#18    | v3 | v2 | v1 | v0 | h3 | h2 | h1 | h0 |
-        -----------------------------------------
-        |                   |                   |
-        +-------------------+-------------------+
-        vertical adjustment   horizontal adjustment
-            (-8 to +7)             (-8 to +7)
+![Figure 4.50](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.50.png)
 
-        ---------------------------------------------------- V=7
-        |                        ^                         |  ^
-        |                        |                         |  |
-        |     ----------------------------------------     |  |
-        |     |                                      |     |  |
-        |     |                                      |     |  |
-        |     |                                      |     |  |
-        |     |                                      |     |  |
-        | <-- |            Display screen            | --> |  |
-        |     |                                      |     |  |
-        |     |                                      |     |  |
-        |     |                                      |     |  |
-        |     |                                      |     |  |
-        |     ----------------------------------------     |  |
-        |                        |                         |  |
-        |                        V                         |  V
-        ---------------------------------------------------- V=8
-      H=7 <----------------------------------------------> H=8
-```
+<p>&nbsp;</p>
+
 
 ### Switching the number of pixels in the Y direction
 
@@ -2315,16 +1369,10 @@ The number of dots displayed in the Y direction on the screen can be switched to
 
 ##### _Figure 4.51  Switching the number of dots in the vertical direction_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#9     | X  | .  | .  | .  | .  | .  | .  | .  |
-        -----------------------------------------
-          |
-          |     0:  192 dots
-          +--->
-                1:  212 dots
-```
+![Figure 4.51](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.51.png)
+
+<p>&nbsp;</p>
+
 
 BASIC program lines:
 
@@ -2340,35 +1388,11 @@ In GRAPHIC modes 4 to 7, the display pages can be easily switched by setting the
 
 ##### _Figure 4.52  Switching pages_
 
-```
+![Figure 4.52](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.52.png)
 
-        * GRAPHIC modes 4 and 5
-
-    MSB   7    6    5    4    3    2    1    0    LSB       VRAM
-        -----------------------------------------     ---------------- 00000H
-R#2     | 0  | X  | X  | 1  | 1  | 1  | 1  | 1  |     |    page 0    |
-        -----------------------------------------     |--------------| 08000H
-             |         |                              |    page 1    |
-             +---------+                              |--------------| 10000H
-                  |      00: page 0                   |    page 2    |
-                  +--->  01: page 1                   |--------------| 18000H
-                         10: page 2                   |    page 3    |
-                         11: page 3                   ----------------
+<p>&nbsp;</p>
 
 
-        * GRAPHIC modes 6 and 7
-
-    MSB   7    6    5    4    3    2    1    0    LSB       VRAM
-        -----------------------------------------     ---------------- 00000H
-R#2     | 0  | 0  | X  | 1  | 1  | 1  | 1  | 1  |     |              |
-        -----------------------------------------     |    page 0    |
-                    |                                 |              |
-                    |                                 |--------------| 10000H
-                    |      0: page 0                  |              |
-                    +--->                             |    page 1    |
-                           1: page 1                  |              |
-                                                      ----------------
-```
 ### Automatic alternate screen display
 
 In GRAPHIC modes 4 to 7, two pages can be displayed alternately by using the following method. Either page 0 and page 1, or page 2 and page 3 can be displayed alternately.
@@ -2378,16 +1402,10 @@ To begin the alternate display, select the odd-numbered page (1 or 3) using R#2 
 
 ##### _Figure 4.53  Setting the rate of the screen alternation_
 
-```
-        -----------------------------------------
-R#13    |    :   EVEN  :    |    :  ODD    :    |  setting the cycle
-        -----------------------------------------
+![Figure 4.53](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.53.png)
 
-        ----------------------                    --------
-        | even numbered page | odd numbered page  |
----------                    ----------------------
-        |<- EVEN/6 seconds ->|<- ODD/6 seconds  ->|
-```
+<p>&nbsp;</p>
+
 
 ### Setting the interlaced mode
 
@@ -2398,43 +1416,10 @@ When the odd page is selected in GRAPHIC 4 to GRAPHIC 7 screen modes and the alt
 
 ##### _Figure 4.54  Setting the interlaced mode_
 
-```
+![Figure 4.54](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.54.png)
 
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#9     | .  | .  | .  | .  | X  | X  | .  | .  |
-        -----------------------------------------
-                              |    |     0: one screen is displayed
-                              |    +-->
-                              |          1: two screens are displayed alternately
-                              |
-                              |
-                              |       0: non-interlace mode (normal mode)
-                              +---->
-                                      1: interlace mode
+<p>&nbsp;</p>
 
-         First screen
- +-- -------------------
- |   | --------------- |
- |   |                 |
-212  | --------------- |
-dots |                 |
- |   | --------------- |           -------------------  ---
- |   |                 |           | --------------  |   ^
- |   | --------------- |           | ..............  |   |
- +-- -------------------  ------>  | --------------  |   |
-                                   | ..............  |   | Apparent 424 dots resolution
-        Second screen              | --------------  |   |
- +-- -------------------  ------>  | ..............  |   |
- |   | ............... |           | --------------  |   |
- |   |                 |           | ..............  |   V
-212  | ............... |           -------------------  ---
-dots |                 |           interlace mode table
- |   | ............... |           (The first and second screens are displayed alternately
- |   |                 |            at 1/60 seconds each cycle.)
- |   | ............... |
- +-- -------------------
-```
 
 ##### _List 4.5  Interlaced mode example_
 
@@ -2501,18 +1486,9 @@ Among the 16 colour codes, only code 0 can be made as a "transparent" colour (th
 
 ##### _Figure 4.55  Colour code 0 function_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#8     | .  | .  | X  | .  | .  | .  | .  | .  |
-        -----------------------------------------
-                    |    0: Colour code 0 transparent function is enabled
-                    +-->
-                         1: Colour code 0 function disabled
-```
+![Figure 4.55](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.55.png)
 
-- When the TB bit is "0", colour code 0 becomes transparent.
-- When the TB bit is "1", colour code 0 changes to the colour defined by palette P#0.
+<p>&nbsp;</p>
 
 
 ### Generating interrupts by the scanning line location
@@ -2522,21 +1498,10 @@ In MSX-VIDEO an interrupt can be generated just after the CRT finishes displayin
 
 ##### _Figure 4.56  Generating the scanning line interrupt_
 
-```
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#0     | .  | .  | .  | E1 | .  | .  | .  | .  |  Mode register 0
-        -----------------------------------------
-                         |    0: Normal condition
-                         +-->
-                              1: Interrupt at specific line mode
+![Figure 4.56](https://raw.githubusercontent.com/Konamiman/MSX2-Technical-Handbook/master/pics/Figure%204.56.png)
 
+<p>&nbsp;</p>
 
-    MSB   7    6    5    4    3    2    1    0    LSB
-        -----------------------------------------
-R#19    | IL7| IL6| IL5| IL4| IL3| IL2| IL1| IL0|  Interrupt line register
-        -----------------------------------------
-```
 
 <p>&nbsp;</p>
 
