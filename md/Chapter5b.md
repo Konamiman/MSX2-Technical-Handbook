@@ -899,7 +899,7 @@ See the following list for the reference of (2) and (3).
 ;              for ROM in 1 page
 ;********************************************************
 
-RSLGREG EQU     0138H
+RSLREG  EQU     0138H
 EXPTBL  EQU     0FCC1H
 BOTTOM  EQU     0FC48H
 HIMEM   EQU     0FC4AH
@@ -934,7 +934,7 @@ GETSL10:
         LD      E,A
         LD      D,0             ;[DE]=000000PP
         LD      HL,EXPTBL
-        ADD     HL,DE           :[HL]=EXPTBL+000000PP
+        ADD     HL,DE           ;[HL]=EXPTBL+000000PP
         LD      E,A             ;[E]=000000PP
         LD      A,(HL)          ;A=(EXPTBL+000000PP)
         AND     80H             ;Use only MSB
@@ -973,9 +973,9 @@ GTSL1NOEXP:
 ASLW10:
         PUSH    DE
         PUSH    AF
-        CALL    GTSL10          ;[A] = F000SSPP, SS = 00 if not expanded
+        CALL    GETSL10         ;[A] = F000SSPP, SS = 00 if not expanded
         AND     00001111B       ;[A] = 0000SSPP
-        LD      L,A             :[A] = 0000SSPP
+        LD      L,A             ;[A] = 0000SSPP
         RLCA
         RLCA
         RLCA
