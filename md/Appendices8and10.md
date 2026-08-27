@@ -1,6 +1,6 @@
 # APPENDIX 8 - CONTROL CODES
 
-| Code (dec) | Code (hex) | Function|    Corresponding  key(s)    |
+| Code (dec) | Code (hex) | Function | Corresponding key(s) |
 | --- | --- | --- | --- |
 |   0  |  00H |                                   | CTRL + @            |
 |   1  |  01H | header at input/output of graphic characters | CTRL + A |

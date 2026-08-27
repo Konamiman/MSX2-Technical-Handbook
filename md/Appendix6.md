@@ -43,8 +43,8 @@
 
 * **A0H to A3H**: sound generator (AY-3-8910)
   * A0H: address latch
-  * A1H: data read
-  * A2H: data write
+  * A1H: data write
+  * A2H: data read
 
 * **A4H to A7H**: reserved
 
@@ -57,10 +57,10 @@
 * **ACH to AFH**: MSX engine (one chip MSX I/O)
 
 * **B0H to B3H**: expansion memory (SONY specification) (8255)
-  * A8H: port A, address (A0 to A7)
-  * A9H: port B, address (A8 to A10, A13 to A15), control R/W
-  * AAH: port C, address (A11 to A12), data (D0 - D7)
-  * ABH: mode set
+  * B0H: port A, address (A0 to A7)
+  * B1H: port B, address (A8 to A10, A13 to A15), control R/W
+  * B2H: port C, address (A11 to A12), data (D0 - D7)
+  * B3H: mode set
 
 * **B4H to B5H**: CLOCK-IC (RP-5C01)
   * B4H: address latch
@@ -89,7 +89,7 @@
 
   The floppy disk controller can be interrupted by an external signal. Interrupt is possible only when the FDC is accessed. Thus, the system can treat different FDC interfaces.
 
-* **D8 to D9H**: kanji ROM (TOSHIBA specification)
+* **D8H to D9H**: kanji ROM (TOSHIBA specification)
   * D8H: b5-b0, lower address (write only)
   * D9H
     * b5-b0: upper address (write)
@@ -109,9 +109,9 @@
   * b6: lightpen
   * b7: CLOCK-IC (only on MSX2)
 
-  Bits to void the conflict between internal I/O devices or those connected by cartridge. The bits can disable the internal devices. When BIOS is initialised, internal devices are valid if no external devices are connected. Applications may not write to or read from here.
+  Bits to avoid the conflict between internal I/O devices or those connected by cartridge. The bits can disable the internal devices. When BIOS is initialised, internal devices are valid if no external devices are connected. Applications may not write to or read from here.
 
-* **F8H**: colour bus I/O
+* **F6H**: colour bus I/O
 
 * **F7H**: A/V control
   * b0: audio R - mixing ON (write)
