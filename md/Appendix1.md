@@ -35,11 +35,11 @@ This chapter lists the 126 BIOS entries available to the user.
 There are two kinds of BIOS routines, the ones in MAIN-ROM and the ones in SUB-ROM. They each have different calling sequences which will be described later. The following is the entry notation.
 
 
-**Label name (address)**    \*n*
+**Label name (address)**    **\*n**
 * **Function**: descriptions and notes about the function
 * **Input**: parameters used by call
 * **Output**: parameters returned by call
-* **Registers**: registers which will be used (original contentes are lost)
+* **Registers**: registers which will be used (original contents are lost)
 
 
 The value of **\*n** has the following meanings.
@@ -56,7 +56,7 @@ Routines without **\*n** are appended for MSX2.
 
 ## MAIN-ROM
 
-To call routines in MAIN-ROM, the CALL or RTS instruction is used as an ordinary subroutine call.
+To call routines in MAIN-ROM, the CALL or RST instruction is used as an ordinary subroutine call.
 
 
 <p>&nbsp;</p>
@@ -144,7 +144,7 @@ Example:        LD      HL,LETTER
 
 #### CALSLT (001CH) *1
 * **Function**: calls the routine in another slot (inter-slot call)
-* **Input**: specify the slot in the 8 high order buts of the IY register (same as [RDSLT](#rdslt-000ch-1)). IX is for the address to be called.
+* **Input**: specify the slot in the 8 high order bits of the IY register (same as [RDSLT](#rdslt-000ch-1)). IX is for the address to be called.
 * **Output**: depends on the calling routine
 * **Registers**: depends on the calling routine
 
@@ -353,8 +353,8 @@ Types can be recognised by the flag marked by "*".
 * **Function**: changes the screen colour
 * **Input**:
   * A for the mode 
-  * FORCLR (F3E9H) for foreground color 
-  * BAKCLR (F3EAH) for background color
+  * FORCLR (F3E9H) for foreground colour 
+  * BAKCLR (F3EAH) for background colour
   * BDRCLR (F3EBH) for border colour
 * **Output**: none
 * **Registers**: all
@@ -372,7 +372,7 @@ Types can be recognised by the flag marked by "*".
 <p>&nbsp;</p>
 
 #### CLRSPR (0069H) *3
-* **Function**: initialises all sprites. The sprite pattern is cleared to null, the sprite number to the sprite plane number, the sprite colour to the foregtound colour. The vertical location of the sprite is set to 209 (mode 0 to 3) or 217 (mode 4 to 8).
+* **Function**: initialises all sprites. The sprite pattern is cleared to null, the sprite number to the sprite plane number, the sprite colour to the foreground colour. The vertical location of the sprite is set to 209 (mode 0 to 3) or 217 (mode 4 to 8).
 * **Input**: SCRMOD (FCAFH) for the screen mode
 * **Output**: none
 * **Registers**: all
@@ -467,6 +467,8 @@ Types can be recognised by the flag marked by "*".
 * **Output**: none
 * **Registers**: all
 
+
+<p>&nbsp;</p>
 
 #### CALPAT (0084H) *1
 * **Function**: returns the address of the sprite generator table
@@ -599,12 +601,12 @@ Types can be recognised by the flag marked by "*".
 <p>&nbsp;</p>
 
 #### CNVCHR (00ABH) *1
-* **Function**: test for the graphic header and transforms the code
+* **Function**: tests for the graphic header and transforms the code
 * **Input**: A for the character code
 * **Output**:
   * the CY flag is reset to not the graphic header 
   * the CY flag and the Z flag are set to the transformed code is set in A 
-  * the CY flag is set and the CY flag is reset to the untransformed code is set in A
+  * the CY flag is set and the Z flag is reset to the untransformed code is set in A
 * **Registers**: AF
 
 
@@ -805,9 +807,9 @@ Types can be recognised by the flag marked by "*".
 
 #### TAPOOF (00F0H) *1
 * **Function**: stops writing to the tape
-* **Input**: A for data
-* **Output**: if failed, the CY flag is set
-* **Registers**: all
+* **Input**: none
+* **Output**: none
+* **Registers**: none
 
 
 <p>&nbsp;</p>
@@ -891,9 +893,10 @@ Types can be recognised by the flag marked by "*".
 * **Function**: Physical input/output for disk devices
 * **Input**: 
   * A for the drive number (0 = A:, 1 = B:,...)
-  * B for the number of sector to be read from or written to 
-  * C for the media ID DE for the first sector number to be read rom or written to
-  * HL for the startinga address of the RAM buffer to be read from or written to specified sectors
+  * B for the number of sectors to be read from or written to 
+  * C for the media ID
+  * DE for the first sector number to be read from or written to
+  * HL for the starting address of the RAM buffer to be read from or written to specified sectors
   * CY set for sector writing; reset for sector reading
 * **Output**: 
   * CY set if failed 
@@ -1061,7 +1064,7 @@ INIPAL: PUSH    IX
         LD      IX, INIPLT
                          ; Set BIOS entry address
         JP      SUBROM
-                         ;Returns caller of INIPAL
+                         ; Returns caller of INIPAL
                 .
                 .
                 .
@@ -1181,7 +1184,7 @@ INIPAL: PUSH    IX
 <p>&nbsp;</p>
 
 #### SETT32 (00E9H)
-* **Function**: ses VDP in the text mode (32x24)
+* **Function**: sets VDP in the text mode (32x24)
 * **Input**: same as [INIT32](#init32-00d9h)
 * **Output**: none
 * **Registers**: all
@@ -1274,8 +1277,8 @@ INIPAL: PUSH    IX
 * **Function**: changes the screen colour
 * **Input**: 
   * A for the mode 
-  * FORCLR (F3E9H) for the foreground color
-  * BAKCLR (F3EAH) for the background color
+  * FORCLR (F3E9H) for the foreground colour
+  * BAKCLR (F3EAH) for the background colour
   * BDRCLR (F3EBH) for the border colour
 * **Output**: none
 * **Registers**: all
@@ -1422,7 +1425,7 @@ INIPAL: PUSH    IX
 <p>&nbsp;</p>
 
 #### KNJPRT (01BDH)
-* **Function**: sends a kanki to the graphic screen (modes 5 to 8)
+* **Function**: sends a kanji to the graphic screen (modes 5 to 8)
 * **Input**: BC for JIS kanji code, A for the display mode. The display mode has the following meaning, similar to the PUT KANJI command of BASIC.
   * 0: display in 16 x 16 dot 
   * 1: display even dots 

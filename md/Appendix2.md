@@ -142,7 +142,7 @@ DAC |  FF |  99 |  99 |  99 |  99 |  99 |  99 |  99 |  -0.99999999999999 E+63
     -------------------------------------------------
 ```
 
-In Math-Pack, the memory is predefined for operation. This memory area is called "DAC (Decimal ACumulator (F7F6H)" and the area which reserves the numerical value to be operated is called "ARG (F847H)". For example, in multiplication, the product of the numbers in DAC and ARG is calculated and the result is returned in the DAC.
+In Math-Pack, the memory is predefined for operation. This memory area is called "DAC (Decimal Accumulator, F7F6H)" and the area which reserves the numerical value to be operated is called "ARG (F847H)". For example, in multiplication, the product of the numbers in DAC and ARG is calculated and the result is returned in the DAC.
 
 In the DAC, single precision real numbers, double precision real numbers, and two-byte integers can be stored. In order to distinguish them, "VALTYP (F663H)" is used and its value is 4 for single precision real numbers, 8 for double precision real numbers, and 2 for two-byte integers.
 
@@ -274,7 +274,7 @@ Since Math-Pack is an internal routine of BASIC, when an error occurs (such as d
 **Note:** (HL), (DE) means the values in memory pointed to by HL or DE. Four
       register names in the parentheses are the single precision real numbers
       which indicate (sign + exponent), (mantissa 1st and 2nd places),
-      (mantissa 3th and 4th places), (mantissa 5th and 6th places) from left
+      (mantissa 3rd and 4th places), (mantissa 5th and 6th places) from left
       to right. Where the object is VALTYP, the movement (2, 4, 8 bytes) is
       according to the type indicated in VALTYP (F663H).
 
@@ -299,7 +299,7 @@ Since Math-Pack is an internal routine of BASIC, when an error occurs (such as d
 * A = 0 ⟶ left = right
 * A = -1 ⟶ left > right
 
-In the comparison of single precision real numbers, CBED means that each register has single precision (sign + exponent),v      (mantissa 1st and 2nd places), (mantissa 3th and 4th places), and (mantissa 5th and 6th places).
+In the comparison of single precision real numbers, CBED means that each register has single precision (sign + exponent), (mantissa 1st and 2nd places), (mantissa 3rd and 4th places), and (mantissa 5th and 6th places).
 
 
 <p>&nbsp;</p>
@@ -401,7 +401,7 @@ In the comparison of single precision real numbers, CBED means that each registe
 |   IADD    |   3172H   |    HL <-- DE + HL    |         all          |
 |   IMULT   |   3193H   |    HL <-- DE * HL    |         all          |
 |   IDIV    |   31E6H   |    HL <-- DE / HL    |         all          |
-|   IMOD    |   323AH   |    HL <-- DE mod HL  |         alle         |
+|   IMOD    |   323AH   |    HL <-- DE mod HL  |         all          |
 |           |           |    (DE <-- DE/HL)    |                      |
 -----------------------------------------------------------------------
 ```
@@ -427,10 +427,6 @@ In the comparison of single precision real numbers, CBED means that each registe
 <p>&nbsp;</p>
 
 ## Changes from the original
-
-- In the explanation before [Figure A.3](#figure-a3--exponent-format), the indication about the excess 64 method has been added.
-
-- In [Figure A.3](#figure-a3--exponent-format), in the third byte, "63rd power of 10" has been corrected to "-63rd power of 10".
 
 - In the explanation before [Figure A.3](#figure-a3--exponent-format), the indication about the excess 64 method has been added.
 

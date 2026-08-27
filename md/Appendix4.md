@@ -323,7 +323,7 @@ F380    |                         |
 * **initial value**: QUETAB (F959H)
 * **contents**: points to queue table at the execution of PLAY statement
 
-#### FRCNEW (F3F5H)
+#### FRCNEW (F3F5H, 1)
 * **initial value**: 255
 * **contents**: used by BASIC interpreter internally
 
@@ -355,22 +355,20 @@ F380    |                         |
 ## Parameters for Cassette
 
 
-<p>&nbsp;</p>
-
 #### CS120 (F3FCH, 5*2)
-  * **contents**:
-    * 1200 baud:
-      * 83 (LOW01): Low width representing bit 0
-      * 92 (HIGH01): High width representing bit 0
-      * 38 (LOW11): Low width representing bit 1
-      * 45 (HIGH11): High width representing bit 1
-      * HEADLEN * 2/256: High bytes (HEDLEN = 2000) of header bits for short header
-    * 2400 baud
-      * 37 (LOW02): Low width representing bit 0
-      * 45 (HIGH02): High width representing bit 0
-      * 14 (LOW12): Low width representing bit 1
-      * 22 (HIGH12): High width representing bit 1
-      * HEADLEN * 4/256: High bytes (HEDLEN = 2000) of header bits for short header
+* **contents**:
+  * 1200 baud:
+    * 83 (LOW01): Low width representing bit 0
+    * 92 (HIGH01): High width representing bit 0
+    * 38 (LOW11): Low width representing bit 1
+    * 45 (HIGH11): High width representing bit 1
+    * HEADLEN * 2/256: High bytes (HEADLEN = 2000) of header bits for short header
+  * 2400 baud:
+    * 37 (LOW02): Low width representing bit 0
+    * 45 (HIGH02): High width representing bit 0
+    * 14 (LOW12): Low width representing bit 1
+    * 22 (HIGH12): High width representing bit 1
+    * HEADLEN * 4/256: High bytes (HEADLEN = 2000) of header bits for short header
 
 #### LOW (F406H, 2)
 * **initial value**: LOW01, HIGH01 (by default, 1200 baud)
@@ -384,10 +382,10 @@ F380    |                         |
 * **initial value**: HEADLEN * 2/256 (by default, 1200 baud)
 * **contents**: header bit for the short header of current baud rate (HEADLEN = 2000); set by `<cassette baud rate>` of SCREEN statement
 
-#### ASPCT1 (F40BH, 1)
+#### ASPCT1 (F40BH, 2)
 * **contents**: 256/aspect ratio; set by SCREEN statement to use in CIRCLE statement
 
-#### ASPCT2 (F40DH, 1)
+#### ASPCT2 (F40DH, 2)
 * **contents**: 256 * aspect ratio; set by SCREEN statement to use in CIRCLE statement
 
 #### ENDPRG (F40FH, 5)
@@ -473,7 +471,7 @@ F380    |                         |
 #### TXTTAB (F676H, 2)
 * **contents**: starting address of BASIC text area
 
-#### TEMPPT (F768H, 2)
+#### TEMPPT (F678H, 2)
 * **initial value**: TEMPST (F67AH)
 * **contents**: starting address of unused area of temporary descriptor
 
@@ -508,7 +506,7 @@ F380    |                         |
 * **contents**: location for temporary reservation for statement code; used for variable pointer, text address, and others
 
 #### PTRFLG (F6A9H, 1)
-* **contents**: 0 if there is not a line number to be converted,otherwise not
+* **contents**: 0 if there is not a line number to be converted, otherwise not
 
 #### AUTFLG (F6AAH, 1)
 * **contents**: flag for AUTO command validity (non-zero = valid, otherwise invalid)
@@ -726,7 +724,7 @@ F380    |                         |
 * **contents**: used internally by CIRCLE statement
 
 #### CPCNT (F939H, 2)
-* **contents**: number of one eight of the circle
+* **contents**: number of one eighth of the circle
 
 #### CPNCNT8 (F93BH, 2)
 * **contents**: used internally by CIRCLE statement
@@ -834,7 +832,7 @@ F380    |                         |
 * **contents**: SUB-ROM slot address
 
 #### CHRCNT (FAF9H, 1)
-* **contents**: character counter in the buffer; used in Roman-kana translation (value is 0 `<`=n `<`=2)
+* **contents**: character counter in the buffer; used in Roman-kana translation (value is 0 <= n <= 2)
 
 #### ROMA (FAFAH, 2)
 * **contents**: area to store character in the buffer; used in Roman-kana translation (Japan version only)
@@ -1018,10 +1016,10 @@ _(offset is in decimal)_
 * **contents**: area to set tone period
 
 #### AMPPRX (+12, 1)
-* **contents**: discrimination of volume and enveloppe
+* **contents**: discrimination of volume and envelope
 
 #### ENVPRX (+13, 2)
-* **contents**: area to set enveloppe period
+* **contents**: area to set envelope period
 
 #### OCTAVX (+15, 1)
 * **contents**: area to set octave
@@ -1036,7 +1034,7 @@ _(offset is in decimal)_
 * **contents**: area to set volume
 
 #### ENVLPX (+19, 14)
-* **contents**: area to set enveloppe wave form
+* **contents**: area to set envelope wave form
 
 #### MCLSTX (+33, 3)
 * **contents**: reservation area of stack
@@ -1086,7 +1084,7 @@ _(offset is in decimal)_
 * **contents**: indicates which function key is displayed at KEY ON (1 = F1 to F5 is displayed, 0 = F6 to F10 is displayed)
 
 #### FNKFLG (FBCEH, 10)
-* **contents**: area to allow, inhibit, or stop the execution of the line defined in ON KEY GOSUB statement, or to reserve it for each function key; set by KEY(n)ON/OFF/STOP statement (0 = KEY(n)OFF/STOP, 1= KEY(n)ON)
+* **contents**: area to allow, inhibit, or stop the execution of the line defined in ON KEY GOSUB statement, or to reserve it for each function key; set by KEY(n)ON/OFF/STOP statement (0 = KEY(n)OFF/STOP, 1 = KEY(n)ON)
 
 #### ONGSBF (FBD8H, 1)
 * **contents**: flag to indicate whether event waiting in TRPTBL (FC4CH) occurred
@@ -1115,7 +1113,7 @@ _(offset is in decimal)_
 #### HIMEM (FC4AH, 2)
 * **contents**: highest address of available memory; set by `<memory upper limit>` of CLEAR statement
 
-#### TRAPTBL (FC4CH, 78)
+#### TRPTBL (FC4CH, 78)
 * **contents**: trap table used to handle interrupt; one table consists of three bytes, where first byte indicates ON/OFF/STOP status and the rest indicate the text address to be jumped to
   * FC4CH to FC69H (3 * 10 bytes): used in ON KEY GOSUB
   * FC6AH to FC6CH (3 * 1 byte): used in ON STOP GOSUB
@@ -1131,10 +1129,10 @@ _(offset is in decimal)_
 * **contents**: if Ctrl+STOP is pressed, setting 03H here causes a stop
 
 #### PADY (FC9CH, 1)
-* **contents**: Y-coordinate of the paddle)
+* **contents**: Y-coordinate of the paddle
 
 #### PADX (FC9DH, 1)
-* **contents**: X-coordinate of the paddle)
+* **contents**: X-coordinate of the paddle
 
 #### JIFFY (FC9EH, 2)
 * **contents**: used internally by PLAY statement
@@ -1161,7 +1159,7 @@ _(offset is in decimal)_
 * **contents**: flag to indicate insert mode (0 = normal mode, otherwise = insert mode)
 
 #### CSRSW (FCA9H, 1)
-* **contents**: whether cursor is displayed (0 = no, otherwise = yes); set by `<cursor swicth>` of LOCATE statement
+* **contents**: whether cursor is displayed (0 = no, otherwise = yes); set by `<cursor switch>` of LOCATE statement
 
 #### CSTYLE (FCAAH, 1)
 * **contents**: cursor shape (0 = block, otherwise = underline)
@@ -1170,7 +1168,7 @@ _(offset is in decimal)_
 * **contents**: CAPS key status (0 = CAP OFF, otherwise = CAP ON)
 
 #### KANAST (FCACH, 1)
-* **contents**: kana key status (0 = kaka OFF, otherwise = kana ON)
+* **contents**: kana key status (0 = kana OFF, otherwise = kana ON)
 
 #### KANAMD (FCADH, 1)
 * **contents**: kana key arrangement status (0 = 50-sound arrangement, otherwise = JIS arrangement)
@@ -1337,7 +1335,7 @@ _(offset is in decimal)_
 * **purpose**: connects disk device
 
 #### H.DSKF (FE12H)
-* **meaning**: beginning of MSXSTS DSKF (unusde disk space)
+* **meaning**: beginning of MSXSTS DSKF (unused disk space)
 * **purpose**: connects disk device
 
 #### H.DSKI (FE17H)
@@ -1381,11 +1379,11 @@ _(offset is in decimal)_
 * **purpose**: connects disk device
 
 #### H.CVD (FE49H)
-* **meaning**: beginning of MSXSTS CVS (convert double precision real)
+* **meaning**: beginning of MSXSTS CVD (convert double precision real)
 * **purpose**: connects disk device
 
 #### H.GETP (FE4EH)
-* **meaning**: SPDSK GETPTR (get file pointer)
+* **meaning**: SPCDSK GETPTR (get file pointer)
 * **purpose**: connects disk device
 
 #### H.SETF (FE53H)
@@ -1393,7 +1391,7 @@ _(offset is in decimal)_
 * **purpose**: connects disk device
 
 #### H.NOFO (FE58H)
-* **meaning**: SPDSK NOFOR (OPEN statement without FOR)
+* **meaning**: SPCDSK NOFOR (OPEN statement without FOR)
 * **purpose**: connects disk device
 
 #### H.NULO (FE5DH)
@@ -1420,8 +1418,8 @@ _(offset is in decimal)_
 * **meaning**: SPCDSK BINLOD (load in binary)
 * **purpose**: connects disk device
 
-#### H.FILE (FD7BH)
-* **meaning**: SPCDSK FILES (displey filename)
+#### H.FILE (FE7BH)
+* **meaning**: SPCDSK FILES (display filename)
 * **purpose**: connects disk device
 
 #### H.DGET (FE80H)
@@ -1449,7 +1447,7 @@ _(offset is in decimal)_
 * **purpose**: connects disk device
 
 #### H.LOF (FE9EH)
-* **meaning**: SPCDSK LOC function (file length)
+* **meaning**: SPCDSK LOF function (file length)
 * **purpose**: connects disk device
 
 #### H.EOF (FEA3H)
@@ -1534,9 +1532,6 @@ _(offset is in decimal)_
 * **meaning**: BINTRP
 
 #### H.FINE (FF1BH)
-* **meaning**: BINTRP
-
-#### H.CRUN (FF20H)
 * **meaning**: BINTRP
 
 #### H.CRUN (FF20H)
